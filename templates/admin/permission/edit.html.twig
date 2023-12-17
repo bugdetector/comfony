@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Permission{% endblock %}
+
+{% block body %}
+    <h1>Edit Permission</h1>
+
+    {{ include('admin/permission/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_admin_permission_index') }}">back to list</a>
+
+    {{ include('admin/permission/_delete_form.html.twig') }}
+{% endblock %}

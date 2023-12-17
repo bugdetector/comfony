@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="phpcs-standard">
+  <description>Codestyle ruleset for Symfony</description>
+
+  <!-- Specify standards. -->
+  <rule ref="PSR12"/>
+
+  <arg name="extensions" value="php,yml"/>
+
+  <!-- Specify folders. -->
+  <file>src/</file>
+  <file>tests/</file>
+
+  <rule ref="Generic.Files.LineEndings">
+      <properties>
+          <property name="eolChar" value="\n"/>
+      </properties>
+  </rule>
+</ruleset>
