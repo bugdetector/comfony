@@ -11,8 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/role')]
-class RoleController extends AbstractController
+#[Route('/admin/roles')]
+class RolesController extends AbstractController
 {
     #[Route('/', name: 'app_admin_role_index', methods: ['GET'])]
     public function index(RoleRepository $roleRepository): Response
