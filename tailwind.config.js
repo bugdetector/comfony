@@ -15,5 +15,6 @@ module.exports = {
       collections: getIconCollections(["tabler"]),
     }),
   ],
+  darkMode: 'class'
 }
 
