@@ -28,6 +28,6 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "alpinejs": "^3.13.3"
+        "flowbite": "^2.2.1"
     }
 }

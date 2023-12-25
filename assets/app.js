@@ -1,6 +1,7 @@
 import './bootstrap.js';
 import './styles/app.css';
+import 'flowbite';
 
-import Alpine from 'alpinejs'
-window.Alpine = Alpine
-Alpine.start()
+document.addEventListener('turbo:load', () => {
+    initFlowbite();
+})

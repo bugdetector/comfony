@@ -4,6 +4,7 @@ module.exports = {
   content: [
     "./assets/**/*.js",
     "./templates/**/*.html.twig",
+    "./node_modules/flowbite/**/*.js",
   ],
   theme: {
     extend: {},
@@ -14,6 +15,7 @@ module.exports = {
       // You can also ignore this option to automatically discover all icon collections you have installed
       collections: getIconCollections(["tabler"]),
     }),
+    require('flowbite/plugin'),
   ],
   darkMode: 'class'
 }
