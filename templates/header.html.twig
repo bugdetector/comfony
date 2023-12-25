@@ -1,0 +1,59 @@
+<script>
+    const setup = () => {
+        const getTheme = () => {
+        if (window.localStorage.getItem('dark')) {
+            return JSON.parse(window.localStorage.getItem('dark'))
+        }
+        return !!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        }
+    
+        const setTheme = (value) => {
+        window.localStorage.setItem('dark', value)
+        }
+    
+        return {
+        loading: true,
+        isDark: getTheme(),
+        toggleTheme() {
+            this.isDark = !this.isDark
+            setTheme(this.isDark)
+        }
+        }
+    }
+</script>
+<header class="fixed w-full flex items-center justify-between h-14 text-white z-10">
+    <a href="{{ path('app_home') }}" class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 bg-blue-800 dark:bg-gray-800 border-none">
+    <img class="h-7 md:h-10 mr-2 rounded-md overflow-hidden" src="{{ asset('assets/favicon.png') }}" />
+    <span class="hidden md:block ms-2">{{ app_name }}</span>
+    </a>
+    <div class="flex justify-end items-center h-14 bg-blue-800 dark:bg-gray-800 header-right">
+    <ul class="flex items-center">
+        <li>
+        <button
+            aria-hidden="true"
+            @click="toggleTheme"
+            class="group p-2 pb-1 transition-colors duration-200 rounded-full shadow-md bg-blue-200 hover:bg-blue-200 dark:bg-gray-50 dark:hover:bg-gray-200 text-gray-900 focus:outline-none"
+        >
+            <span x-show="isDark" class="i-tabler-moon text-2xl"></span>
+            <span x-show="!isDark" class="i-tabler-sun text-2xl"></span>
+        </button>
+        </li>
+        <li>
+        <div class="block w-px h-6 mx-3 bg-gray-400 dark:bg-gray-700"></div>
+        </li>
+        <li>
+        {% if not app.user %}
+            <a href="{{ path('app_login') }}" class="flex items-center mr-4 hover:text-blue-100">
+            <span class="inline-flex mr-1"><span class="i-tabler-login text-2xl"></span></span>
+            {% trans %}Login{% endtrans %}
+            </a>
+        {% else %}
+            <a href="{{ path('app_logout') }}" class="flex items-center mr-4 hover:text-blue-100">
+            <span class="inline-flex mr-1"><span class="i-tabler-logout text-2xl"></span></span>
+            {% trans %}Logout{% endtrans %}
+            </a>
+        {% endif %}
+        </li>
+    </ul>
+    </div>
+</header>
