@@ -1,3 +1,4 @@
+import './bootstrap.js';
 import './styles/app.css';
 
 import Alpine from 'alpinejs'
