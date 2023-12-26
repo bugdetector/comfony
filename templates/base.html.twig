@@ -1,37 +1,39 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      {% block title %}
-        {{ app_name }}
-      {% endblock %}
-    </title>
-    <link rel="icon" href="{{ asset('assets/favicon.ico') }}" />
-    {% block stylesheets %}
-      {{ encore_entry_link_tags('app') }}
-    {% endblock %}
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>{{ title ?? app_name }}</title>
+		<link rel="icon" href="{{ asset('assets/favicon.ico') }}"/>
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
 
-    {% block javascripts %}
-      {{ encore_entry_script_tags('app') }}
-    {% endblock %}
-  </head>
-  <body class="light" x-data="setup()" :class="{ 'dark': isDark }">
-    <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
-        {% block header %}
-          {% include "header.html.twig" %}
-        {% endblock %}
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+	</head>
+	<body class="light" x-data="setup()" :class="{ 'dark': isDark }">
+		<div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
+			{% block header %}
+				{% include "_header.html.twig" %}
+			{% endblock %}
 
-        {% block aside %}
-          {% include "aside.html.twig" %}
-        {% endblock %}
+			{% block aside %}
+				{% include "_aside.html.twig" %}
+			{% endblock %}
 
-        <div class="h-full ml-14 mt-14 mb-10 md:ml-64">
-          {% block body %}
-
-          {% endblock %}
-        </div>
-      </div>
-  </body>
+			<div class="h-full ml-14 mt-14 mb-10 md:ml-64">
+				{% block title %}
+					<div class="bg-blue-100 dark:bg-gray-600 w-100 p-3 min-h-8 flex justify-between">
+						<h1 class='font-bold'>{{ title ?? app_name }}</h1>
+						<div class='flex gap-2'>
+							{% block actions %}{% endblock %}
+						</div>
+					</div>
+				{% endblock %}
+				{% block body %}{% endblock %}
+			</div>
+		</div>
+	</body>
 </html>

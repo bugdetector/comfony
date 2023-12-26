@@ -3,28 +3,29 @@
 namespace App\Entity\Auth;
 
 use App\Repository\Auth\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation\Timestampable;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`users`')]
+#[ORM\Table(name:'users')]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'bigint', options:["unsigned" => true])]
+    #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180, unique: true)]
-    private ?string $username = null;
+    #[ORM\Column(nullable: false)]
+    private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Role::class)]
-    private Collection $roles;
+    #[ORM\Column(length: 180, unique: true)]
+    private ?string $email = null;
+
+    #[ORM\Column]
+    private array $roles = [];
 
     /**
      * @var string The hashed password
@@ -32,44 +33,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $name = null;
-
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $surname = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
-
-    #[ORM\Column(length: 255, enumType: UserStatus::class)]
-    private ?UserStatus $status = UserStatus::Active;
-
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    #[Timestampable(on:'create')]
-    private ?\DateTimeInterface $created_at = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Timestampable(on: 'update')]
-    private ?\DateTimeInterface $last_updated = null;
-
-    public function __construct()
-    {
-        $this->roles = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUsername(): ?string
+    public function getName(): ?string
     {
-        return $this->username;
+        return $this->name;
     }
 
-    public function setUsername(string $username): static
+    public function setName(string $name): static
     {
-        $this->username = $username;
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
 
         return $this;
     }
@@ -81,7 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->username;
+        return (string) $this->email;
     }
 
     /**
@@ -89,21 +76,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        return $this->roles->toArray();
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
-    public function addRole(Role $role): static
+    public function setRoles(array $roles): static
     {
-        if (!$this->roles->contains($role)) {
-            $this->roles->add($role);
-        }
-
-        return $this;
-    }
-
-    public function removeRole(Role $role): static
-    {
-        $this->roles->removeElement($role);
+        $this->roles = $roles;
 
         return $this;
     }
@@ -130,63 +112,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getSurname(): ?string
-    {
-        return $this->surname;
-    }
-
-    public function setSurname(?string $surname): static
-    {
-        $this->surname = $surname;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getStatus(): ?string
-    {
-        return $this->status->value;
-    }
-
-    public function setStatus(UserStatus $status): static
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->created_at;
-    }
-
-    public function getLastUpdated(): ?\DateTimeInterface
-    {
-        return $this->last_updated;
     }
 }
