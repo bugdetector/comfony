@@ -21,7 +21,7 @@
 					{% else %}
 						{% trans %}Account{% endtrans %}
 					{% endif %}
-					<span class="i-tabler-chevron-down"></span>
+					<span class="i-tabler-chevron-down text-lg"></span>
 				</button>
 
 				<!-- Dropdown menu -->
@@ -30,15 +30,27 @@
 						{% if app.user %}
 							<li>
 								<a href="{{ path('app_logout') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-									<span class="i-tabler-logout text-2xl"></span>
-									{% trans %}Logout{% endtrans %}
+									<span class="flex justify-between items-center">
+										<span>{% trans %}Logout{% endtrans %}</span>
+										<span class="i-tabler-logout text-2xl"></span>
+									</span>
 								</a>
 							</li>
 						{% else %}
 							<li>
 								<a href="{{ path('app_login') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-									<span class="i-tabler-login text-2xl"></span>
-									{% trans %}Login{% endtrans %}
+									<span class="flex justify-between items-center">
+										<span>{% trans %}Login{% endtrans %}</span>
+										<span class="i-tabler-login text-2xl"></span>
+									</span>
+								</a>
+							</li>
+							<li>
+								<a href="{{ path('app_register') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+									<span class="flex justify-between items-center">
+										<span>{% trans %}Register{% endtrans %}</span>
+										<span class="i-tabler-user-plus text-2xl"></span>
+									</span>
 								</a>
 							</li>
 						{% endif %}

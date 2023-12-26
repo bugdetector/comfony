@@ -3,11 +3,14 @@
 namespace App\Repository\Auth;
 
 use App\Entity\Auth\User;
+use App\Pagination\Paginator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+
+use function Symfony\Component\String\u;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -39,29 +42,46 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+    /**
+     * @return User[]
+     */
+    public function findBySearchQuery(string $query, int $limit = Paginator::PAGE_SIZE): array
+    {
+        $searchTerms = $this->extractSearchTerms($query);
 
-//    /**
-//     * @return User[] Returns an array of User objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+        $queryBuilder = $this->createQueryBuilder('u');
 
-//    public function findOneBySomeField($value): ?User
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        foreach ($searchTerms as $key => $term) {
+            $queryBuilder
+                ->orWhere('u.name LIKE :t_' . $key)
+                ->orWhere('u.email LIKE :t_' . $key)
+                ->setParameter('t_' . $key, '%' . $term . '%')
+            ;
+        }
+
+        /** @var User[] $result */
+        $result = $queryBuilder
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $result;
+    }
+
+    /**
+     * Transforms the search string into an array of search terms.
+     *
+     * @return string[]
+     */
+    private function extractSearchTerms(string $searchQuery): array
+    {
+        $terms = array_unique(u($searchQuery)->replaceMatches('/[[:space:]]+/', ' ')->trim()->split(' '));
+
+        // ignore the search terms that are too short
+        return array_filter($terms, static function ($term) {
+            return 2 <= $term->length();
+        });
+    }
 }

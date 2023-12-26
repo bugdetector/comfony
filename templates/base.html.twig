@@ -25,8 +25,8 @@
 
 			<div class="h-full ml-14 mt-14 mb-10 md:ml-64">
 				{% block title %}
-					<div class="bg-blue-100 dark:bg-gray-600 w-100 p-3 min-h-8 flex justify-between">
-						<h1 class='font-bold'>{{ title ?? app_name }}</h1>
+					<div class="bg-blue-100 dark:bg-gray-600 w-100 p-3 min-h-20 flex justify-between items-center">
+						<h1 class='font-bold text-2xl'>{{ title ?? app_name }}</h1>
 						<div class='flex gap-2'>
 							{% block actions %}{% endblock %}
 						</div>
