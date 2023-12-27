@@ -2,26 +2,29 @@
 	<ul class="flex items-center -space-x-px h-8 text-sm">
 		{% if first is defined and current != first %}
 			<li>
-				<a href="{{ path(route, query|merge({(pageParameterName): first})) }}" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+				<label role='button' class="flex items-center justify-center px-2 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
 					<span class="sr-only">{% trans %}Previous{% endtrans %}</span>
 					<span class='i-tabler-chevrons-left'></span>
-				</a>
+					<input type='radio' class='hidden' name='pagination_page' value='{{ first }}' data-model='{{ pageParameterName }}'/>
+				</bel>
 			</li>
 		{% endif %}
 		{% if previous is defined %}
 			<li>
-				<a href="{{ path(route, query|merge({(pageParameterName): previous})) }}" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+				<label role='button' class="flex items-center justify-center px-2 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
 					<span class="sr-only">{% trans %}Previous{% endtrans %}</span>
 					<span class='i-tabler-chevron-left'></span>
-				</a>
+					<input type='radio' class='hidden' name='pagination_page' value='{{ previous }}' data-model='{{ pageParameterName }}'/>
+				</label>
 			</li>
 		{% endif %}
 		{% for page in pagesInRange %}
 			{% if page != current %}
 				<li>
-					<a href="{{ path(route, query|merge({(pageParameterName): page})) }}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+					<label role='button' class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
 						{{page}}
-					</a>
+						<input type='radio' class='hidden' name='pagination_page' value='{{ page }}' data-model='{{ pageParameterName }}'/>
+					</label>
 				</li>
 			{% else %}
 				<li>
@@ -34,19 +37,21 @@
 
 		{% if next is defined %}
 			<li>
-				<a href="{{ path(route, query|merge({(pageParameterName): next})) }}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+				<label role='button' class="flex items-center justify-center px-2 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
 					<span class="sr-only">{% trans %}Next{% endtrans %}</span>
 					<span class='i-tabler-chevron-right'></span>
-				</a>
+					<input type='radio' class='hidden' name='pagination_page' value='{{ next }}' data-model='{{ pageParameterName }}'/>
+				</label>
 			</li>
 		{% endif %}
 
 		{% if last is defined and current != last %}
 			<li>
-				<a href="{{ path(route, query|merge({(pageParameterName): last})) }}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+				<label role='button' class="flex items-center justify-center px-2 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 rounded-e-lg hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
 					<span class="sr-only">{% trans %}Next{% endtrans %}</span>
 					<span class='i-tabler-chevrons-right'></span>
-				</a>
+					<input type='radio' class='hidden' name='pagination_page' value='{{ last }}' data-model='{{ pageParameterName }}'/>
+				</label>
 			</li>
 		{% endif %}
 	</ul>

@@ -14,11 +14,11 @@ namespace App\Twig\Components;
 use App\Repository\Auth\UserRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
-use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
-#[AsTwigComponent(name: 'users_search')]
+#[AsLiveComponent(name: 'users_search')]
 final class UsersSearchComponent
 {
     use DefaultActionTrait;
@@ -52,7 +52,7 @@ final class UsersSearchComponent
         return $this->paginator->paginate(
             $queryBuilder,
             $this->page,
-            1
+            10
         );
     }
 }
