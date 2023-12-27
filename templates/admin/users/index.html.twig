@@ -11,8 +11,6 @@
 
 {% block body %}
 	<div class="p-4">
-		{{ component('users_search', {
-			query: query
-		}) }}
+		{{ component('users_search', list_params) }}
 	</div>
 {% endblock %}

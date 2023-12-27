@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\Auth\User;
 use App\Form\Auth\UserType;
-use App\Repository\Auth\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,12 +20,14 @@ class UsersController extends AbstractController
     }
 
     #[Route('/', name: 'app_admin_users_index', methods: ['GET'])]
-    public function index(Request $request, UserRepository $userRepository): Response
+    public function index(Request $request): Response
     {
         return $this->render('admin/users/index.html.twig', [
-            'users' => $userRepository->findAll(),
             'title' => $this->translator->trans('Users'),
-            'query' => (string) $request->query->get('q', '')
+            'list_params' => [
+                'query' => (string) $request->query->get('q', ''),
+                'page' => (int) $request->query->get('page', 1)
+            ]
         ]);
     }
 
