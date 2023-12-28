@@ -1,10 +1,11 @@
-{% if app.request.hasPreviousSession and app.flashes %}
+{% set flashes = app.flashes %}
+{% if app.request.hasPreviousSession and flashes %}
 	<div class="p-3">
-		{% for type, messages in app.flashes %}
+		{% for type, messages in flashes %}
 			{% for message in messages %}
                 {% if type == 'warning' %}
                     {% set colorClasses = "text-yellow-800 dark:text-yellow-400 bg-yellow-100" %}
-                {% elseif type == 'danger' %}
+                {% elseif type == 'error' %}
                     {% set colorClasses = "text-red-800 dark:text-red-400 bg-red-100" %}
                 {% elseif type == 'success' %}
                     {% set colorClasses = "text-green-800 dark:text-green-400 bg-green-100" %}
