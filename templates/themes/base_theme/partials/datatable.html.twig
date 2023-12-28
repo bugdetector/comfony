@@ -1,0 +1,63 @@
+{% set pagination = this.getPagination() %}
+<div {{ attributes }}>
+	{% block filters %}
+		<div class="relative mb-5">
+			<div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+				<svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 20 20">
+					<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+				</svg>
+			</div>
+			<input type="search" data-model="query" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="{{'Search'|trans}}" required>
+		</div>
+	{% endblock %}
+	<div class='w-full'>
+		<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-200">
+            <caption class="text-start font-bold mb-3">
+                {% set end = ((pagination.getCurrentPageNumber()) * pagination.getItemNumberPerPage()) %}
+                {% trans with {
+                    ':total': pagination.getTotalItemCount(), 
+                    ':start': ((pagination.getCurrentPageNumber() - 1) * pagination.getItemNumberPerPage()), 
+                    ':end': end > pagination.getTotalItemCount() ? pagination.getTotalItemCount() : end
+                } %}Out of :total records :start - :end is monitoring{% endtrans %}
+            </caption>
+			<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-200">
+				<tr>
+					{% block headers %}
+						{% for column, data in this.getTableBuildData()["headers"] %}
+							{% if data.sortable is defined and data.sortable %}
+								<th class="px-6 py-3">
+									{% set sorted = pagination.params.sort is defined and pagination.params.sort == column %}
+									{% set direction = pagination.params.direction is defined ? pagination.params.direction %}
+									<a href="?sort={{ column }}&direction={{ direction == 'desc' ? 'asc' : 'desc' }}" role='button'>
+										<div class="flex items-center justify-between">
+											<span>{{ data.label }}</span>
+											{% if sorted %}
+												{% if direction == 'desc' %}
+													<span class='i-tabler-sort-ascending'></span>
+												{% else %}
+													<span class='i-tabler-sort-descending'></span>
+												{% endif %}
+											{% else %}
+												<span class='i-tabler-arrows-sort'></span>
+											{% endif %}
+										</div>
+									</a>
+
+								</th>
+							{% else %}
+								<th class="px-6 py-3">{{ data.label|trans }}</th>
+							{% endif %}
+						{% endfor %}
+					{% endblock %}
+				</tr>
+			</thead>
+			<tbody>
+				{% block rows %}{% endblock %}
+			</tbody>
+		</table>
+	</div>
+
+	{% block pagination %}
+		{{ knp_pagination_render(pagination, '@base_theme/partials/pagination.html.twig') }}
+	{% endblock %}
+</div>

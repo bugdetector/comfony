@@ -12,47 +12,63 @@
 namespace App\Twig\Components;
 
 use App\Repository\Auth\UserRepository;
-use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\PaginatorInterface;
+use Override;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
-use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
 #[AsLiveComponent(name: 'users_search')]
-final class UsersSearchComponent
+final class UsersSearchComponent extends DatatableComponent
 {
     use DefaultActionTrait;
 
-    #[LiveProp(writable: true)]
-    public string $query = '';
-
-    #[LiveProp(writable: true)]
-    public int $page = 1;
-
     public function __construct(
-        private readonly UserRepository $userRepository,
-        private readonly PaginatorInterface $paginator
+        protected readonly PaginatorInterface $paginator,
+        protected readonly TranslatorInterface $translator,
+        private readonly UserRepository $userRepository
     ) {
     }
 
-    /**
-     * @return PaginationInterface
-     */
-    public function getPagination(): PaginationInterface
+    #[Override]
+    public function getQueryBuilder(): QueryBuilder
     {
-        $queryBuilder = $this->userRepository->createQueryBuilder('u');
+        return $this->userRepository->createQueryBuilder('u');
+    }
 
-        $queryBuilder
-                ->orWhere('u.name LIKE :query')
-                ->orWhere('u.email LIKE :query')
-                ->setParameter('query', '%' . $this->query . '%')
-                ->orderBy('u.id', 'ASC');
-
-
-        return $this->paginator->paginate(
-            $queryBuilder,
-            $this->page,
-            10
-        );
+    #[Override]
+    public function getTableBuildData(): array
+    {
+        return [
+            'headers' => [
+                [
+                    'label' => $this->translator->trans("Actions")
+                ],
+                'u.id' => [
+                    'label' => $this->translator->trans("Id"),
+                    'sortable' => true,
+                ],
+                'u.name' => [
+                    'label' => $this->translator->trans("Name"),
+                    'sortable' => true,
+                ],
+                'u.email' => [
+                    'label' => $this->translator->trans("Email"),
+                    'sortable' => true,
+                ],
+                [
+                    'label' => $this->translator->trans("Roles")
+                ],
+            ],
+            "filters" => [
+                'u.name' => [
+                    'label' => 'Name'
+                ],
+                'u.email' => [
+                    'label' => 'Email'
+                ]
+            ]
+        ];
     }
 }
