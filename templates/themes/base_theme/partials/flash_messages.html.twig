@@ -1,0 +1,21 @@
+{% if app.request.hasPreviousSession and app.flashes %}
+	<div class="p-3">
+		{% for type, messages in app.flashes %}
+			{% for message in messages %}
+                {% if type == 'warning' %}
+                    {% set colorClasses = "text-yellow-800 dark:text-yellow-400 bg-yellow-100" %}
+                {% elseif type == 'danger' %}
+                    {% set colorClasses = "text-red-800 dark:text-red-400 bg-red-100" %}
+                {% elseif type == 'success' %}
+                    {% set colorClasses = "text-green-800 dark:text-green-400 bg-green-100" %}
+                {% else %}
+                    {% set colorClasses = "text-blue-800 dark:text-blue-400 bg-blue-100" %}
+                {% endif %}
+                <div class="p-4 mb-4 text-sm rounded-lg dark:bg-gray-800 {{ colorClasses }}" role="alert">
+                    <span class="font-medium">{{ type }}</span>
+                    {{ message|trans }}
+                </div>
+			{% endfor %}
+		{% endfor %}
+	</div>
+{% endif %}

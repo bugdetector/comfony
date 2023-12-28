@@ -16,6 +16,7 @@ module.exports = {
       collections: getIconCollections(["tabler"]),
     }),
     require('flowbite/plugin'),
+    require('@tailwindcss/forms'),
   ],
   darkMode: 'class'
 }

@@ -22,8 +22,7 @@
 			{% block aside %}
 				{% include "_aside.html.twig" %}
 			{% endblock %}
-
-			<div class="h-full ml-14 mt-14 mb-10 md:ml-64">
+			<div class="{{ mainClasses|default('min-h-full ml-14 mt-14 mb-10 md:ml-64') }}">
 				{% block title %}
 					<div class="bg-blue-100 dark:bg-gray-600 w-100 p-3 min-h-20 flex justify-between items-center">
 						<h1 class='font-bold text-2xl'>{{ title ?? app_name }}</h1>
@@ -32,6 +31,10 @@
 						</div>
 					</div>
 				{% endblock %}
+				 {{ include('@base_theme/partials/flash_messages.html.twig') }}
+				 {% if form is defined %}
+				 	{% form_theme form '@base_theme/form_theme.html.twig' %}
+				 {% endif %}
 				{% block body %}{% endblock %}
 			</div>
 		</div>
