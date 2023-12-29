@@ -11,8 +11,15 @@
 
 {% block body %}
 	<div class="p-4">
-		{{ include('admin/users/_form.html.twig', {'button_label': 'Update'}) }}
-
-		{{ include('admin/users/_delete_form.html.twig') }}
+		<div class="flex">
+			<div class="w-9/12">
+				{{ include('admin/users/_form.html.twig', {'button_label': 'Update'}) }}
+			</div>
+			<div class="w-3/12">
+				<div class='p-3'>
+					{{ include('admin/users/_delete_form.html.twig') }}
+				</div>
+			</div>
+		</div>
 	</div>
 {% endblock %}
