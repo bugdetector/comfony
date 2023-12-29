@@ -2,7 +2,9 @@
 
 namespace App\Entity\Auth;
 
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\Auth\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -13,6 +15,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use TimestampableTrait;
+
     public const ROLE_SUPER_ADMIN = "ROLE_SUPER_ADMIN";
     public const ROLE_ADMIN = "ROLE_ADMIN";
     public const ROLE_USER = "ROLE_USER";
@@ -41,6 +45,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column(nullable: true)]
     private ?string $password = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true, options:["default" => "CURRENT_TIMESTAMP"])]
+    private ?\DateTimeInterface $last_access = null;
 
     public function getId(): ?int
     {
@@ -121,5 +128,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): static
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getLastAccess(): ?\DateTimeInterface
+    {
+        return $this->last_access;
+    }
+
+    public function setLastAccess(?\DateTimeInterface $last_access): static
+    {
+        $this->last_access = $last_access;
+
+        return $this;
     }
 }
