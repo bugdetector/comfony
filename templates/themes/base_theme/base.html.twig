@@ -8,7 +8,6 @@
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
-
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
@@ -31,12 +30,12 @@
 						</div>
 					</div>
 				{% endblock %}
-				 {% block flashes %}
-				 	{{ include('@base_theme/partials/flash_messages.html.twig') }}
-				 {% endblock %}
-				 {% if form is defined %}
-				 	{% form_theme form '@base_theme/form_theme.html.twig' %}
-				 {% endif %}
+				{% block flashes %}
+					{{ include('@base_theme/partials/flash_messages.html.twig') }}
+				{% endblock %}
+				{% if form is defined %}
+					{% form_theme form '@base_theme/form_theme.html.twig' %}
+				{% endif %}
 				{% block body %}{% endblock %}
 			</main>
 		</div>
