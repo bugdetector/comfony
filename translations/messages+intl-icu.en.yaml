@@ -32,7 +32,9 @@ Next: Next
 user.created_successfully: 'User created successfully.'
 user.updated_successfully: 'User updated successfully.'
 user.deleted_successfully: 'User deleted successfully.'
-success: 'Success'
-warning: 'Warning'
-error: 'Error'
-info: 'Info'
+success: Success
+warning: Warning
+error: Error
+info: Info
+'Back to mainpage': 'Back to mainpage'
+Welcome: Welcome

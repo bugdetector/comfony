@@ -32,7 +32,9 @@ Next: Sonraki
 user.created_successfully: 'Kullanıcı başarıyla oluşturuldu.'
 user.updated_successfully: 'Kullanıcı başarıyla güncellendi.'
 user.deleted_successfully: 'Kullanıcı başarıyla silindi.'
-success: 'Başarılı'
-warning: 'Uyarı'
-error: 'Hata'
-info: 'Bilgi'
+success: Başarılı
+warning: Uyarı
+error: Hata
+info: Bilgi
+'Back to mainpage': 'Anasayfaya Dön'
+Welcome: 'Hoş geldiniz'

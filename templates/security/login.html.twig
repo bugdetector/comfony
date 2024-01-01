@@ -15,9 +15,13 @@
 					<label class="block mb-1 font-bold" for="email">{% trans %}Email{% endtrans %}</label>
 					<input id="email" type="text" name="username" class="form-control"/>
 				</div>
-				<div class="mb-4">
+				<div class="mb-4 toggle-password-container">
 					<label class="block mb-1 font-bold" for="password">{% trans %}Password{% endtrans %}</label>
-					<input id="password" type="password" name="password" class="form-control"/>
+					<input id="password" type="password" name="password" class="form-control" {{ stimulus_controller('symfony/ux-toggle-password/toggle-password', { 
+						buttonClasses: ['toggle-password-button', 'end-0', 'mt-5', 'me-1'],
+						visibleLabel: '',
+						hiddenLabel: ''
+					} ) }}/>
 				</div>
 				<div class="mt-6 flex items-center justify-end">
 					<a href="{{ path('app_forgot_password_request') }}" class="text-sm">
@@ -30,7 +34,7 @@
 				<div class="mt-6 text-center">
 					<a href="{{ path('app_register') }}" class="underline">{% trans %}Sign up for an account{% endtrans %}</a>
 				</div>
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 			</form>
 		</div>
 	</div>
