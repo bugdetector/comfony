@@ -32,6 +32,8 @@
 					</span>
 				{% endif %}
 			</td>
+			<td><time>{{ user.lastAccess|format_datetime() }}</time></td>
+			<td><time>{{ user.createdAt|format_datetime() }}</time></td>
 		</tr>
 	{% else %}
 		<tr>
