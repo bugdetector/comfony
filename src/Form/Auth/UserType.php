@@ -19,7 +19,11 @@ class UserType extends AbstractType
             ->add('roles', ChoiceType::class, [
                 "choices" => User::ROLES,
                 "multiple" => true
-            ])->add('save', SubmitType::class)
+            ])->add('save', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn-primary'
+                ]
+            ])
         ;
     }
 

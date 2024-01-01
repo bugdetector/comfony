@@ -1,16 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block actions %}
-	<a href='{{ path('app_admin_users_index') }}' class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-		<span class="flex justify-center items-center">
-			<span class="i-tabler-chevron-left me-2"></span>
-			{% trans %}Back{% endtrans %}
-		</span>
-	</a>
-{% endblock %}
-
 {% block body %}
 	<div class="p-4">
+		<a href='{{ path('app_admin_users_index') }}' class="btn-info w-20">
+			<span class="flex justify-center items-center">
+				<span class="i-tabler-chevron-left me-2"></span>
+				{% trans %}Back{% endtrans %}
+			</span>
+		</a>
 		<div class="flex">
 			<div class="w-9/12">
 				{{ include('admin/users/_form.html.twig') }}
