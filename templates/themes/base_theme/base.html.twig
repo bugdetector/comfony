@@ -16,11 +16,11 @@
 	<body class="light" x-data="setup()" :class="{ 'dark': isDark }">
 		<div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
 			{% block header %}
-				{% include "_header.html.twig" %}
+				{% include "@base_theme/_header.html.twig" %}
 			{% endblock %}
 
 			{% block aside %}
-				{% include "_aside.html.twig" %}
+				{% include "@base_theme/_aside.html.twig" %}
 			{% endblock %}
 			<div class="{{ mainClasses|default('min-h-full ml-14 mt-14 mb-10 md:ml-64') }}">
 				{% block title %}
