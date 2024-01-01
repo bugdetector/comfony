@@ -10,6 +10,14 @@
 		</a>
 		<div class="flex flex-wrap bg-white p-3 dark:bg-slate-900">
 			<div class="md:w-9/12 w-full">
+				<div class='mb-3'>
+					<label class='font-bold'>{% trans %}Registration Date{% endtrans %}</label>
+					<div>{{ user.createdAt|format_datetime('full', 'short') }}</div>
+				</div>
+				<div class='mb-3'>
+					<label class='font-bold'>{% trans %}Last Access{% endtrans %}</label>
+					<div>{{ user.lastAccess ? user.lastAccess|format_datetime('full', 'short') : 'Never'|trans }}</div>
+				</div>
 				{{ include('admin/users/_form.html.twig', {'button_label': 'Update'}) }}
 			</div>
 			<div class="md:w-3/12 w-full">
