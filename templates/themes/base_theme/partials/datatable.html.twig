@@ -15,9 +15,9 @@
             <caption class="text-start font-bold mb-3 sticky left-0">
                 {% set end = ((pagination.getCurrentPageNumber()) * pagination.getItemNumberPerPage()) %}
                 {% trans with {
-                    ':total': pagination.getTotalItemCount(), 
-                    ':start': ((pagination.getCurrentPageNumber() - 1) * pagination.getItemNumberPerPage()), 
-                    ':end': end > pagination.getTotalItemCount() ? pagination.getTotalItemCount() : end
+                    'total': pagination.getTotalItemCount(), 
+                    'start': ((pagination.getCurrentPageNumber() - 1) * pagination.getItemNumberPerPage()), 
+                    'end': end > pagination.getTotalItemCount() ? pagination.getTotalItemCount() : end
                 } %}Out of :total records :start - :end is monitoring{% endtrans %}
             </caption>
 			<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-200">

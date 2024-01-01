@@ -137,3 +137,8 @@ Error: Hata
 'Please select a valid option.': 'Lütfen geçerli bir seçenek seçin.'
 'Please select a valid range.': 'Lütfen geçerli bir aralık seçin.'
 'Please enter a valid week.': 'Lütfen geçerli bir hafta girin.'
+'Please enter a password': 'Lütfen bir şifre girin'
+'Your password should be at least {{ limit }} characters': 'Şifreniz en az {{ limit }} karakter olmalıdır'
+'Please enter your email': 'Lütfen e-postanızı girin'
+'You should agree to our terms.': 'Kullanım koşullarını kabul etmelisiniz.'
+'There is already an account with this email': 'Bu e-posta ile oluşturulmuş bir hesap bulunmaktadır.'

@@ -137,3 +137,8 @@ Error: Error
 'Please select a valid option.': 'Please select a valid option.'
 'Please select a valid range.': 'Please select a valid range.'
 'Please enter a valid week.': 'Please enter a valid week.'
+'Please enter a password': 'Please enter a password'
+'Your password should be at least {{ limit }} characters': '__Your password should be at least {{ limit }} characters'
+'Please enter your email': 'Please enter your email'
+'You should agree to our terms.': 'You should agree to our terms.'
+'There is already an account with this email': 'There is already an account with this email'

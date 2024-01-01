@@ -32,8 +32,11 @@ class UsersController extends AbstractController
     }
 
     #[Route('/new', name: 'app_admin_users_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    public function new(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        TranslatorInterface $translator
+    ): Response {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -41,26 +44,30 @@ class UsersController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($user);
             $entityManager->flush();
-            $this->addFlash('success', 'user.created_successfully');
+            $this->addFlash('success', $translator->trans('user.created_successfully'));
             return $this->redirectToRoute('app_admin_users_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/users/new.html.twig', [
             'user' => $user,
             'form' => $form,
-            'title' => $this->translator->trans('Add new user')
+            'title' => $this->translator->trans('Add New User')
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_admin_users_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
-    {
+    public function edit(
+        Request $request,
+        User $user,
+        EntityManagerInterface $entityManager,
+        TranslatorInterface $translator
+    ): Response {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-            $this->addFlash('success', 'user.updated_successfully');
+            $this->addFlash('success', $translator->trans('user.updated_successfully'));
             return $this->redirectToRoute('app_admin_users_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -68,18 +75,22 @@ class UsersController extends AbstractController
             'user' => $user,
             'form' => $form,
             'title' => $this->translator->trans('Edit User :name', [
-                ":name" => $user->getName()
+                "name" => $user->getName()
             ])
         ]);
     }
 
     #[Route('/{id}', name: 'app_admin_users_delete', methods: ['POST'])]
-    public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
-    {
+    public function delete(
+        Request $request,
+        User $user,
+        EntityManagerInterface $entityManager,
+        TranslatorInterface $translator
+    ): Response {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
-            $this->addFlash('success', 'user.deleted_successfully');
+            $this->addFlash('success', $translator->trans('user.deleted_successfully'));
         }
 
         return $this->redirectToRoute('app_admin_users_index', [], Response::HTTP_SEE_OTHER);

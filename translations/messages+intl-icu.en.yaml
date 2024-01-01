@@ -1,3 +1,38 @@
 Home: Home
 Login: Login
 Logout: Logout
+Dashboard: Dashboard
+Users: Users
+'Add New User': 'Add New User'
+'Edit User :name': 'Edit User {name}'
+'Reset your password': 'Reset your password'
+Actions: Actions
+Id: Id
+Name: Name
+Email: Email
+Roles: Roles
+Register: Register
+'Have an account?': 'Have an account?'
+Password: Password
+'Forgot your password?': 'Forgot your password?'
+'Sign up for an account': 'Sign up for an account'
+User: User
+Back: Back
+'No Result Found': 'No Result Found'
+Account: Account
+Delete: Delete
+Close: Close
+'Are you sure you want to delete this :objectName?': 'Are you sure you want to delete this {object}?'
+'Yes': 'Yes'
+'No': 'No'
+'Out of :total records :start - :end is monitoring': 'Out of {total} records {start} - {end} is monitoring'
+Search: Search
+Previous: Previous
+Next: Next
+user.created_successfully: 'User created successfully.'
+user.updated_successfully: 'User updated successfully.'
+user.deleted_successfully: 'User deleted successfully.'
+success: 'Success'
+warning: 'Warning'
+error: 'Error'
+info: 'Info'
