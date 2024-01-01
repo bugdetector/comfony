@@ -40,4 +40,9 @@ info: Bilgi
 Welcome: 'Hoş geldiniz'
 'Registration Date': 'Üyelik Tarihi'
 'Last Access': 'Son Erişim'
-Never: Hiçbir zaman
+Never: 'Hiçbir zaman'
+Status: Durum
+Admin: Yönetici
+Active: Aktif
+Blocked: Bloklanmış
+Banned: Engellenmiş

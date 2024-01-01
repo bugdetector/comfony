@@ -58,6 +58,9 @@ final class UsersSearchComponent extends DatatableComponent
                     'sortable' => true,
                 ],
                 [
+                    'label' => $this->translator->trans('Status'),
+                ],
+                [
                     'label' => $this->translator->trans("Roles")
                 ],
                 'u.last_access' => [

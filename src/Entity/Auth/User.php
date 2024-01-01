@@ -2,6 +2,7 @@
 
 namespace App\Entity\Auth;
 
+use App\DoctrineType\UserStatusType;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\Auth\UserRepository;
 use Doctrine\DBAL\Types\Types;
@@ -48,6 +49,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true, options:["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $last_access = null;
+
+    #[ORM\Column(type: UserStatusType::NAME, length: 255)]
+    private UserStatus $status = UserStatus::Active;
 
     public function getId(): ?int
     {
@@ -150,6 +154,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastAccess(?\DateTimeInterface $last_access): static
     {
         $this->last_access = $last_access;
+
+        return $this;
+    }
+
+    public function getStatus(): ?UserStatus
+    {
+        return $this->status;
+    }
+
+    public function setStatus(UserStatus $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }

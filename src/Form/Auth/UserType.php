@@ -3,8 +3,10 @@
 namespace App\Form\Auth;
 
 use App\Entity\Auth\User;
+use App\Entity\Auth\UserStatus;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,7 +22,8 @@ class UserType extends AbstractType
             ->add('email')
             ->add('roles', ChoiceType::class, [
                 "choices" => User::ROLES,
-                "multiple" => true
+                "multiple" => true,
+                "expanded" => true
             ])->add('password', PasswordType::class, [
                 'required' => false,
                 'mapped' => false,
@@ -36,6 +39,9 @@ class UserType extends AbstractType
                 'toggle' => true,
                 'hidden_label' => '',
                 'visible_label' => '',
+            ])->add('status', EnumType::class, [
+                'class' => UserStatus::class,
+                'expanded' => true
             ])->add('save', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn-primary'
