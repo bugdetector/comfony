@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -60,12 +61,20 @@ class UsersController extends AbstractController
         Request $request,
         User $user,
         EntityManagerInterface $entityManager,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        UserPasswordHasherInterface $userPasswordHasher
     ): Response {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($password = $request->get("user")["password"]) {
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $password
+                    )
+                );
+            }
             $entityManager->flush();
             $this->addFlash('success', $translator->trans('user.updated_successfully'));
             return $this->redirectToRoute('app_admin_users_index', [], Response::HTTP_SEE_OTHER);
