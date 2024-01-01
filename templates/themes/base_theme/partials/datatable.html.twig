@@ -10,9 +10,9 @@
 			<input type="search" data-model="query" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="{{'Search'|trans}}" required>
 		</div>
 	{% endblock %}
-	<div class='w-full'>
+	<div class='w-full overflow-auto'>
 		<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-200">
-            <caption class="text-start font-bold mb-3">
+            <caption class="text-start font-bold mb-3 sticky left-0">
                 {% set end = ((pagination.getCurrentPageNumber()) * pagination.getItemNumberPerPage()) %}
                 {% trans with {
                     ':total': pagination.getTotalItemCount(), 
