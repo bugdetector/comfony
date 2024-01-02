@@ -51,25 +51,28 @@ final class FilesSearchComponent extends DatatableComponent
                     'sortable' => true,
                 ],
                 'f.file_name' => [
-                    'label' => $this->translator->trans("File Name"),
+                    'label' => $this->translator->trans("file_name"),
                     'sortable' => true,
                 ],
                 'f.file_size' => [
-                    'label' => $this->translator->trans("Size"),
+                    'label' => $this->translator->trans("file_size"),
                     'sortable' => true,
                 ],
                 [
-                    'label' => $this->translator->trans('Mime Type'),
+                    'label' => $this->translator->trans('mime_type'),
                 ],
                 [
                     'label' => $this->translator->trans("Extension")
                 ],
+                [
+                    'label' => $this->translator->trans("Status"),
+                ],
                 'f.created_at' => [
-                    'label' => $this->translator->trans('Created At'),
+                    'label' => $this->translator->trans('created_at'),
                     'sortable' => true
                 ],
                 'f.updated_at' => [
-                    'label' => $this->translator->trans('Updated At'),
+                    'label' => $this->translator->trans('updated_at'),
                     'sortable' => true
                 ]
             ],

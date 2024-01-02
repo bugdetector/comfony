@@ -51,7 +51,19 @@ Banned: Engellenmiş
 Save: Kaydet
 'Enter your email address, and we will send you a link to reset your password': 'E-posta adresinizi giriniz. Sonrasında şifre sıfırlamanız için e-posta adresinize bir link ileteceğiz.'
 'Send password reset email': 'Şifre sıfırlama e-postası gönder'
-'reset_password.check_mail': '<p>E-postanızla eşleşen bir hesap bulunması halinde şifre sıfırlamanı için bir link bulunduran e-posta, girdiğiniz adrese gönderilecektir. Bu linkin kullanım süresi { expire } içinde dolacaktır.</p><p> Eğer e-posta almadıysanız spam klasörünüzü kontrol edin ya da <a href="{ forgot_password_path }" class="text-blue-500">tekrar deneyin</a>. </p>'
+reset_password.check_mail: '<p>E-postanızla eşleşen bir hesap bulunması halinde şifre sıfırlamanı için bir link bulunduran e-posta, girdiğiniz adrese gönderilecektir. Bu linkin kullanım süresi { expire } içinde dolacaktır.</p><p> Eğer e-posta almadıysanız spam klasörünüzü kontrol edin ya da <a href="{ forgot_password_path }" class="text-blue-500">tekrar deneyin</a>. </p>'
 'New password': 'Yeni Şifre'
 'Repeat Password': 'Şifre (Tekrar)'
 'Password reset successfully. You can now login.': 'Şifre başarıyla sıfırlandı. Şimdi oturum açabilirsiniz.'
+file_name: 'Dosya Adı'
+file_size: Boyut
+mime_type: 'Mime Tipi'
+Extension: Uzantı
+'Reset password': 'Şifre sıfırla'
+File: Dosya
+created_at: 'Oluşturulma Tarihi'
+updated_at: 'Güncellenme Tarihi'
+'Upload New File': 'Yeni Dosya Yükle'
+Files: Dosyalar
+Temporary: Geçici
+Permanent: Kalıcı

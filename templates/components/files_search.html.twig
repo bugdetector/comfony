@@ -13,6 +13,7 @@
             <td class="px-6 py-3">{{ file.getFileSize() }}</td>
             <td class="px-6 py-3">{{ file.getMimeType() }}</td>
             <td class="px-6 py-3">{{ file.getExtension() }}</td>
+			<td class="px-6 py-3">{{ file.status|trans }}</td>
             <td class='px-2'>
 				<time>{{ file.createdAt|format_datetime() }}</time>
 			</td>

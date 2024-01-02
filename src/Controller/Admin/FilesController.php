@@ -23,7 +23,7 @@ class FilesController extends AbstractController
     ): Response {
         return $this->render('admin/files/index.html.twig', [
             'files' => $fileRepository->findAll(),
-            'title' => $translator->trans('files'),
+            'title' => $translator->trans('Files'),
             'list_params' => [
                 'query' => (string) $request->query->get('q', ''),
                 'page' => (int) $request->query->get('page', 1)
