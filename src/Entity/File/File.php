@@ -2,13 +2,12 @@
 
 namespace App\Entity\File;
 
-use App\DoctrineType\FileStatusType;
 use App\Repository\FileRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 
 #[ORM\Entity(repositoryClass: FileRepository::class)]
-#[ORM\Table(name:'files')]
+#[ORM\Table(name: 'files')]
 #[Broadcast]
 class File
 {
@@ -32,7 +31,7 @@ class File
     #[ORM\Column(length: 255)]
     private ?string $extension = null;
 
-    #[ORM\Column(type: FileStatusType::NAME, length: 255)]
+    #[ORM\Column(enumType: FileStatus::class)]
     private ?FileStatus $status = FileStatus::Temporary;
 
     public function getId(): ?int

@@ -2,7 +2,6 @@
 
 namespace App\Entity\Auth;
 
-use App\DoctrineType\UserStatusType;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\Auth\UserRepository;
 use Doctrine\DBAL\Types\Types;
@@ -12,7 +11,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name:'users')]
+#[ORM\Table(name: 'users')]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -47,10 +46,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?string $password = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true, options:["default" => "CURRENT_TIMESTAMP"])]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $last_access = null;
 
-    #[ORM\Column(type: UserStatusType::NAME, length: 255)]
+    #[ORM\Column(enumType: UserStatus::class)]
     private UserStatus $status = UserStatus::Active;
 
     public function getId(): ?int

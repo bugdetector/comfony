@@ -22,9 +22,6 @@ class UserType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add("profile_photo", FileType::class, [
-                "mapped" => false
-            ])
             ->add('email', EmailType::class, [
                 'constraints' => [
                     new Email()
