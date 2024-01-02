@@ -21,7 +21,9 @@ class ResetPasswordRequestFormType extends AbstractType
                         'message' => 'Please enter your email',
                     ]),
                 ],
-                'help' => new TranslatableMessage('Enter your email address, and we will send you a link to reset your password')
+                'help' => new TranslatableMessage(
+                    'Enter your email address, and we will send you a link to reset your password'
+                )
             ])
         ;
     }
