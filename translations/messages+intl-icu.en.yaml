@@ -46,3 +46,6 @@ Admin: Admin
 Active: Active
 Blocked: Blocked
 Banned: Banned
+'Your account has been blocked. Please login after reset password.': 'Your account has been blocked. Please login after reset password.'
+'This account has been banned. You are not able to login with this account.': 'This account has been banned. You are not able to login with this account.'
+Save: Save

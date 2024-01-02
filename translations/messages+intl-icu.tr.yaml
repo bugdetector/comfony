@@ -46,3 +46,6 @@ Admin: Yönetici
 Active: Aktif
 Blocked: Bloklanmış
 Banned: Engellenmiş
+'Your account has been blocked. Please login after reset password.': 'Hesabınız kilitlenmiştir. Lütfen şifrenizi sıfırlayarak sisteme yeniden giriş yapın.'
+'This account has been banned. You are not able to login with this account.': 'Bu hesap engellenmiş. Bu hesabı kullanarak oturum açamazsınız.'
+Save: Kaydet

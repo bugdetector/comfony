@@ -25,7 +25,7 @@
 					{% block headers %}
 						{% for column, data in this.getTableBuildData()["headers"] %}
 							{% if data.sortable is defined and data.sortable %}
-								<th class="px-6 py-3">
+								<th class="px-6 py-3 text-nowrap">
 									{% set sorted = pagination.params.sort is defined and pagination.params.sort == column %}
 									{% set direction = pagination.params.direction is defined ? pagination.params.direction %}
 									<a href="?sort={{ column }}&direction={{ direction == 'desc' ? 'asc' : 'desc' }}" role='button'>

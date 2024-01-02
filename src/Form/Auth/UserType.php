@@ -48,7 +48,7 @@ class UserType extends AbstractType
             ])->add('status', EnumType::class, [
                 'class' => UserStatus::class,
                 'expanded' => true
-            ])->add('save', SubmitType::class, [
+            ])->add('Save', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn-primary'
                 ]
