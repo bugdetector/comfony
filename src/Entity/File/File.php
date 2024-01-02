@@ -2,15 +2,16 @@
 
 namespace App\Entity\File;
 
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\FileRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\UX\Turbo\Attribute\Broadcast;
 
 #[ORM\Entity(repositoryClass: FileRepository::class)]
 #[ORM\Table(name: 'files')]
-#[Broadcast]
 class File
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -99,9 +100,9 @@ class File
         return $this;
     }
 
-    public function getStatus(): FileStatus
+    public function getStatus(): string
     {
-        return $this->status;
+        return $this->status->value;
     }
 
     public function setStatus(FileStatus $status): static

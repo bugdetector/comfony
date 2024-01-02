@@ -1,0 +1,16 @@
+{% extends '@base_theme/base.html.twig' %}
+
+{% block actions %}
+	<a href='{{ path('app_admin_files_new') }}' class="btn-success">
+		<span class="flex justify-center items-center">
+			<span class="i-tabler-upload me-2"></span>
+			{% trans %}Upload New File{% endtrans %}
+		</span>
+	</a>
+{% endblock %}
+
+{% block body %}
+	<div class="p-4">
+		{{ component('files_search', list_params) }}
+	</div>
+{% endblock %}
