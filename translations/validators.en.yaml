@@ -10,7 +10,7 @@
 'This field is missing.': 'This field is missing.'
 'This value is not a valid date.': 'This value is not a valid date.'
 'This value is not a valid datetime.': 'This value is not a valid datetime.'
-'This value is not a valid email address.': 'This value is not a valid email address.'
+'This value is not a valid email address.': 'Please enter a valid email address.'
 'The file could not be found.': 'The file could not be found.'
 'The file is not readable.': 'The file is not readable.'
 'The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.': 'The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.'

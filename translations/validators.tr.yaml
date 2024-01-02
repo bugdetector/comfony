@@ -10,7 +10,7 @@
 'This field is missing.': 'Bu alan, eksik'
 'This value is not a valid date.': 'Bu değer doğru bir tarih biçimi değildir.'
 'This value is not a valid datetime.': 'Bu değer doğru bir tarihsaat biçimi değildir.'
-'This value is not a valid email address.': 'Bu değer doğru bir e-mail adresi değildir.'
+'This value is not a valid email address.': 'Lütfent geçerli bir e-posta adresi giriniz.'
 'The file could not be found.': 'Dosya bulunamadı.'
 'The file is not readable.': 'Dosya okunabilir değil.'
 'The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.': 'Dosya çok büyük ({{ size }} {{ suffix }}). İzin verilen en büyük dosya boyutu {{ limit }} {{ suffix }}.'

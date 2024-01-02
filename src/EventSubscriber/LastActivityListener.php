@@ -20,7 +20,7 @@ class LastActivityListener
     ) {
     }
 
-    #[AsEventListener(KernelEvents::RESPONSE)]
+    #[AsEventListener(KernelEvents::REQUEST)]
     public function onResponse()
     {
         /** @var User */

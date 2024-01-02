@@ -47,6 +47,10 @@ class RegistrationController extends AbstractController
             )->setStatusCode(400);
         }
 
+        if ($this->getUser()) {
+            return $this->redirectToRoute('homepage');
+        }
+
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ], new Response(
