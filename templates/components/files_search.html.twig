@@ -8,19 +8,27 @@
 					<span class='i-tabler-edit text-blue-600 dark:text-gray-200'></span>
 				</a>
 			</td>
-            <td class="px-6 py-3">{{ file.id }}</td>
-            <td class="px-6 py-3">{{ file.getFileName() }}</td>
-            <td class="px-6 py-3">{{ file.getFileSize() }}</td>
-            <td class="px-6 py-3">{{ file.getMimeType() }}</td>
-            <td class="px-6 py-3">{{ file.getExtension() }}</td>
+			<td class="px-6 py-3">{{ file.id }}</td>
+			<td class="px-6 py-3 flex flex-nowrap gap-3">
+				<a href='{{ upload_asset(file.filePath) }}' class='text-teal-500 flex items-center gap-2' target='_blank'>
+					<span class='i-tabler-eye text-2xl'></span>
+					{{ file.fileName }}
+				</a>
+				<a href='{{ upload_asset(file.filePath) }}' download='{{ file.fileName }}'>
+					<span class='i-tabler-download text-2xl'></span>
+				</a>
+			</td>
+			<td class="px-6 py-3">{{ file.getFileSize()|format_bytes }}</td>
+			<td class="px-6 py-3">{{ file.getMimeType() }}</td>
+			<td class="px-6 py-3">{{ file.getExtension() }}</td>
 			<td class="px-6 py-3">{{ file.status|trans }}</td>
-            <td class='px-2'>
+			<td class='px-2'>
 				<time>{{ file.createdAt|format_datetime() }}</time>
 			</td>
 			<td class='px-2'>
 				<time>{{ file.updatedAt|format_datetime() }}</time>
 			</td>
-        </tr>
+		</tr>
 	{% else %}
 		<tr>
 			<td colspan="6" class="px-6 py-3">{{ 'No Result Found'|trans }}</td>

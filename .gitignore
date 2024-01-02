@@ -28,3 +28,7 @@ package-lock.json
 yarn.lock
 /.vscode
 ###< symfony/webpack-encore-bundle ###
+
+###> Comfony ###
+/public/uploads
+###< Comfony ###

@@ -11,8 +11,10 @@
 
 namespace App\Twig;
 
+use App\Entity\File\File;
 use Symfony\Component\Intl\Locales;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 /**
@@ -36,8 +38,10 @@ final class AppExtension extends AbstractExtension
 
     // The $locales argument is injected thanks to the service container.
     // See https://symfony.com/doc/current/service_container.html#binding-arguments-by-name-or-type
-    public function __construct(string $locales)
-    {
+    public function __construct(
+        string $locales,
+        private string $uploads_directory
+    ) {
         $localeCodes = explode('|', $locales);
         sort($localeCodes);
         $this->localeCodes = $localeCodes;
@@ -47,6 +51,14 @@ final class AppExtension extends AbstractExtension
     {
         return [
             new TwigFunction('locales', $this->getLocales(...)),
+            new TwigFunction('upload_asset', $this->uploadAsset(...))
+        ];
+    }
+
+    public function getFilters()
+    {
+        return [
+            new TwigFilter("format_bytes", [$this, 'sizeConvertToString'])
         ];
     }
 
@@ -69,5 +81,30 @@ final class AppExtension extends AbstractExtension
         }
 
         return $this->locales;
+    }
+
+    /**
+     * Get uploaded file url
+     * @return string URL
+     */
+    public function uploadAsset($path)
+    {
+        return $this->uploads_directory . $path;
+    }
+
+    /**
+     * Converts bytes to human readable string
+     * @return string Human readable size
+     */
+    public function sizeConvertToString($bytes)
+    {
+        if ($bytes > 0) {
+            $unit = intval(log($bytes, 1024));
+            $units = ['B', 'KB', 'MB', 'GB'];
+            if (array_key_exists($unit, $units) === true) {
+                return sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]);
+            }
+        }
+        return $bytes;
     }
 }

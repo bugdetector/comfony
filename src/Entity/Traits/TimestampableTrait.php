@@ -29,7 +29,7 @@ trait TimestampableTrait
      */
     public function getCreatedAt(): ?DateTimeInterface
     {
-        return $this->createdAt ?? new DateTime();
+        return $this->created_at ?? new DateTime();
     }
 
     /**
@@ -38,7 +38,7 @@ trait TimestampableTrait
      */
     public function setCreatedAt(DateTimeInterface $createdAt): self
     {
-        $this->createdAt = $createdAt;
+        $this->created_at = $createdAt;
 
         return $this;
     }
@@ -48,7 +48,7 @@ trait TimestampableTrait
      */
     public function getUpdatedAt(): ?DateTimeInterface
     {
-        return $this->updatedAt ?? new DateTime();
+        return $this->updated_at ?? new DateTime();
     }
 
     /**
@@ -57,21 +57,8 @@ trait TimestampableTrait
      */
     public function setUpdatedAt(DateTimeInterface $updatedAt): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->updated_at = $updatedAt;
 
         return $this;
     }
-
-    // /**
-    //  * @ORM\PrePersist()
-    //  * @ORM\PreUpdate()
-    //  */
-    // public function updateTimestamps(): void
-    // {
-    //     $now = new DateTime();
-    //     $this->setUpdatedAt($now);
-    //     if ($this->getId() === null) {
-    //         $this->setCreatedAt($now);
-    //     }
-    // }
 }
