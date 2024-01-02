@@ -2,17 +2,17 @@
 
 namespace App\DoctrineType;
 
-use App\Entity\Auth\UserStatus;
+use App\Entity\File\FileStatus;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
 #[AutoconfigureTag('app.doctrine_enum_type')]
-class UserStatusType extends AbstractEnumType
+class FileStatusType extends AbstractEnumType
 {
-    public const NAME = 'userStatusType';
+    public const NAME = 'fileStatusType';
 
     public static function getEnumsClass(): string
     {
-        return UserStatus::class;
+        return FileStatus::class;
     }
 
     public function getName(): string

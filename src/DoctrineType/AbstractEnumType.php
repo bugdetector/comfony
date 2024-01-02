@@ -6,7 +6,9 @@ use BackedEnum;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use LogicException;
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
+#[AutoconfigureTag('app.doctrine_enum_type')]
 abstract class AbstractEnumType extends Type
 {
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string

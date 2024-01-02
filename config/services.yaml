@@ -22,9 +22,6 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-    _instanceof:
-      App\DoctrineType\AbstractEnumType:
-        tags: [ 'app.doctrine_enum_type' ]
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
