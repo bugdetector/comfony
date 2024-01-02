@@ -49,3 +49,8 @@ Banned: Banned
 'Your account has been blocked. Please login after reset password.': 'Your account has been blocked. Please login after reset password.'
 'This account has been banned. You are not able to login with this account.': 'This account has been banned. You are not able to login with this account.'
 Save: Save
+'Enter your email address, and we will send you a link to reset your password': 'Enter your email address, and we will send you a link to reset your password'
+'Send password reset email': 'Send password reset email' 
+'reset_password.check_mail': '<p>If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password. This link will expire in { expire }.</p><p> If you don''t receive an email please check your spam folder or <a href="{ forgot_password_path }" class="text-blue-500">try again</a>. </p>'
+'New password': 'New password'
+'Repeat Password': 'Repeat Password'

@@ -49,3 +49,9 @@ Banned: Engellenmiş
 'Your account has been blocked. Please login after reset password.': 'Hesabınız kilitlenmiştir. Lütfen şifrenizi sıfırlayarak sisteme yeniden giriş yapın.'
 'This account has been banned. You are not able to login with this account.': 'Bu hesap engellenmiş. Bu hesabı kullanarak oturum açamazsınız.'
 Save: Kaydet
+'Enter your email address, and we will send you a link to reset your password': 'E-posta adresinizi giriniz. Sonrasında şifre sıfırlamanız için e-posta adresinize bir link ileteceğiz.'
+'Send password reset email': 'Şifre sıfırlama e-postası gönder'
+'reset_password.check_mail': '<p>E-postanızla eşleşen bir hesap bulunması halinde şifre sıfırlamanı için bir link bulunduran e-posta, girdiğiniz adrese gönderilecektir. Bu linkin kullanım süresi { expire } içinde dolacaktır.</p><p> Eğer e-posta almadıysanız spam klasörünüzü kontrol edin ya da <a href="{ forgot_password_path }" class="text-blue-500">tekrar deneyin</a>. </p>'
+'New password': 'Yeni Şifre'
+'Repeat Password': 'Şifre (Tekrar)'
+'Password reset successfully. You can now login.': 'Şifre başarıyla sıfırlandı. Şimdi oturum açabilirsiniz.'

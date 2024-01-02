@@ -3,15 +3,12 @@
 {% block body %}
 	<div class="w-full min-h-screen bg-gray-50 flex flex-col sm:justify-center items-center pt-4 sm:pt-0">
 		<div class="w-full sm:max-w-md mx-auto">
-			<h2 class="mb-12 text-center text-5xl font-extrabold">Reset your password</h2>
+			<h2 class="mb-12 text-center text-5xl font-extrabold">{% trans %}Reset your password{% endtrans %}</h2>
             {{ include('@base_theme/partials/flash_messages.html.twig') }}
-			<p>
-				If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.
-				        This link will expire in
-				{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
-			</p>
-			<p>If you don't receive an email please check your spam folder or
-				<a href="{{ path('app_forgot_password_request') }}" class='text-blue-500'>try again</a>.</p>
+			{% trans with {
+				expire: resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle'),
+				forgot_password_path: path('app_forgot_password_request')
+			} %}reset_password.check_mail{% endtrans %}
 			<div class="mt-6 text-center">
 				<a href="{{ path('homepage') }}" class="btn-danger">
 					<span class='i-tabler-chevron-left text-xl'></span>

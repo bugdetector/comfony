@@ -48,6 +48,10 @@ class ResetPasswordController extends AbstractController
             );
         }
 
+        if ($this->getUser()) {
+            return $this->redirectToRoute('homepage');
+        }
+
         return $this->render('reset_password/request.html.twig', [
             'requestForm' => $form->createView(),
             'title' => $translator->trans('Reset your password')
@@ -66,6 +70,10 @@ class ResetPasswordController extends AbstractController
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
         }
 
+        if ($this->getUser()) {
+            return $this->redirectToRoute('homepage');
+        }
+
         return $this->render('reset_password/check_email.html.twig', [
             'resetToken' => $resetToken,
             'title' => $translator->trans('Reset your password')
@@ -82,6 +90,11 @@ class ResetPasswordController extends AbstractController
         TranslatorInterface $translator,
         string $token = null
     ): Response {
+
+        if ($this->getUser()) {
+            return $this->redirectToRoute('homepage');
+        }
+
         if ($token) {
             // We store the token in session and remove it from the URL, to avoid the URL being
             // loaded in a browser and potentially leaking the token to 3rd party JavaScript.
@@ -93,7 +106,7 @@ class ResetPasswordController extends AbstractController
         $token = $this->getTokenFromSession();
 
         if (null === $token) {
-            throw $this->createNotFoundException('No reset password token found in the URL or in the session.');
+            return $this->redirectToRoute("app_forgot_password_request");
         }
 
         try {
@@ -131,14 +144,18 @@ class ResetPasswordController extends AbstractController
 
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
-
-            return $this->redirectToRoute('homepage');
+            $this->addFlash('success', 'Password reset successfully. You can now login.');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('reset_password/reset.html.twig', [
             'resetForm' => $form->createView(),
+            'error' => $form->getErrors(true),
             'title' => $translator->trans('Reset your password')
-        ]);
+        ], new Response(
+            null,
+            $form->isSubmitted() && !$form->isValid() ? 422 : 200
+        ));
     }
 
     private function processSendingPasswordResetEmail(

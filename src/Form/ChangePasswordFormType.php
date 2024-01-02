@@ -17,6 +17,7 @@ class ChangePasswordFormType extends AbstractType
         $builder
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
+                'required' => true,
                 'options' => [
                     'attr' => [
                         'autocomplete' => 'new-password',
