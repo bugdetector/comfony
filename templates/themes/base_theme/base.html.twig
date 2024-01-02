@@ -31,7 +31,9 @@
 					</div>
 				{% endblock %}
 				{% block flashes %}
-					{{ include('@base_theme/partials/flash_messages.html.twig') }}
+					<div class="p-3">
+						{{ include('@base_theme/partials/flash_messages.html.twig') }}
+					</div>
 				{% endblock %}
 				{% if form is defined %}
 					{% form_theme form '@base_theme/form_theme.html.twig' %}
