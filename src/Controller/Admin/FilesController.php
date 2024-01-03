@@ -139,7 +139,7 @@ class FilesController extends AbstractController
             $file->setStatus(FileStatus::Permanent);
             $entityManager->persist($file);
             $entityManager->flush();
-            $this->addFlash('success', $this->translator->trans('file.saved_successfully'));
+            $this->addFlash('success', $this->translator->trans('file.uploaded_successfully'));
             return $this->redirectToRoute('app_admin_files_index', [], Response::HTTP_SEE_OTHER);
         } catch (FileException $e) {
             $this->addFlash('error', $e->getMessage());

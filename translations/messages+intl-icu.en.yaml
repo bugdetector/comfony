@@ -66,3 +66,5 @@ updated_at: 'Updated At'
 Files: Files
 Temporary: Temporary
 Permanent: Permanent
+file.deleted_successfully: 'File deleted successfully.'
+file.uploaded_successfully: 'File uploaded successfully.'

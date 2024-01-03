@@ -67,3 +67,5 @@ updated_at: 'Güncellenme Tarihi'
 Files: Dosyalar
 Temporary: Geçici
 Permanent: Kalıcı
+file.deleted_successfully: 'Dosya başarıyla silindi.'
+file.uploaded_successfully: 'Dosya başarıyla yüklendi.'
