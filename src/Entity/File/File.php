@@ -111,46 +111,4 @@ class File
 
         return $this;
     }
-
-    public static function getFileIconClass($extension)
-    {
-        switch ($extension) {
-            case 'pdf':
-                return 'i-tabler-file-type-pdf';
-                break;
-            case 'doc':
-            case 'docx':
-                return 'i-tabler-file-type-docx';
-                break;
-            case 'txt':
-                return 'i-tabler-file-type-txt';
-                break;
-            case 'xls':
-            case 'xlsx':
-            case 'xlsm':
-                return 'i-tabler-file-type-xls';
-                break;
-            case 'ppt':
-            case 'pptx':
-                return 'i-tabler-file-type-ppt';
-                break;
-            case 'mp3':
-            case 'wmv':
-            case 'mp4':
-            case 'mpeg':
-                return 'i-tabler-headphones';
-                break;
-            case 'html':
-                return 'i-tabler-file-type-html';
-                break;
-            case "jpg":
-            case "jpeg":
-            case "png":
-                return 'i-tabler-photo';
-                break;
-            default:
-                return 'i-tabler-file-unknown';
-                break;
-        }
-    }
 }

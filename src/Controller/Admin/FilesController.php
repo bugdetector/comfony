@@ -99,6 +99,11 @@ class FilesController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $file->getId(), $request->request->get('_token'))) {
             $entityManager->remove($file);
             $entityManager->flush();
+
+            $filePath = $this->getParameter('uploads_directory') . $file->getFilePath();
+            if ($file->getFilePath() && is_file($filePath)) {
+                unlink($filePath);
+            }
             $this->addFlash('success', $this->translator->trans('file.deleted_successfully'));
         }
 

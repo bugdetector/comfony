@@ -11,7 +11,6 @@
 
 namespace App\Twig\Components;
 
-use App\Repository\Auth\UserRepository;
 use App\Repository\FileRepository;
 use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\PaginatorInterface;

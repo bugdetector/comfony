@@ -1,0 +1,22 @@
+{% macro file_icon(file) %}
+    {% set extension = file.extension %}
+    {% if extension in ['pdf'] %}
+        <span class='i-tabler-file-type-pdf text-2xl text-red-500'></span>
+    {% elseif extension in ['doc', 'docx'] %}
+        <span class='i-tabler-file-type-docx text-2xl'></span>
+    {% elseif extension in ['txt'] %}
+        <span class='i-tabler-file-type-txt text-2xl'></span>
+    {% elseif extension in ['xls', 'xlsx', 'xlsm'] %}
+        <span class='i-tabler-file-type-xls text-2xl'></span>
+    {% elseif extension in ['ppt', 'pptx'] %}
+        <span class='i-tabler-file-type-ppt text-2xl'></span>
+    {% elseif extension in ['mp3', 'wmv', 'mp4', 'mpeg'] %}
+        <span class='i-tabler-headphones text-2xl'></span>
+    {% elseif extension in ['html'] %}
+        <span class='i-tabler-file-type-html text-2xl'></span>
+    {% elseif extension in ['jpg', 'jpeg', 'png'] %}
+        <img src='{{ upload_asset(file.filePath) }}' class='h-10 rounded-lg' />
+    {% else %}
+        <span class='i-tabler-file-unknown text-2xl text-black dark:text-white'></span>
+    {% endif %}
+{% endmacro %}
