@@ -6,7 +6,7 @@
 	<div class='flex items-center gap-3 justify-between w-full'>
 		<a href='{{ upload_asset(file.filePath) }}' class='text-teal-400 flex items-center gap-2' target='_blank'>
 			{{ macros.file_icon(file) }}
-			<span>{{ file.fileName }}</span>
+			<span class='text-nowrap'>{{ file.fileName }}</span>
 		</a>
 		<a href='{{ upload_asset(file.filePath) }}' download='{{ file.fileName }}'>
 			<span class='i-tabler-download text-2xl'></span>

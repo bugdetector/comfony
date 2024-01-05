@@ -15,7 +15,7 @@
     {% elseif extension in ['html'] %}
         <span class='i-tabler-file-type-html text-2xl'></span>
     {% elseif extension in ['jpg', 'jpeg', 'png'] %}
-        <img src='{{ upload_asset(file.filePath) }}' class='h-10 rounded-lg' />
+        <img src='{{ upload_asset(file.filePath) }}' class='h-10 max-w-10 object-cover rounded-lg' />
     {% else %}
         <span class='i-tabler-file-unknown text-2xl text-black dark:text-white'></span>
     {% endif %}

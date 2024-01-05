@@ -4,15 +4,14 @@ namespace App\Twig\Components;
 
 use App\Entity\File\File;
 use App\Repository\FileRepository;
-use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
+use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
-#[AsLiveComponent(name: 'file_preview')]
+#[AsTwigComponent(name: 'file_preview')]
 final class FilePreviewComponent
 {
     use DefaultActionTrait;
-
 
     #[LiveProp(writable: true)]
     public ?File $file = null;

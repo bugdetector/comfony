@@ -46,12 +46,20 @@ class FilesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadedFile = $form->get('file')->getData();
             if ($uploadedFile) {
-                return $this->saveUploadedFile(
-                    $file,
-                    $uploadedFile,
-                    $slugger,
-                    $entityManager
-                );
+                try {
+                    File::saveUploadedFile(
+                        $file,
+                        $uploadedFile,
+                        $slugger,
+                        $entityManager,
+                        $this->getParameter('uploads_directory'),
+                        FileStatus::Permanent
+                    );
+                    $this->addFlash('success', $this->translator->trans('file.uploaded_successfully'));
+                    return $this->redirectToRoute('app_admin_files_index', [], Response::HTTP_SEE_OTHER);
+                } catch (FileException $e) {
+                    $this->addFlash('error', $e->getMessage());
+                }
             }
             return $this->redirectToRoute('app_admin_files_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -76,12 +84,20 @@ class FilesController extends AbstractController
             /** @var UploadedFile */
             $uploadedFile = $form->get('file')->getData();
             if ($uploadedFile) {
-                return $this->saveUploadedFile(
-                    $file,
-                    $uploadedFile,
-                    $slugger,
-                    $entityManager
-                );
+                try {
+                    File::saveUploadedFile(
+                        $file,
+                        $uploadedFile,
+                        $slugger,
+                        $entityManager,
+                        $this->getParameter('uploads_directory'),
+                        FileStatus::Permanent
+                    );
+                    $this->addFlash('success', $this->translator->trans('file.uploaded_successfully'));
+                    return $this->redirectToRoute('app_admin_files_index', [], Response::HTTP_SEE_OTHER);
+                } catch (FileException $e) {
+                    $this->addFlash('error', $e->getMessage());
+                }
             } else {
                 return $this->redirectToRoute('app_admin_files_index', [], Response::HTTP_SEE_OTHER);
             }
@@ -108,41 +124,5 @@ class FilesController extends AbstractController
         }
 
         return $this->redirectToRoute('app_admin_files_index', [], Response::HTTP_SEE_OTHER);
-    }
-
-    private function saveUploadedFile(
-        File $file,
-        UploadedFile $uploadedFile,
-        SluggerInterface $slugger,
-        EntityManagerInterface $entityManager
-    ) {
-        $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-        $safeFilename = $slugger->slug($originalFilename);
-        $size = $uploadedFile->getSize();
-        $mimeType = $uploadedFile->getMimeType();
-        $extension = $uploadedFile->guessExtension();
-        $newFilename = $safeFilename . '-' . uniqid() . '.' . $extension;
-        try {
-            $directory =  '/files/file/';
-            $uploadedFile->move(
-                $this->getParameter('uploads_directory') . $directory,
-                $newFilename
-            );
-            if ($file->getFilePath()) {
-                unlink($this->getParameter('uploads_directory') . $file->getFilePath());
-            }
-            $file->setFileName($originalFilename);
-            $file->setFilePath($directory . $newFilename);
-            $file->setFileSize($size);
-            $file->setMimeType($mimeType);
-            $file->setExtension($extension);
-            $file->setStatus(FileStatus::Permanent);
-            $entityManager->persist($file);
-            $entityManager->flush();
-            $this->addFlash('success', $this->translator->trans('file.uploaded_successfully'));
-            return $this->redirectToRoute('app_admin_files_index', [], Response::HTTP_SEE_OTHER);
-        } catch (FileException $e) {
-            $this->addFlash('error', $e->getMessage());
-        }
     }
 }

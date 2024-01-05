@@ -2,6 +2,7 @@
 
 namespace App\Entity\Auth;
 
+use App\Entity\File\File;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\Auth\UserRepository;
 use Doctrine\DBAL\Types\Types;
@@ -51,6 +52,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(enumType: UserStatus::class)]
     private UserStatus $status = UserStatus::Active;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
+    private ?File $profile_photo = null;
 
     public function getId(): ?int
     {
@@ -165,6 +170,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setStatus(UserStatus $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getProfilePhoto(): ?File
+    {
+        return $this->profile_photo;
+    }
+
+    public function setProfilePhoto(?File $profile_photo): static
+    {
+        $this->profile_photo = $profile_photo;
 
         return $this;
     }

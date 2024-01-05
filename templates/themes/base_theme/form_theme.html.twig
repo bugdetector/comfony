@@ -33,7 +33,18 @@
 
 {%- block button_widget -%}
     {%- set attr = {
-        class: attr.class|default('btn')
+        class: attr.class|default('btn btn-primary')
     } -%}
     {{- parent() -}}
 {%- endblock button_widget -%}
+
+{% block async_file_row %}
+    <div class='mb-3'>
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {{ component('async_file_input', {
+            vars: form.vars
+        }) }}
+        {{ form_help(form) }}
+    </div>
+{% endblock %}

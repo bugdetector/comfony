@@ -4,7 +4,10 @@ namespace App\Entity\File;
 
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\FileRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[ORM\Entity(repositoryClass: FileRepository::class)]
 #[ORM\Table(name: 'files')]
@@ -110,5 +113,38 @@ class File
         $this->status = $status;
 
         return $this;
+    }
+
+    public static function saveUploadedFile(
+        File $file,
+        UploadedFile $uploadedFile,
+        SluggerInterface $slugger,
+        EntityManagerInterface $entityManager,
+        $uploadDirectory,
+        FileStatus $fileStatus = FileStatus::Temporary,
+        array $nameParts = ['files', 'file']
+    ) {
+        $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+        $safeFilename = $slugger->slug($originalFilename);
+        $size = $uploadedFile->getSize();
+        $mimeType = $uploadedFile->getMimeType();
+        $extension = $uploadedFile->guessExtension();
+        $newFilename = $safeFilename . '-' . uniqid() . '.' . $extension;
+        $directory =  "/" . implode('/', $nameParts) . "/";
+        $uploadedFile->move(
+            $uploadDirectory . $directory,
+            $newFilename
+        );
+        if ($file->getFilePath()) {
+            unlink($uploadDirectory . $file->getFilePath());
+        }
+        $file->setFileName($originalFilename);
+        $file->setFilePath($directory . $newFilename);
+        $file->setFileSize($size);
+        $file->setMimeType($mimeType);
+        $file->setExtension($extension);
+        $file->setStatus($fileStatus);
+        $entityManager->persist($file);
+        $entityManager->flush();
     }
 }
