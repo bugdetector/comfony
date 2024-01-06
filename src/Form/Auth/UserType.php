@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
 
 class UserType extends AbstractType
@@ -27,7 +28,14 @@ class UserType extends AbstractType
                 'constraints' => [
                     new Email()
                 ]
-            ])->add("profile_photo", AsyncFileType::class)
+            ])->add("profile_photo", AsyncFileType::class, [
+                "constraints" => [
+                    new File(
+                        mimeTypes: ['image/png', 'image/jpg']
+                    )
+                ],
+                "help" => 'Upload a PNG/JPG file.'
+            ])
             ->add('roles', ChoiceType::class, [
                 "choices" => User::ROLES,
                 "multiple" => true,

@@ -52,7 +52,6 @@ class FilesController extends AbstractController
                         $uploadedFile,
                         $slugger,
                         $entityManager,
-                        $this->getParameter('uploads_directory'),
                         FileStatus::Permanent
                     );
                     $this->addFlash('success', $this->translator->trans('file.uploaded_successfully'));
@@ -90,7 +89,6 @@ class FilesController extends AbstractController
                         $uploadedFile,
                         $slugger,
                         $entityManager,
-                        $this->getParameter('uploads_directory'),
                         FileStatus::Permanent
                     );
                     $this->addFlash('success', $this->translator->trans('file.uploaded_successfully'));
@@ -116,9 +114,9 @@ class FilesController extends AbstractController
             $entityManager->remove($file);
             $entityManager->flush();
 
-            $filePath = $this->getParameter('uploads_directory') . $file->getFilePath();
+            $filePath = $file->getFilePath();
             if ($file->getFilePath() && is_file($filePath)) {
-                unlink($filePath);
+                unlink("uploads" . $filePath);
             }
             $this->addFlash('success', $this->translator->trans('file.deleted_successfully'));
         }

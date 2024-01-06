@@ -11,7 +11,6 @@
 
 namespace App\Twig;
 
-use App\Entity\File\File;
 use Symfony\Component\Intl\Locales;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -40,7 +39,6 @@ final class AppExtension extends AbstractExtension
     // See https://symfony.com/doc/current/service_container.html#binding-arguments-by-name-or-type
     public function __construct(
         string $locales,
-        private string $uploads_directory
     ) {
         $localeCodes = explode('|', $locales);
         sort($localeCodes);
@@ -89,7 +87,7 @@ final class AppExtension extends AbstractExtension
      */
     public function uploadAsset($path)
     {
-        return $this->uploads_directory . $path;
+        return "/uploads" . $path;
     }
 
     /**

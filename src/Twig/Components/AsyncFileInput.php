@@ -51,7 +51,6 @@ final class AsyncFileInput
                 $uploadedFiles,
                 $this->slugger,
                 $this->entityManager,
-                $this->parameterBag->get('uploads_directory'),
                 nameParts: [$firstPart, ...$nameParts]
             );
             $this->vars["value"] = $file->getId();

@@ -14,8 +14,7 @@ class FileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add("file", TypeFileType::class, [
-            "mapped" => false,
-            'required' => false
+            "mapped" => false
         ])->add('upload', SubmitType::class, [
             'attr' => [
                 'class' => 'btn-primary'

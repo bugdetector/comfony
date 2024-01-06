@@ -6,6 +6,5 @@
 
     <input type='hidden' name='{{ this.getFullName() }}' value='{{ file ? file.id : null }}' />
     <input type='file' name='{{ prefixedName }}' onchange='document.getElementById("{{ this.vars.id }}").click()' class='mt-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'/>
-
-    <button type='button' id='{{ this.vars.id }}' data-action="live#action" data-action-name="files({{ prefixedName }})|uploadFile" />
+    <button type='button' id='{{ this.vars.id }}' data-action="live#action" data-action-name="files({{ prefixedName }})|uploadFile" class='hidden' />
 </div>

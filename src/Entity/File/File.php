@@ -18,22 +18,22 @@ class File
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id = 0;
 
     #[ORM\Column(length: 255)]
-    private ?string $file_name = null;
+    private ?string $file_name = "";
 
     #[ORM\Column(length: 500)]
-    private ?string $file_path = null;
+    private ?string $file_path = "";
 
     #[ORM\Column]
-    private ?int $file_size = null;
+    private ?int $file_size = 0;
 
     #[ORM\Column(length: 255)]
-    private ?string $mime_type = null;
+    private ?string $mime_type = "";
 
     #[ORM\Column(length: 255)]
-    private ?string $extension = null;
+    private ?string $extension = "";
 
     #[ORM\Column(enumType: FileStatus::class)]
     private ?FileStatus $status = FileStatus::Temporary;
@@ -120,7 +120,6 @@ class File
         UploadedFile $uploadedFile,
         SluggerInterface $slugger,
         EntityManagerInterface $entityManager,
-        $uploadDirectory,
         FileStatus $fileStatus = FileStatus::Temporary,
         array $nameParts = ['files', 'file']
     ) {
@@ -132,11 +131,11 @@ class File
         $newFilename = $safeFilename . '-' . uniqid() . '.' . $extension;
         $directory =  "/" . implode('/', $nameParts) . "/";
         $uploadedFile->move(
-            $uploadDirectory . $directory,
+            "uploads/" . $directory,
             $newFilename
         );
         if ($file->getFilePath()) {
-            unlink($uploadDirectory . $file->getFilePath());
+            unlink("uploads" . $file->getFilePath());
         }
         $file->setFileName($originalFilename);
         $file->setFilePath($directory . $newFilename);
@@ -146,5 +145,10 @@ class File
         $file->setStatus($fileStatus);
         $entityManager->persist($file);
         $entityManager->flush();
+    }
+
+    public function __toString()
+    {
+        return 'uploads' . $this->file_path;
     }
 }
