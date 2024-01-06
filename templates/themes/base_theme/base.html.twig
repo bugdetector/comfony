@@ -38,9 +38,7 @@
 				{% if form is defined %}
 					{% form_theme form '@base_theme/form_theme.html.twig' %}
 				{% endif %}
-				<turbo-frame id='block-body'>
-					{% block body %}{% endblock %}
-				</turbo-frame>
+				{% block body %}{% endblock %}
 			</main>
 		</div>
 	</body>

@@ -2,10 +2,12 @@ import './bootstrap.js';
 import './styles/app.css';
 import 'flowbite';
 
-document.addEventListener('turbo:load', () => {
-    initFlowbite();
-    window.initDarkMode();
-})
+"turbo:load turbo:render".split(" ").forEach(function(e){
+    document.addEventListener(e, () => {
+        initFlowbite();
+        window.initDarkMode();
+    })
+});
 
 document.addEventListener('DOMContentLoaded', window.initDarkMode)
 

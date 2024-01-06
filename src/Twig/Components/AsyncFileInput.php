@@ -3,6 +3,7 @@
 namespace App\Twig\Components;
 
 use App\Entity\File\File;
+use App\Entity\File\FileStatus;
 use App\Repository\FileRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -56,6 +57,16 @@ final class AsyncFileInput
             $this->vars["value"] = $file->getId();
         } catch (Exception $ex) {
             $message = $ex->getMessage();
+        }
+    }
+
+    #[LiveAction]
+    public function removeFile(Request $request)
+    {
+        if ($file = $this->getFile()) {
+            $file->setStatus(FileStatus::Temporary);
+            $this->entityManager->persist($file);
+            $this->vars["value"] = null;
         }
     }
 
