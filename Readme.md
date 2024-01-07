@@ -17,9 +17,21 @@ npm run watch
 ## Translations
 - Dump English translations:
   - ```
-    php bin/console translation:extract --force --format=yaml en
+    symfony console translation:extract --force --format=yaml en
     ```
 - Dump Turkish translations:
   - ```
-    php bin/console translation:extract --force --format=yaml tr
+    symfony console translation:extract --force --format=yaml tr
     ```
+
+## List Schedule Commands
+```
+symfony console schedule:list
+```
+## Run Schedule
+```
+symfony console schedule:run
+```
+
+## Code Quality check
+Please run ``` phpcbf ``` then ``` phpcs ``` commands to ensure code visible quality.

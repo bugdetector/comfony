@@ -354,5 +354,8 @@
     },
     "twig/extra-bundle": {
         "version": "v3.8.0"
+    },
+    "zenstruck/schedule-bundle": {
+        "version": "v1.8.0"
     }
 }
