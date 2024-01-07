@@ -24,7 +24,7 @@ class PageController extends AbstractController
     public function index(Request $request): Response
     {
         return $this->render('admin/page/index.html.twig', [
-            'title' => $this->translator->trans('Users'),
+            'title' => $this->translator->trans('Pages'),
             'list_params' => [
                 'query' => (string) $request->query->get('q', ''),
                 'page' => (int) $request->query->get('page', 1)
@@ -47,6 +47,7 @@ class PageController extends AbstractController
         }
 
         return $this->render('admin/page/new.html.twig', [
+            'title' => $this->translator->trans('Add New Page'),
             'page' => $page,
             'form' => $form,
         ]);
@@ -65,6 +66,7 @@ class PageController extends AbstractController
         }
 
         return $this->render('admin/page/edit.html.twig', [
+            'title' => $this->translator->trans('Edit Page {title}', ['title' => $page->getTitle()]),
             'page' => $page,
             'form' => $form,
         ]);

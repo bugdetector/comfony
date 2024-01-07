@@ -22,7 +22,7 @@
 			</div>
 			<div class="md:w-3/12 w-full">
 				<div class='md:p-3 p-0'>
-                    <a href='#' class='btn btn-info'>
+                    <a href='{{ path('app_page_view', {'slug': page.slug}) }}' class='btn btn-info'>
                         <span class='i-tabler-eye text-xl me-1'></span>
                         {% trans %}View Page{% endtrans %}
                     </a>

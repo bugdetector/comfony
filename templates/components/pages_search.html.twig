@@ -7,6 +7,9 @@
 				<a href="{{ path('app_admin_page_edit', {'id': page.id}) }}">
 					<span class='i-tabler-edit text-blue-600 dark:text-gray-200 text-xl'></span>
 				</a>
+				<a href='{{ path('app_page_view', {'slug': page.slug}) }}'>
+					<span class='i-tabler-eye text-indigo-500 dark:text-gray-200 text-xl'></span>
+				</a>
 				<form method="post" action="{{ path('app_admin_page_delete', {'id': page.id}) }}">
 					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ page.id) }}">
 					{% set modalId = 'delete-modal-' ~ page.id %}
