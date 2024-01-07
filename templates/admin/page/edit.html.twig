@@ -1,0 +1,34 @@
+{% extends 'admin/page/index.html.twig' %}
+
+{% block body %}
+	<div class="p-4">
+		<a href='{{ path('app_admin_page_index') }}' class="btn-info w-20">
+			<span class="flex justify-center items-center">
+				<span class="i-tabler-chevron-left me-2"></span>
+				{% trans %}Back{% endtrans %}
+			</span>
+		</a>
+		<div class="flex flex-wrap bg-white p-3 dark:bg-slate-900">
+			<div class="md:w-9/12 w-full">
+				<div class='mb-3'>
+					<label class='font-bold'>{% trans %}created_at{% endtrans %}</label>
+					<div>{{ page.createdAt|format_datetime('full', 'short') }}</div>
+				</div>
+				<div class='mb-3'>
+					<label class='font-bold'>{% trans %}updated_at{% endtrans %}</label>
+					<div>{{ page.updatedAt|format_datetime('full', 'short') }}</div>
+				</div>				
+				{{ include('admin/page/_form.html.twig') }}
+			</div>
+			<div class="md:w-3/12 w-full">
+				<div class='md:p-3 p-0'>
+                    <a href='#' class='btn btn-info'>
+                        <span class='i-tabler-eye text-xl me-1'></span>
+                        {% trans %}View Page{% endtrans %}
+                    </a>
+					{{ include('admin/page/_delete_form.html.twig') }}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
