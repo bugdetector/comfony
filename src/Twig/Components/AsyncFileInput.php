@@ -66,6 +66,7 @@ final class AsyncFileInput
         if ($file = $this->getFile()) {
             $file->setStatus(FileStatus::Temporary);
             $this->entityManager->persist($file);
+            $this->entityManager->flush();
             $this->vars["value"] = null;
         }
     }
