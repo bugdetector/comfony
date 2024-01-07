@@ -1,4 +1,4 @@
-# Comfony - Comfortable Symfony boilerplate
+# Comfony - Comfortable Symfony boilerplate - developed with tailwindcss, turbo, ux live components
 
 ## Start development enviroment
 ```
