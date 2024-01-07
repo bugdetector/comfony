@@ -2,14 +2,17 @@ import './bootstrap.js';
 import './styles/app.css';
 import 'flowbite';
 
-"turbo:load turbo:render".split(" ").forEach(function(e){
-    document.addEventListener(e, () => {
-        initFlowbite();
-        window.initDarkMode();
-    })
-});
+document.addEventListener('turbo:load', () => {
+    initFlowbite();
+})
 
-document.addEventListener('DOMContentLoaded', window.initDarkMode)
+document.addEventListener('turbo:render', () => {
+    window.initDarkMode();
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+    window.initDarkMode();
+})
 
 window.initDarkMode = function() {
     var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
