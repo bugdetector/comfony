@@ -2,10 +2,9 @@
 
 namespace App\Form\Page;
 
-use App\Entity\File\File;
 use App\Entity\Page\Page;
+use App\Form\Type\AsyncFileType;
 use App\Repository\Page\PageRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -28,6 +27,8 @@ class PageType extends AbstractType
             ->add('body')
             ->add('published', options: [
                 'required' => false
+            ])->add('attachments', AsyncFileType::class, [
+                'multiple' => true
             ])
             ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
                 /** @var Page $page */

@@ -4,6 +4,8 @@ namespace App\Form\Extension\DataTransformer;
 
 use App\Entity\File\File;
 use App\Repository\FileRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
@@ -17,9 +19,9 @@ class AsyncFileTransformer implements DataTransformerInterface
     /**
      * @throws TransformationFailedException if the given value is not an array
      */
-    public function transform(mixed $file): ?File
+    public function transform(mixed $files): File|Collection|null
     {
-        return $file;
+        return $files;
     }
 
     /**
@@ -27,8 +29,16 @@ class AsyncFileTransformer implements DataTransformerInterface
      *                                       or if no matching choice could be
      *                                       found for some given value
      */
-    public function reverseTransform(mixed $fileId): ?File
+    public function reverseTransform(mixed $fileIds): File|Collection|null
     {
-        return $fileId ? $this->fileRepository->find($fileId) : null;
+        if (is_array($fileIds)) {
+            return new ArrayCollection(
+                $fileIds ? $this->fileRepository->findBy([
+                    "id" => $fileIds
+                ]) : []
+            );
+        } else {
+            return $fileIds ? $this->fileRepository->find($fileIds) : null;
+        }
     }
 }

@@ -5,6 +5,8 @@ namespace App\Twig\Components;
 use App\Entity\File\File;
 use App\Entity\File\FileStatus;
 use App\Repository\FileRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -46,15 +48,29 @@ final class AsyncFileInput
             $uploadedFiles = $uploadedFiles[$namePart];
         }
         try {
-            $file = new File();
-            File::saveUploadedFile(
-                $file,
-                $uploadedFiles,
-                $this->slugger,
-                $this->entityManager,
-                nameParts: [$firstPart, ...$nameParts]
-            );
-            $this->vars["value"] = $file->getId();
+            if (isset($this->vars["attr"]["multiple"]) && $this->vars["attr"]["multiple"]) {
+                foreach ($uploadedFiles as $uploadedFile) {
+                    $file = new File();
+                    File::saveUploadedFile(
+                        $file,
+                        $uploadedFile,
+                        $this->slugger,
+                        $this->entityManager,
+                        nameParts: [$firstPart, ...$nameParts]
+                    );
+                    $this->vars["data"][] = $file;
+                }
+            } else {
+                $file = new File();
+                File::saveUploadedFile(
+                    $file,
+                    $uploadedFiles,
+                    $this->slugger,
+                    $this->entityManager,
+                    nameParts: [$firstPart, ...$nameParts]
+                );
+                $this->vars["value"] = $file->getId();
+            }
         } catch (Exception $ex) {
             $message = $ex->getMessage();
         }
@@ -63,7 +79,7 @@ final class AsyncFileInput
     #[LiveAction]
     public function removeFile(Request $request)
     {
-        if ($file = $this->getFile()) {
+        if ($file = $this->getFiles()[0]) {
             $file->setStatus(FileStatus::Temporary);
             $this->entityManager->persist($file);
             $this->entityManager->flush();
@@ -73,20 +89,35 @@ final class AsyncFileInput
 
     public function hydrateVars($vars)
     {
-        return json_decode($vars, true);
+        $vars = json_decode($vars, true);
+        if (isset($vars["data"]) && is_array($vars["data"])) {
+            $vars["data"] = new ArrayCollection($this->fileRepository->findBy([
+                "id" => $vars["data"]
+            ]));
+        }
+        return $vars;
     }
 
     public function dehydrateVars($data)
     {
+        if (isset($data["data"]) && $data["data"] instanceof Collection) {
+            $data["data"] = $data["data"]->map(function (File $file) {
+                return $file->getId();
+            })->toArray();
+        }
         $data = array_filter($data, function ($el) {
             return !is_object($el);
         });
         return json_encode($data);
     }
 
-    public function getFile()
+    public function getFiles()
     {
-        return $this->vars['value'] ? $this->fileRepository->find($this->vars['value']) : null;
+        if (isset($this->vars["attr"]["multiple"]) && $this->vars["attr"]["multiple"]) {
+            return $this->vars["data"];
+        } else {
+            return $this->vars['value'] ? [$this->fileRepository->find($this->vars['value'])] : [];
+        }
     }
 
     public function getFullName()

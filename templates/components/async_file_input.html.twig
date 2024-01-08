@@ -2,57 +2,58 @@
 
 <div {{ attributes }}>
 	<div data-controller='async-file-input'>
-		{% set file = this.getFile() %}
+		{% set files = this.getFiles() %}
 		{% set prefixedName = "file_input_" ~ this.getFullName() %}
-		{% if file %}
-			<div class='flex items-center gap-3 justify-between w-full'>
-				<a href='{{ upload_asset(file.filePath) }}' class='text-teal-400 flex items-center gap-2' target='_blank'>
-					{{ macros.file_icon(file) }}
-					<span class='text-nowrap'>{{ file.fileName }}</span>
-				</a>
-				<div class='flex gap-3'>
-					<a href='{{ upload_asset(file.filePath) }}' download='{{ file.fileName }}'>
-						<span class='i-tabler-download text-2xl'></span>
+		{% if files %}
+			{% for index, file in files %}
+				<div class='flex items-center gap-3 justify-between w-full mb-3'>
+					<a href='{{ upload_asset(file.filePath) }}' class='text-teal-400 flex items-center gap-2' target='_blank'>
+						{{ macros.file_icon(file) }}
+						<span class='text-nowrap'>{{ file.fileName }}</span>
 					</a>
-					{% set modalId = 'delete-modal-' ~ file.id %}
-					{% set objectName = 'File'|trans %}
-					{% if file.status == 'Permanent' %}
-						<button type='button' data-modal-target="{{ modalId }}" data-modal-toggle="{{ modalId }}">
-							<span class='i-tabler-trash text-red-500 text-2xl'></span>
-						</button>
+					<div class='flex gap-3'>
+						<a href='{{ upload_asset(file.filePath) }}' download='{{ file.fileName }}'>
+							<span class='i-tabler-download text-2xl'></span>
+						</a>
+						{% set modalId = 'delete-modal-' ~ file.id %}
+						{% set objectName = 'File'|trans %}
+						{% if file.status == 'Permanent' %}
+							<button type='button' data-modal-target="{{ modalId }}" data-modal-toggle="{{ modalId }}">
+								<span class='i-tabler-trash text-red-500 text-2xl'></span>
+							</button>
 
-						<div id="{{ modalId }}" tabindex="-1" class="hidden modal-container">
-							<div class="modal-body top-0 transition-all duration-500">
-								<div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-									<button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="{{ modalId }}">
-										<span class='i-tabler-x text-2xl'></span>
-										<span class="sr-only">{% trans %}Close{% endtrans %}</span>
-									</button>
-									<div class="p-4 md:p-5 text-center">
-										<span class="i-tabler-exclamation-circle mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"></span>
-										<h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">{% trans with {'object': objectName} %}Are you sure you want to delete this :objectName?{% endtrans %}</h3>
-										<div class="flex justify-center gap-3">
-											<button data-modal-hide="{{ modalId }}" type="button" class="btn-danger" data-action="live#action" data-action-name="removeFile">
-												{% trans %}Yes{% endtrans %}
-											</button>
-											<button data-modal-hide="{{ modalId }}" type="button" class="btn">
-												{% trans %}No{% endtrans %}
-											</button>
+							<div id="{{ modalId }}" tabindex="-1" class="hidden modal-container">
+								<div class="modal-body top-0 transition-all duration-500">
+									<div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+										<button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="{{ modalId }}">
+											<span class='i-tabler-x text-2xl'></span>
+											<span class="sr-only">{% trans %}Close{% endtrans %}</span>
+										</button>
+										<div class="p-4 md:p-5 text-center">
+											<span class="i-tabler-exclamation-circle mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"></span>
+											<h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">{% trans with {'object': objectName} %}Are you sure you want to delete this :objectName?{% endtrans %}</h3>
+											<div class="flex justify-center gap-3">
+												<button data-modal-hide="{{ modalId }}" type="button" class="btn-danger" data-action="live#action" data-action-name="removeFile">
+													{% trans %}Yes{% endtrans %}
+												</button>
+												<button data-modal-hide="{{ modalId }}" type="button" class="btn">
+													{% trans %}No{% endtrans %}
+												</button>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					{% endif %}
-
+						{% endif %}
+						<input type='hidden' name='{{ this.getFullName() }}' value='{{ file.id }}'/>
+					</div>
 				</div>
-			</div>
+			{% endfor %}
 		{% endif %}
 
 		<span data-loading>{% trans %}Uploading...{% endtrans %}</span>
 
-		<input type='hidden' name='{{ this.getFullName() }}' value='{{ file ? file.id : null }}'/>
-		<input type='file' name='{{ prefixedName }}' onchange='document.getElementById("{{ this.vars.id }}").click()' class='mt-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'/>
+		<input type='file' {{ this.vars.attr.multiple|default('') }} name='{{ prefixedName }}' onchange='document.getElementById("{{ this.vars.id }}").click()' class='mt-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'/>
 		<button type='button' id='{{ this.vars.id }}' data-action="live#action" data-action-name="files({{ prefixedName }})|uploadFile" class='hidden'/>
 	</div>
 </div>

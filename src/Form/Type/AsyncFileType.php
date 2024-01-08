@@ -5,6 +5,7 @@ namespace App\Form\Type;
 use App\Entity\File\File;
 use App\Entity\File\FileStatus;
 use App\Form\Extension\DataTransformer\AsyncFileTransformer;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -46,10 +47,18 @@ class AsyncFileType extends AbstractType
     {
         $builder->addViewTransformer($this->asyncFileTransformer);
         $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
-            /** @var File */
-            if ($file = $event->getData()) {
-                $file->setStatus(FileStatus::Permanent);
-                $this->entityManager->persist($file);
+            /** @var File $file */
+            if ($files = $event->getData()) {
+                if ($files instanceof Collection) {
+                    foreach ($files as $file) {
+                        $file->setStatus(FileStatus::Permanent);
+                        $this->entityManager->persist($file);
+                    }
+                } else {
+                    $file = $files;
+                    $file->setStatus(FileStatus::Permanent);
+                    $this->entityManager->persist($file);
+                }
             }
         });
     }
