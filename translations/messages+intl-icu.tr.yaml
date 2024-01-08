@@ -71,7 +71,7 @@ file.deleted_successfully: 'Dosya başarıyla silindi.'
 file.uploaded_successfully: 'Dosya başarıyla yüklendi.'
 'Login As User: { email }': 'Kullanıcı olarak oturum aç: { email }'
 Uploading...: Yükleniyor...
-Pages: __Pages
+Pages: Sayfalar
 'Add New Page': 'Yeni Sayfa Ekle'
 'Edit Page {title}': 'Sayfayı Düzenle {title}'
 Title: Başlık
@@ -79,3 +79,4 @@ Published: Yayında
 Page: Sayfa
 'View Page': 'Sayfayı Görüntüle'
 Unpublished: Yayınlanmamış
+Body: Gövde
