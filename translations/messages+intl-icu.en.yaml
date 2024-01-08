@@ -70,3 +70,11 @@ file.deleted_successfully: 'File deleted successfully.'
 file.uploaded_successfully: 'File uploaded successfully.'
 'Login As User: { email }': 'Login As User: { email }'
 Uploading...: Uploading...
+Pages: Pages
+'Add New Page': 'Add New Page'
+'Edit Page {title}': 'Edit Page {title}'
+Title: Title
+Published: Published
+Page: Page
+'View Page': 'View Page'
+Unpublished: Unpublished
