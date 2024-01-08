@@ -42,7 +42,7 @@ class PageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($page);
             $entityManager->flush();
-
+            $this->addFlash('success', $this->translator->trans('page.created_successfully'));
             return $this->redirectToRoute('app_admin_page_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -61,7 +61,7 @@ class PageController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
+            $this->addFlash('success', $this->translator->trans('page.updated_successfully'));
             return $this->redirectToRoute('app_admin_page_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -78,6 +78,7 @@ class PageController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $page->getId(), $request->request->get('_token'))) {
             $entityManager->remove($page);
             $entityManager->flush();
+            $this->addFlash('success', $this->translator->trans('page.deleted_successfully'));
         }
 
         return $this->redirectToRoute('app_admin_page_index', [], Response::HTTP_SEE_OTHER);

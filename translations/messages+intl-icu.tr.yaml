@@ -80,3 +80,6 @@ Page: Sayfa
 'View Page': 'Sayfayı Görüntüle'
 Unpublished: Yayınlanmamış
 Body: Gövde
+page.created_successfully: 'Sayfa başarıyla oluşturuldu.'
+page.updated_successfully: 'Sayfa başarıyla güncellendi.'
+page.deleted_successfully: 'Sayfa başarıyla silindi.'

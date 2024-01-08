@@ -79,3 +79,6 @@ Page: Page
 'View Page': 'View Page'
 Unpublished: Unpublished
 Body: Body
+page.created_successfully: 'Page created successfully.'
+page.updated_successfully: 'Page updated successfully.'
+page.deleted_successfully: 'Page deleted successfully.'

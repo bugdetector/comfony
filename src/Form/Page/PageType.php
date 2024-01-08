@@ -25,10 +25,11 @@ class PageType extends AbstractType
         $builder
             ->add('title')
             ->add('body')
+            ->add('attachments', AsyncFileType::class, [
+                'multiple' => true
+            ])
             ->add('published', options: [
                 'required' => false
-            ])->add('attachments', AsyncFileType::class, [
-                'multiple' => true
             ])
             ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
                 /** @var Page $page */
