@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
+use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
@@ -77,13 +78,20 @@ final class AsyncFileInput
     }
 
     #[LiveAction]
-    public function removeFile(Request $request)
+    public function removeFile(#[LiveArg] int $index)
     {
-        if ($file = $this->getFiles()[0]) {
+        if ($file = $this->getFiles()[$index]) {
             $file->setStatus(FileStatus::Temporary);
             $this->entityManager->persist($file);
             $this->entityManager->flush();
-            $this->vars["value"] = null;
+            if (isset($this->vars["attr"]["multiple"]) && $this->vars["attr"]["multiple"]) {
+                unset($this->vars["data"][$index]);
+                $this->vars["data"] = new ArrayCollection(
+                    $this->vars["data"]->getValues()
+                );
+            } else {
+                $this->vars["value"] = null;
+            }
         }
     }
 
