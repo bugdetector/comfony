@@ -2,19 +2,34 @@
 {% if app.request.hasPreviousSession and flashes %}
 	<div class="">
 		{% for type, messages in flashes %}
-			{% for message in messages %}
+			{% for key, message in messages %}
                 {% if type == 'warning' %}
-                    {% set colorClasses = "text-yellow-800 dark:text-yellow-400 bg-yellow-100" %}
+                    {% set iconClass = 'i-tabler-alert-triangle' %}
+                    {% set colorClasses = "text-yellow-800 dark:text-yellow-400 bg-yellow-100 border-yellow-600" %}
+                    {% set closeButtonClasses = "text-yellow-500 hover:ring-yellow-400" %}
                 {% elseif type == 'error' %}
-                    {% set colorClasses = "text-red-800 dark:text-red-400 bg-red-100" %}
+                    {% set iconClass = 'i-tabler-exclamation-circle' %}
+                    {% set colorClasses = "text-red-800 dark:text-red-400 bg-red-100 border-red-600" %}
+                    {% set closeButtonClasses = "text-red-500 hover:ring-red-400" %}
                 {% elseif type == 'success' %}
-                    {% set colorClasses = "text-green-800 dark:text-green-400 bg-green-100" %}
+                    {% set iconClass = 'i-tabler-circle-check' %}
+                    {% set colorClasses = "text-green-800 dark:text-green-400 bg-green-100 border-green-600" %}
+                    {% set closeButtonClasses = "text-green-500 hover:ring-green-400" %}
                 {% else %}
-                    {% set colorClasses = "text-blue-800 dark:text-blue-400 bg-blue-100" %}
+                    {% set iconClass = 'i-tabler-info-circle' %}
+                    {% set colorClasses = "text-blue-800 dark:text-blue-400 bg-blue-100 border-blue-600" %}
+                    {% set closeButtonClasses = "text-blue-500 hover:ring-blue-400" %}
                 {% endif %}
-                <div class="p-4 mb-4 text-sm rounded-lg dark:bg-gray-800 {{ colorClasses }}" role="alert">
+                {% set id = type ~ "-" ~ key %}
+                <div class="flex items-center p-4 mb-4 text-sm dark:bg-gray-800 border-t-4 {{ colorClasses }}" role="alert" id="{{ id }}">
+                    <span class="{{ iconClass }} text-2xl me-2"></span>
                     <span class="font-bold">{{ type|trans }}</span>
-                    {{ message|trans }}
+                    <div class="ms-2 text-sm font-medium">
+                        {{ message|trans }}
+                    </div>
+                    <button type="button" class="ms-auto bg-transparent p-1.5 -mx-1.5 -my-1.5 h-8 w-8 hover:ring-2 rounded-lg {{ closeButtonClasses }}" data-dismiss-target="#{{ id }}">
+                        <span class="i-tabler-x text-xl"></span>
+                    </button>
                 </div>
 			{% endfor %}
 		{% endfor %}
