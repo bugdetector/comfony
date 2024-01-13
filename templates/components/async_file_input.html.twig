@@ -7,7 +7,8 @@
 		{% if files %}
 			{% for index, file in files %}
 				<div class='flex items-center gap-3 justify-between w-full mb-3'>
-					<a href='{{ upload_asset(file.filePath) }}' class='text-teal-400 flex items-center gap-2 glightbox' data-gallery='{{ prefixedName }}'>
+					{% set isPreviewable = file.isPreviewable() %}
+					<a href='{{ upload_asset(file.filePath) }}' class='text-teal-400 flex items-center gap-2 {{ isPreviewable ? 'glightbox' }}' {{ not isPreviewable ? "target='_blank'" }}>
 						{{ macros.file_icon(file) }}
 						<span class='text-nowrap'>{{ file.fileName }}</span>
 					</a>

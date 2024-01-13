@@ -151,4 +151,26 @@ class File
     {
         return 'uploads' . $this->file_path;
     }
+
+    public function isImage(): bool
+    {
+        return str_contains($this->mime_type, "image/");
+    }
+
+    public function isVideo(): bool
+    {
+        return str_contains($this->mime_type, "video/");
+    }
+
+    public function isPdf(): bool
+    {
+        return $this->mime_type == "application/pdf";
+    }
+
+    public function isPreviewable()
+    {
+        return $this->isImage() ||
+            $this->isVideo() ||
+            $this->isPdf();
+    }
 }
