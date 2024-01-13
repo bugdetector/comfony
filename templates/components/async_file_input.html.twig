@@ -1,7 +1,7 @@
 {% import "@base_theme/partials/macros.html.twig" as macros %}
 
 <div {{ attributes }}>
-	<div data-controller='async-file-input'>
+	<div>
 		{% set files = this.getFiles() %}
 		{% set prefixedName = "file_input_" ~ this.getFullName() %}
 		{% if files %}
