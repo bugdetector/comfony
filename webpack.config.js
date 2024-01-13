@@ -72,6 +72,23 @@ Encore
 
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
+
+    .copyFiles({
+        from: 'node_modules/tinymce/skins',
+        to: 'skins/[path]/[name].[ext]'
+    })
+    .copyFiles({
+        from: 'node_modules/tinymce/models',
+        to: 'models/[path]/[name].[ext]'
+    })
+    .copyFiles({
+        from: 'node_modules/tinymce/icons',
+        to: 'icons/[path]/[name].[ext]'
+    })
+    .copyFiles({
+        from: 'node_modules/tinymce/plugins',
+        to: 'plugins/[path]/[name].[ext]'
+    })
 ;
 
 module.exports = Encore.getWebpackConfig({

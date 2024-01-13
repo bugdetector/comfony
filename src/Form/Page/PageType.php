@@ -24,7 +24,11 @@ class PageType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('body')
+            ->add('body', options: [
+                'attr' => [
+                    'data-controller' => 'tinymce'
+                ]
+            ])
             ->add('attachments', AsyncFileType::class, [
                 'multiple' => true
             ])
