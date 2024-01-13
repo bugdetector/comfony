@@ -1,5 +1,5 @@
 <header class="fixed w-full flex items-center justify-between h-14 text-white z-10">
-	<a href="{{ path('homepage') }}" class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 bg-slate-900 border-none">
+	<a href="{{ path('homepage') }}" class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 bg-slate-900 text-gray-200 border-none">
 		<img class="h-7 md:h-10 mr-2 rounded-md overflow-hidden" src="{{ asset('assets/favicon.png') }}"/>
 		<span class="hidden md:block ms-2">{{ app_name }}</span>
 	</a>
@@ -18,11 +18,11 @@
 				<button data-dropdown-toggle="account-dropdown" class="ring-1 ring-slate-200 text-slate-700 focus:ring-4 focus:outline-none hover:ring-slate-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-slate-800 dark:hover:bg-slate-700 dark:focus:ring-slate-800 dark:text-gray-200 me-2 transition-colors duration-200" type="button">
 					{% if app.user %}
 						{% if app.user.profilePhoto %}
-							<img src='{{ upload_asset(app.user.profilePhoto.filePath) }}' class='w-7 h-7 object-cover me-2' />
+							<img src='{{ upload_asset(app.user.profilePhoto.filePath) }}' class='w-7 h-7 object-cover me-2'/>
 						{% else %}
 							<span class='i-tabler-user-circle text-2xl me-2'></span>
 						{% endif %}
-						
+
 						{{ app.user.name }}
 					{% else %}
 						{% trans %}Account{% endtrans %}
@@ -36,14 +36,14 @@
 						{% if app.user %}
 							<li>
 								{% if is_granted('IS_IMPERSONATOR') %}
-									<a href="{{ impersonation_exit_path(path('homepage') ) }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+									<a href="{{ impersonation_exit_path(path('homepage') ) }}" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
 										<span class="flex justify-between items-center">
 											<span>{% trans %}Logout{% endtrans %}</span>
 											<span class="i-tabler-logout text-2xl"></span>
 										</span>
 									</a>
 								{% else %}
-									<a href="{{ path('app_logout') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+									<a href="{{ path('app_logout') }}" class="block px-4 py-2 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">
 										<span class="flex justify-between items-center">
 											<span>{% trans %}Logout{% endtrans %}</span>
 											<span class="i-tabler-logout text-2xl"></span>
@@ -53,7 +53,7 @@
 							</li>
 						{% else %}
 							<li>
-								<a href="{{ path('app_login') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+								<a href="{{ path('app_login') }}" class="block px-4 py-2 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">
 									<span class="flex justify-between items-center">
 										<span>{% trans %}Login{% endtrans %}</span>
 										<span class="i-tabler-login text-2xl"></span>
@@ -61,7 +61,7 @@
 								</a>
 							</li>
 							<li>
-								<a href="{{ path('app_register') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+								<a href="{{ path('app_register') }}" class="block px-4 py-2 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">
 									<span class="flex justify-between items-center">
 										<span>{% trans %}Register{% endtrans %}</span>
 										<span class="i-tabler-user-plus text-2xl"></span>
@@ -74,7 +74,7 @@
 								{% set is_active = app.request.locale == locale.code %}
 								{% set is_rtl = locale.code in ['ar', 'fa', 'he'] %}
 								<li class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white {{ is_active ? 'bg-slate-300 dark:bg-slate-600' }} {{ is_rtl ? 'rtl' }}" translate="no">
-									<a class="stretched-link flex justify-between" lang="{{ locale.code }}" hreflang="{{ locale.code }}" href="{{ path(app.request.get('_route', 'blog_index'), app.request.get('_route_params', [])|merge({_locale: locale.code})) }}">
+									<a class="stretched-link flex justify-between text-gray-800 dark:text-gray-200" lang="{{ locale.code }}" hreflang="{{ locale.code }}" href="{{ path(app.request.get('_route', 'blog_index'), app.request.get('_route_params', [])|merge({_locale: locale.code})) }}">
 										{{ locale.name|capitalize }}
 										<small class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{{ locale.code|upper }}</small>
 									</a>
@@ -87,4 +87,3 @@
 		</ul>
 	</div>
 </header>
-
