@@ -7,7 +7,7 @@
 		{% if files %}
 			{% for index, file in files %}
 				<div class='flex items-center gap-3 justify-between w-full mb-3'>
-					<a href='{{ upload_asset(file.filePath) }}' class='text-teal-400 flex items-center gap-2' target='_blank'>
+					<a href='{{ upload_asset(file.filePath) }}' class='text-teal-400 flex items-center gap-2 glightbox' data-gallery='{{ prefixedName }}'>
 						{{ macros.file_icon(file) }}
 						<span class='text-nowrap'>{{ file.fileName }}</span>
 					</a>
@@ -50,7 +50,10 @@
 				</div>
 			{% endfor %}
 		{% endif %}
-
+		{% if this.error %}
+			<p class="text-red-800 font-bold">{{ this.error }}</p>
+		{% endif %}
+		
 		<span data-loading>{% trans %}Uploading...{% endtrans %}</span>
 
 		<input type='file' {{ this.vars.attr.multiple|default('') }} name='{{ prefixedName }}' onchange='document.getElementById("{{ this.vars.id }}").click()' class='mt-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'/>

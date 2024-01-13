@@ -31,6 +31,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "flowbite": "^2.2.1"
+        "flowbite": "^2.2.1",
+        "glightbox": "^3.2.0"
     }
 }

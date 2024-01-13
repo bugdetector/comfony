@@ -10,8 +10,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
@@ -26,11 +28,14 @@ final class AsyncFileInput
     #[LiveProp(hydrateWith: 'hydrateVars', dehydrateWith: 'dehydrateVars')]
     public $vars;
 
+    public $error = null;
+
     public function __construct(
         private FileRepository $fileRepository,
         private SluggerInterface $slugger,
         private EntityManagerInterface $entityManager,
-        private ParameterBagInterface $parameterBag
+        private ParameterBagInterface $parameterBag,
+        private TranslatorInterface $translator
     ) {
     }
 
@@ -50,16 +55,26 @@ final class AsyncFileInput
         }
         try {
             if (isset($this->vars["attr"]["multiple"]) && $this->vars["attr"]["multiple"]) {
+                /** @var UploadedFile $uploadedFile */
                 foreach ($uploadedFiles as $uploadedFile) {
-                    $file = new File();
-                    File::saveUploadedFile(
-                        $file,
-                        $uploadedFile,
-                        $this->slugger,
-                        $this->entityManager,
-                        nameParts: [$firstPart, ...$nameParts]
-                    );
-                    $this->vars["data"][] = $file;
+                    if (!$uploadedFile->getError()) {
+                        $file = new File();
+                        File::saveUploadedFile(
+                            $file,
+                            $uploadedFile,
+                            $this->slugger,
+                            $this->entityManager,
+                            nameParts: [$firstPart, ...$nameParts]
+                        );
+                        $this->vars["data"][] = $file;
+                    } else {
+                        $this->error = $this->translator->trans(
+                            "File upload size exceed. Maximum size: { maxSize }",
+                            [
+                                "maxSize" => ini_get('upload_max_filesize')
+                            ]
+                        );
+                    }
                 }
             } else {
                 $file = new File();
@@ -73,7 +88,7 @@ final class AsyncFileInput
                 $this->vars["value"] = $file->getId();
             }
         } catch (Exception $ex) {
-            $message = $ex->getMessage();
+            $this->error = $ex->getMessage();
         }
     }
 

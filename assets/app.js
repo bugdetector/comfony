@@ -1,6 +1,9 @@
 import './bootstrap.js';
 import './styles/app.css';
 import 'flowbite';
+import GLightbox from 'glightbox';
+import "glightbox/dist/css/glightbox.css"
+
 
 document.addEventListener('turbo:load', () => {
     initFlowbite();
@@ -8,10 +11,12 @@ document.addEventListener('turbo:load', () => {
 
 document.addEventListener('turbo:render', () => {
     window.initDarkMode();
+    window.initLightBox();
 })
 
 document.addEventListener('DOMContentLoaded', () => {
     window.initDarkMode();
+    window.initLightBox();
 })
 
 window.initDarkMode = function() {
@@ -56,4 +61,12 @@ window.initDarkMode = function() {
         }
 
     });
+}
+window.GLightbox = GLightbox;
+window.glightbox = null;
+window.initLightBox = function(){
+    if(glightbox){
+        glightbox.destroy();
+    }
+    glightbox = GLightbox();
 }
