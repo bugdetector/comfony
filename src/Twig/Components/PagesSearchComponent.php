@@ -11,31 +11,18 @@
 
 namespace App\Twig\Components;
 
-use App\Repository\Auth\UserRepository;
-use App\Repository\Page\PageRepository;
+use App\Entity\Page\Page;
 use Doctrine\ORM\QueryBuilder;
-use Knp\Component\Pager\PaginatorInterface;
 use Override;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
-use Symfony\UX\LiveComponent\DefaultActionTrait;
+use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
-#[AsLiveComponent(name: 'pages_search')]
+#[AsTwigComponent(name: 'pages_search')]
 final class PagesSearchComponent extends DatatableComponent
 {
-    use DefaultActionTrait;
-
-    public function __construct(
-        protected readonly PaginatorInterface $paginator,
-        protected readonly TranslatorInterface $translator,
-        private readonly PageRepository $pageRepository
-    ) {
-    }
-
     #[Override]
     public function getQueryBuilder(): QueryBuilder
     {
-        return $this->pageRepository->createQueryBuilder('p');
+        return $this->entityManager->getRepository(Page::class)->createQueryBuilder('p');
     }
 
     #[Override]
@@ -50,21 +37,24 @@ final class PagesSearchComponent extends DatatableComponent
                     'label' => $this->translator->trans("Id"),
                     'sortable' => true,
                 ],
-                'p.name' => [
+                'p.title' => [
                     'label' => $this->translator->trans("Title"),
                     'sortable' => true,
                 ],
                 [
                     'label' => $this->translator->trans('Published'),
                 ],
-                'u.created_at' => [
+                'p.created_at' => [
                     'label' => $this->translator->trans('created_at'),
                     'sortable' => true
                 ],
-                'u.updated_at' => [
-                    'label' => $this->translator->trans('created_at'),
+                'p.updated_at' => [
+                    'label' => $this->translator->trans('updated_at'),
                     'sortable' => true
                 ]
+            ],
+            "quick_filters" => [
+                "p.title" => []
             ],
             "filters" => [
                 'p.title' => [

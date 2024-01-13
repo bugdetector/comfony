@@ -11,30 +11,18 @@
 
 namespace App\Twig\Components;
 
-use App\Repository\FileRepository;
+use App\Entity\File\File;
 use Doctrine\ORM\QueryBuilder;
-use Knp\Component\Pager\PaginatorInterface;
 use Override;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
-use Symfony\UX\LiveComponent\DefaultActionTrait;
+use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
-#[AsLiveComponent(name: 'files_search')]
+#[AsTwigComponent(name: 'files_search')]
 final class FilesSearchComponent extends DatatableComponent
 {
-    use DefaultActionTrait;
-
-    public function __construct(
-        protected readonly PaginatorInterface $paginator,
-        protected readonly TranslatorInterface $translator,
-        private readonly FileRepository $fileRepository
-    ) {
-    }
-
     #[Override]
     public function getQueryBuilder(): QueryBuilder
     {
-        return $this->fileRepository->createQueryBuilder('f');
+        return $this->entityManager->getRepository(File::class)->createQueryBuilder('f');
     }
 
     #[Override]
@@ -74,6 +62,9 @@ final class FilesSearchComponent extends DatatableComponent
                     'label' => $this->translator->trans('updated_at'),
                     'sortable' => true
                 ]
+            ],
+            "quick_filters" => [
+                "f.file_name" => []
             ],
             "filters" => [
                 'f.file_name' => [

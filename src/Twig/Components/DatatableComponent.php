@@ -11,38 +11,35 @@
 
 namespace App\Twig\Components;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
-use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
+use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
-#[AsLiveComponent(template: '@base_theme/partials/datatable.html.twig')]
+#[AsTwigComponent(template: '@base_theme/partials/datatable.html.twig')]
 abstract class DatatableComponent
 {
     use DefaultActionTrait;
 
-    protected readonly PaginatorInterface $paginator;
-    protected readonly TranslatorInterface $translator;
     public QueryBuilder $queryBuilder;
-    public array $headers = [];
 
-    #[LiveProp(writable: true)]
+    public array $headers = [];
+    public string $query = '';
+    public string $sort = "";
+    public string $direction = "";
+    public int $page = 1;
     public int $pageSize = 10;
 
-    #[LiveProp(writable: true)]
-    public string $query = '';
-
-    #[LiveProp(writable: true)]
-    public int $sort = 1;
-
-    #[LiveProp(writable: true)]
-    public int $direction = 1;
-
-    #[LiveProp(writable: true)]
-    public int $page = 1;
+    public function __construct(
+        protected readonly PaginatorInterface $paginator,
+        protected readonly TranslatorInterface $translator,
+        protected readonly EntityManagerInterface $entityManager
+    ) {
+    }
 
     /**
      * Get query builder to paginate.
@@ -63,7 +60,7 @@ abstract class DatatableComponent
     {
         $this->queryBuilder = $this->getQueryBuilder();
         if ($this->query) {
-            foreach ($this->getTableBuildData()["filters"] as $column => $data) {
+            foreach ($this->getTableBuildData()["quick_filters"] as $column => $data) {
                 $comparison = @$data['comparison'] ?: 'LIKE';
                 $placeholder = 'query_' . preg_replace('/[^A-Za-z]/', '_', $column);
                 $this->queryBuilder->orWhere("{$column} {$comparison} :{$placeholder}");

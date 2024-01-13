@@ -25,10 +25,6 @@ class PageController extends AbstractController
     {
         return $this->render('admin/page/index.html.twig', [
             'title' => $this->translator->trans('Pages'),
-            'list_params' => [
-                'query' => (string) $request->query->get('q', ''),
-                'page' => (int) $request->query->get('page', 1)
-            ]
         ]);
     }
 

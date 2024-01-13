@@ -11,30 +11,18 @@
 
 namespace App\Twig\Components;
 
-use App\Repository\Auth\UserRepository;
+use App\Entity\Auth\User;
 use Doctrine\ORM\QueryBuilder;
-use Knp\Component\Pager\PaginatorInterface;
 use Override;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
-use Symfony\UX\LiveComponent\DefaultActionTrait;
+use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
-#[AsLiveComponent(name: 'users_search')]
+#[AsTwigComponent(name: 'users_search')]
 final class UsersSearchComponent extends DatatableComponent
 {
-    use DefaultActionTrait;
-
-    public function __construct(
-        protected readonly PaginatorInterface $paginator,
-        protected readonly TranslatorInterface $translator,
-        private readonly UserRepository $userRepository
-    ) {
-    }
-
     #[Override]
     public function getQueryBuilder(): QueryBuilder
     {
-        return $this->userRepository->createQueryBuilder('u');
+        return $this->entityManager->getRepository(User::class)->createQueryBuilder('u');
     }
 
     #[Override]
@@ -71,6 +59,10 @@ final class UsersSearchComponent extends DatatableComponent
                     'label' => $this->translator->trans('Registration Date'),
                     'sortable' => true
                 ]
+            ],
+            "quick_filters" => [
+                "u.name" => [],
+                "u.email" => []
             ],
             "filters" => [
                 'u.name' => [

@@ -11,6 +11,6 @@
 
 {% block body %}
 	<div class="p-4">
-		{{ component('files_search', list_params) }}
+		{{ component('files_search', app.request.query.all()) }}
 	</div>
 {% endblock %}

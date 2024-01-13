@@ -11,6 +11,6 @@
 
 {% block body %}
 	<div class="p-4">
-		{{ component('pages_search', list_params) }}
+		{{ component('pages_search', app.request.query.all()) }}
 	</div>
 {% endblock %}

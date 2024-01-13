@@ -25,10 +25,6 @@ class UsersController extends AbstractController
     {
         return $this->render('admin/users/index.html.twig', [
             'title' => $this->translator->trans('Users'),
-            'list_params' => [
-                'query' => (string) $request->query->get('q', ''),
-                'page' => (int) $request->query->get('page', 1)
-            ]
         ]);
     }
 
