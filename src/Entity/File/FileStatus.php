@@ -6,4 +6,5 @@ enum FileStatus: string
 {
     case Temporary = 'Temporary';
     case Permanent = 'Permanent';
+    case Deleted = 'Deleted';
 }

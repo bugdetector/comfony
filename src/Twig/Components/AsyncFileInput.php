@@ -96,7 +96,7 @@ final class AsyncFileInput
     public function removeFile(#[LiveArg] int $index)
     {
         if ($file = $this->getFiles()[$index]) {
-            $file->setStatus(FileStatus::Temporary);
+            $file->setStatus(FileStatus::Deleted);
             $this->entityManager->persist($file);
             $this->entityManager->flush();
             if (isset($this->vars["attr"]["multiple"]) && $this->vars["attr"]["multiple"]) {
