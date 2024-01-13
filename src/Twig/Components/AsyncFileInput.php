@@ -18,12 +18,14 @@ use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
+use Symfony\UX\LiveComponent\ComponentToolsTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
 #[AsLiveComponent(name: 'async_file_input')]
 final class AsyncFileInput
 {
     use DefaultActionTrait;
+    use ComponentToolsTrait;
 
     #[LiveProp(hydrateWith: 'hydrateVars', dehydrateWith: 'dehydrateVars')]
     public $vars;
@@ -90,6 +92,7 @@ final class AsyncFileInput
         } catch (Exception $ex) {
             $this->error = $ex->getMessage();
         }
+        $this->dispatchBrowserEvent('live-component:update');
     }
 
     #[LiveAction]
@@ -108,6 +111,7 @@ final class AsyncFileInput
                 $this->vars["value"] = null;
             }
         }
+        $this->dispatchBrowserEvent('live-component:update');
     }
 
     public function hydrateVars($vars)
