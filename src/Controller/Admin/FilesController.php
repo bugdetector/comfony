@@ -24,7 +24,7 @@ class FilesController extends AbstractController
     ) {
     }
     #[Route('/', name: 'app_admin_files_index', methods: ['GET'])]
-    public function index(Request $request, FileRepository $fileRepository): Response
+    public function index(FileRepository $fileRepository): Response
     {
         return $this->render('admin/files/index.html.twig', [
             'files' => $fileRepository->findAll(),

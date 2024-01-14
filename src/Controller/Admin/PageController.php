@@ -21,7 +21,7 @@ class PageController extends AbstractController
     }
 
     #[Route('/', name: 'app_admin_page_index', methods: ['GET'])]
-    public function index(Request $request): Response
+    public function index(): Response
     {
         return $this->render('admin/page/index.html.twig', [
             'title' => $this->translator->trans('Pages'),

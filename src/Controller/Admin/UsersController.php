@@ -21,7 +21,7 @@ class UsersController extends AbstractController
     }
 
     #[Route('/', name: 'app_admin_users_index', methods: ['GET'])]
-    public function index(Request $request): Response
+    public function index(): Response
     {
         return $this->render('admin/users/index.html.twig', [
             'title' => $this->translator->trans('Users'),
