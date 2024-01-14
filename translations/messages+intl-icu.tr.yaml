@@ -83,3 +83,7 @@ Body: Gövde
 page.created_successfully: 'Sayfa başarıyla oluşturuldu.'
 page.updated_successfully: 'Sayfa başarıyla güncellendi.'
 page.deleted_successfully: 'Sayfa başarıyla silindi.'
+'Reset Password': 'Şifre Sıfırla'
+'File upload size exceed. Maximum size: { maxSize }': 'Doya yükleme limiti aşıldı. En büyük boyut { maxSize } olabilir.'
+'You can reset your password using the link below. This link will expire in {expire}': 'Aşağıdaki bağlantıyı kullanarak şifrenizi sıfırlayabilirsiniz. Bu linkin kullanımı {expire} sonra sona erecektir.'
+'Hi {user}': 'Merhaba {user}'

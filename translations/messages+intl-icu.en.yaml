@@ -82,3 +82,7 @@ Body: Body
 page.created_successfully: 'Page created successfully.'
 page.updated_successfully: 'Page updated successfully.'
 page.deleted_successfully: 'Page deleted successfully.'
+'Reset Password': 'Reset Password'
+'File upload size exceed. Maximum size: { maxSize }': 'File upload size exceed. Maximum size: { maxSize }'
+'You can reset your password using the link below. This link will expire in {expire}': 'You can reset your password using the link below. This link will expire in {expire}'
+'Hi {user}': 'Hi {user}'
