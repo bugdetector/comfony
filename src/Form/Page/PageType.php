@@ -6,6 +6,7 @@ use App\Entity\Page\Page;
 use App\Form\Type\AsyncFileType;
 use App\Repository\Page\PageRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -34,6 +35,11 @@ class PageType extends AbstractType
             ])
             ->add('published', options: [
                 'required' => false
+            ])
+            ->add('Save', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn-primary'
+                ]
             ])
             ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
                 /** @var Page $page */
