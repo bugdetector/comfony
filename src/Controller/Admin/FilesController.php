@@ -62,6 +62,7 @@ class FilesController extends AbstractController
         return $this->render('admin/files/new.html.twig', [
             'file' => $file,
             'form' => $form,
+            'title' => $this->translator->trans('Upload New File')
         ]);
     }
 
@@ -100,6 +101,9 @@ class FilesController extends AbstractController
         return $this->render('admin/files/edit.html.twig', [
             'file' => $file,
             'form' => $form,
+            'title' => $this->translator->trans('Edit File: { name }', [
+                "name" => $file->getFileName()
+            ])
         ]);
     }
 
