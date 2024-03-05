@@ -8,9 +8,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\UX\Turbo\Attribute\Broadcast;
 
 #[ORM\Entity(repositoryClass: FileRepository::class)]
 #[ORM\Table(name: 'files')]
+#[Broadcast(
+    topics: ['files'],
+    private: true
+)]
 class File
 {
     use TimestampableTrait;

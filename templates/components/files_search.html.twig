@@ -2,53 +2,7 @@
 
 {% block rows %}
 	{% for file in pagination %}
-		<tr class='bg-gray-100 hover:bg-gray-200 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600'>
-			<td class="px-6 py-3 flex gap-2">
-				<a href="{{ path('app_admin_files_edit', {'id': file.id}) }}">
-					<span class='i-tabler-edit text-blue-600 dark:text-gray-200 text-xl'></span>
-				</a>
-				<form method="post" action="{{ path('app_admin_files_delete', {'id': file.id}) }}">
-					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ file.id) }}">
-					{% set modalId = 'delete-modal-' ~ file.id %}
-					<button type='button' class='text-red-600' role='button' data-modal-target="{{ modalId }}" data-modal-toggle="{{ modalId }}">
-						<span class='i-tabler-trash me-1 text-xl'></span>
-					</button>
-					{% include "@base_theme/partials/delete_modal.html.twig" with {modalId: modalId, objectName: "File"|trans} %}
-				</form>
-			</td>
-			<td class="px-6 py-3">{{ file.id }}</td>
-			<td class="px-6 py-3 flex flex-nowrap gap-3">
-				{{ component('file_preview', {file: file}) }}
-			</td>
-			<td class="px-6 py-3">{{ file.getFileSize()|format_bytes }}</td>
-			<td class="px-6 py-3">{{ file.getMimeType() }}</td>
-			<td class="px-6 py-3">{{ file.getExtension() }}</td>
-			<td class="px-6 py-3">
-				{% if file.status == 'Temporary' %}
-					<span class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">
-						{{ file.status|trans }}
-					</span>
-				{% endif %}
-
-				{% if file.status == 'Permanent' %}
-					<span class="bg-blue-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
-						{{ file.status|trans }}
-					</span>
-				{% endif %}
-
-				{% if file.status == 'Deleted' %}
-					<span class="bg-blue-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
-						{{ file.status|trans }}
-					</span>
-				{% endif %}
-			</td>
-			<td class='px-6 py-3 text-nowrap'>
-				<time>{{ file.createdAt|format_datetime() }}</time>
-			</td>
-			<td class='px-6 py-3 text-nowrap'>
-				<time>{{ file.updatedAt|format_datetime() }}</time>
-			</td>
-		</tr>
+		{% include "admin/files/file_row.html.twig" with {file: file} %}
 	{% else %}
 		<tr>
 			<td colspan="6" class="px-6 py-3">{{ 'No Result Found'|trans }}</td>
