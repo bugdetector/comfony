@@ -5,16 +5,14 @@
 			<a href="{{ path('app_admin_files_edit', {'id': file.id}) }}">
 				<span class='i-tabler-edit text-blue-600 dark:text-gray-200 text-xl'></span>
 			</a>
-			{% if action != null %}
-				<form method="post" action="{{ path('app_admin_files_delete', {'id': file.id}) }}">
-					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ file.id) }}">
-					{% set modalId = 'delete-modal-' ~ file.id %}
-					<button type='button' class='text-red-600' role='button' data-modal-target="{{ modalId }}" data-modal-toggle="{{ modalId }}">
-						<span class='i-tabler-trash me-1 text-xl'></span>
-					</button>
-					{% include "@base_theme/partials/delete_modal.html.twig" with {modalId: modalId, objectName: "File"|trans} %}
-				</form>
-			{% endif %}
+			<form method="post" action="{{ path('app_admin_files_delete', {'id': file.id}) }}">
+				<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ file.id) }}">
+				{% set modalId = 'delete-modal-' ~ file.id %}
+				<button type='button' class='text-red-600' role='button' data-modal-target="{{ modalId }}" data-modal-toggle="{{ modalId }}">
+					<span class='i-tabler-trash me-1 text-xl'></span>
+				</button>
+				{% include "@base_theme/partials/delete_modal.html.twig" with {modalId: modalId, objectName: "File"|trans} %}
+			</form>
 		{% endif %}
 	</td>
 	<td class="px-6 py-3">{{ file.id }}</td>

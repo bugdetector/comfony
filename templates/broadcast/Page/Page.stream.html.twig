@@ -1,0 +1,33 @@
+{# Learn how to use Turbo Streams: https://github.com/symfony/ux-turbo#broadcast-doctrine-entities-update #}
+{% block create %}
+	<turbo-stream action="prepend" target="pages">
+		<template>
+			{% include "admin/page/page_row.html.twig" with {
+				page: entity,
+				action: "create"
+			} %}
+		</template>
+	</turbo-stream>
+{% endblock %}
+
+{% block update %}
+	<turbo-stream action="replace" target="page_{{ id }}">
+		<template>
+			{% include "admin/page/page_row.html.twig" with {
+				page: entity,
+				action: "update"
+			} %}
+		</template>
+	</turbo-stream>
+{% endblock %}
+
+{% block remove %}
+	<turbo-stream action="replace" target="page_{{ id }}">
+		<template>
+			{% include "admin/page/page_row.html.twig" with {
+				page: entity,
+				action: "remove"
+            } %}
+		</template>
+	</turbo-stream>
+{% endblock %}

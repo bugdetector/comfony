@@ -14,6 +14,13 @@ document.addEventListener('turbo:render', () => {
     window.initLightBox();
 })
 
+document.addEventListener('turbo:before-stream-render', () => {
+    setTimeout(() => {
+        window.initLightBox();
+        initFlowbite();
+    }, 1000);
+})
+
 document.addEventListener('DOMContentLoaded', () => {
     window.initDarkMode();
     window.initLightBox();
