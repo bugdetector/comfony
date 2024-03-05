@@ -17,7 +17,8 @@ use Symfony\UX\Turbo\Attribute\Broadcast;
 #[ORM\Table(name: 'users')]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 #[Broadcast(
-    topics: ['users']
+    topics: ['users'],
+    private: true
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
