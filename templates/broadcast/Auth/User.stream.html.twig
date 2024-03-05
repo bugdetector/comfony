@@ -11,16 +11,14 @@
 {% endblock %}
 
 {% block update %}
-	{% if id != app.user.id %}
-		<turbo-stream action="replace" target="user_{{ id }}">
-			<template>
-				{% include "admin/users/user_row.html.twig" with {
-            user: entity,
-            action: "update"
-            } %}
-			</template>
-		</turbo-stream>
-	{% endif %}
+	<turbo-stream action="replace" target="user_{{ id }}">
+		<template>
+			{% include "admin/users/user_row.html.twig" with {
+		user: entity,
+		action: "update"
+		} %}
+		</template>
+	</turbo-stream>
 {% endblock %}
 
 {% block remove %}

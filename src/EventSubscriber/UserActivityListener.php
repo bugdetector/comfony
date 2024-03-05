@@ -4,7 +4,9 @@ namespace App\EventSubscriber;
 
 use App\Entity\Auth\User;
 use App\Entity\Auth\UserStatus;
+use App\Repository\Auth\UserRepository;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
@@ -30,9 +32,16 @@ class UserActivityListener
         /** @var User */
         $user = $this->security?->getUser();
         if ($user && $this->entityManager->isOpen()) {
-            $user->setLastAccess(new DateTime());
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
+            /** @var UserRepository */
+            $userRepository = $this->entityManager->getRepository(User::class);
+            $userRepository->createQueryBuilder('u')
+                ->update()
+                ->set("u.last_access", ':last_access')
+                ->where('u.id = :id')
+                ->setParameter(':last_access', new DateTime())
+                ->setParameter(':id', $user->getId())
+                ->getQuery()
+                ->execute();
             if ($user->getStatus() != UserStatus::Active) {
                 $this->security->logout(false);
                 /** @var Session */

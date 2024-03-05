@@ -56,7 +56,7 @@
 		{% endif %}
 	</td>
 	<td class='px-2'>
-		<time>{{ user.lastAccess|format_datetime() }}</time>
+		<time>{{ user.lastAccess ? user.lastAccess|format_datetime() }}</time>
 	</td>
 	<td class='px-2'>
 		<time>{{ user.createdAt|format_datetime() }}</time>
