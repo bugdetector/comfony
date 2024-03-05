@@ -60,7 +60,7 @@
 						{% endblock %}
 					</tr>
 				</thead>
-				<tbody>
+				<tbody {{ listTopic ? ('id="' ~ listTopic ~ '"')|raw }} {{ listTopic ? turbo_stream_listen(listTopic) }}>
 					{% block rows %}{% endblock %}
 				</tbody>
 			</table>

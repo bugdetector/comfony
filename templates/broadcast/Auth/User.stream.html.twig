@@ -1,0 +1,35 @@
+{# Learn how to use Turbo Streams: https://github.com/symfony/ux-turbo#broadcast-doctrine-entities-update #}
+{% block create %}
+	<turbo-stream action="prepend" target="users">
+		<template>
+			{% include "admin/users/user_row.html.twig" with {
+            user: entity,
+            action: "create"
+        } %}
+		</template>
+	</turbo-stream>
+{% endblock %}
+
+{% block update %}
+	{% if id != app.user.id %}
+		<turbo-stream action="replace" target="user_{{ id }}">
+			<template>
+				{% include "admin/users/user_row.html.twig" with {
+            user: entity,
+            action: "update"
+            } %}
+			</template>
+		</turbo-stream>
+	{% endif %}
+{% endblock %}
+
+{% block remove %}
+	<turbo-stream action="replace" target="user_{{ id }}">
+		<template>
+			{% include "admin/users/user_row.html.twig" with {
+            user: entity,
+            action: "remove"
+            } %}
+		</template>
+	</turbo-stream>
+{% endblock %}

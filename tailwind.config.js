@@ -3,6 +3,7 @@ const { iconsPlugin, getIconCollections } = require("@egoist/tailwindcss-icons")
 module.exports = {
   content: [
     "./assets/**/*.js",
+    "./assets/**/*.css",
     "./templates/**/*.html.twig",
     "./node_modules/flowbite/**/*.js",
   ],

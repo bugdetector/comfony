@@ -15,7 +15,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
@@ -33,6 +32,7 @@ abstract class DatatableComponent
     public string $direction = "";
     public int $page = 1;
     public int $pageSize = 10;
+    public ?string $listTopic = null;
 
     public function __construct(
         protected readonly PaginatorInterface $paginator,
