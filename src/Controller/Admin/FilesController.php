@@ -115,8 +115,11 @@ class FilesController extends AbstractController
             $entityManager->flush();
 
             $filePath = $file->getFilePath();
-            if ($file->getFilePath() && is_file($filePath)) {
-                unlink("uploads" . $filePath);
+            try {
+                if ($file->getFilePath() && is_file($filePath)) {
+                    unlink("uploads" . $filePath);
+                }
+            } catch (\Exception $ex) {
             }
             $this->addFlash('success', $this->translator->trans('file.deleted_successfully'));
         }
