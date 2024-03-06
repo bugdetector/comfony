@@ -8,14 +8,16 @@
 			<a href='{{ path('app_page_view', {'slug': page.slug}) }}'>
 				<span class='i-tabler-eye text-indigo-500 dark:text-gray-200 text-xl'></span>
 			</a>
-			<form method="post" action="{{ path('app_admin_page_delete', {'id': page.id}) }}">
-				<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ page.id) }}">
-				{% set modalId = 'delete-modal-' ~ page.id %}
-				<button type='button' class='text-red-600' role='button' data-modal-target="{{ modalId }}" data-modal-toggle="{{ modalId }}">
-					<span class='i-tabler-trash me-1 text-xl'></span>
-				</button>
-				{% include "@base_theme/partials/delete_modal.html.twig" with {modalId: modalId, objectName: "Page"|trans} %}
-			</form>
+			{% if action == null %}
+				<form method="post" action="{{ path('app_admin_page_delete', {'id': page.id}) }}">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ page.id) }}">
+					{% set modalId = 'delete-modal-' ~ page.id %}
+					<button type='button' class='text-red-600' role='button' data-modal-target="{{ modalId }}" data-modal-toggle="{{ modalId }}">
+						<span class='i-tabler-trash me-1 text-xl'></span>
+					</button>
+					{% include "@base_theme/partials/delete_modal.html.twig" with {modalId: modalId, objectName: "Page"|trans} %}
+				</form>
+			{% endif %}
 		{% endif %}
 	</td>
 	<td class="px-6 py-3">{{ page.id }}</td>
