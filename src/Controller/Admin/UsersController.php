@@ -32,13 +32,22 @@ class UsersController extends AbstractController
     public function new(
         Request $request,
         EntityManagerInterface $entityManager,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        UserPasswordHasherInterface $userPasswordHasher
     ): Response {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($password = @$request->get("user")["password"]) {
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $password
+                    )
+                );
+            }
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('success', $translator->trans('user.created_successfully'));
