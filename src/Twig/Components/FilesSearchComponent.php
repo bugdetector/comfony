@@ -54,11 +54,11 @@ final class FilesSearchComponent extends DatatableComponent
                 [
                     'label' => $this->translator->trans("Status"),
                 ],
-                'f.created_at' => [
+                'f.createdAt' => [
                     'label' => $this->translator->trans('created_at'),
                     'sortable' => true
                 ],
-                'f.updated_at' => [
+                'f.updatedAt' => [
                     'label' => $this->translator->trans('updated_at'),
                     'sortable' => true
                 ]

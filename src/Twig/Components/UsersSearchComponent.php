@@ -55,7 +55,7 @@ final class UsersSearchComponent extends DatatableComponent
                     'label' => $this->translator->trans('Last Access'),
                     'sortable' => true
                 ],
-                'u.created_at' => [
+                'u.createdAt' => [
                     'label' => $this->translator->trans('Registration Date'),
                     'sortable' => true
                 ]

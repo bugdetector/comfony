@@ -44,11 +44,11 @@ final class PagesSearchComponent extends DatatableComponent
                 [
                     'label' => $this->translator->trans('Published'),
                 ],
-                'p.created_at' => [
+                'p.createdAt' => [
                     'label' => $this->translator->trans('created_at'),
                     'sortable' => true
                 ],
-                'p.updated_at' => [
+                'p.updatedAt' => [
                     'label' => $this->translator->trans('updated_at'),
                     'sortable' => true
                 ]
