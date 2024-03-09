@@ -2,10 +2,10 @@
 
 namespace App\Entity\File;
 
-use App\Entity\Traits\TimestampableTrait;
 use App\Repository\FileRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\UX\Turbo\Attribute\Broadcast;
@@ -18,7 +18,7 @@ use Symfony\UX\Turbo\Attribute\Broadcast;
 )]
 class File
 {
-    use TimestampableTrait;
+    use TimestampableEntity;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

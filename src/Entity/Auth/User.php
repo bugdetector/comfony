@@ -3,10 +3,13 @@
 namespace App\Entity\Auth;
 
 use App\Entity\File\File;
-use App\Entity\Traits\TimestampableTrait;
 use App\Repository\Auth\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Gedmo\Mapping\Annotation\SoftDeleteable;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -20,9 +23,12 @@ use Symfony\UX\Turbo\Attribute\Broadcast;
     topics: ['users'],
     private: true
 )]
+#[SoftDeleteable()]
+#[HasLifecycleCallbacks]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    use TimestampableTrait;
+    use TimestampableEntity;
+    use SoftDeleteableEntity;
 
     public const ROLE_SUPER_ADMIN = "ROLE_SUPER_ADMIN";
     public const ROLE_ADMIN = "ROLE_ADMIN";
@@ -53,7 +59,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?string $password = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $last_access = null;
 
     #[ORM\Column(enumType: UserStatus::class)]
@@ -145,18 +151,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $created_at): static
-    {
-        $this->created_at = $created_at;
-
-        return $this;
     }
 
     public function getLastAccess(): ?\DateTimeInterface

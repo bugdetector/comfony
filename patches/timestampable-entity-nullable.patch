@@ -1,0 +1,22 @@
+diff --git a/src/Timestampable/Traits/TimestampableEntity.php b/src/Timestampable/Traits/TimestampableEntity.php
+index 2e69bbd..6699516 100644
+--- a/src/Timestampable/Traits/TimestampableEntity.php
++++ b/src/Timestampable/Traits/TimestampableEntity.php
+@@ -28,7 +28,7 @@ trait TimestampableEntity
+      * @ORM\Column(type="datetime")
+      */
+     #[Gedmo\Timestampable(on: 'create')]
+-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
++    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+     protected $createdAt;
+ 
+     /**
+@@ -39,7 +39,7 @@ trait TimestampableEntity
+      * @ORM\Column(type="datetime")
+      */
+     #[Gedmo\Timestampable(on: 'update')]
+-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
++    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+     protected $updatedAt;
+ 
+     /**
