@@ -39,7 +39,7 @@ class RegistrationController extends AbstractController
 
             /** @var UserRepository */
             $userRepository = $entityManager->getRepository(User::class);
-            if($userRepository->count([]) == 0){
+            if ($userRepository->count([]) == 0) {
                 $user->setRoles([User::ROLE_SUPER_ADMIN]);
             }
 
