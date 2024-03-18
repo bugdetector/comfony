@@ -60,16 +60,22 @@ abstract class DatatableComponent
     {
         $this->queryBuilder = $this->getQueryBuilder();
         if ($this->query) {
+            $conditions = [];
             foreach ($this->getTableBuildData()["quick_filters"] as $column => $data) {
                 $comparison = @$data['comparison'] ?: 'LIKE';
                 $placeholder = 'query_' . preg_replace('/[^A-Za-z]/', '_', $column);
-                $this->queryBuilder->orWhere("{$column} {$comparison} :{$placeholder}");
+                $conditions[] = "{$column} {$comparison} :{$placeholder}";
                 if (strcasecmp('LIKE', $comparison) === 0) {
                     $this->queryBuilder->setParameter($placeholder, '%' . $this->query . '%');
                 } else {
                     $this->queryBuilder->setParameter($placeholder, $this->query);
                 }
             }
+            $this->queryBuilder->andWhere(
+                $this->queryBuilder->expr()->orX(
+                    ...$conditions
+                )
+            );
         }
 
         return $this->paginator->paginate(
