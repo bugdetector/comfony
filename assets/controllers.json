@@ -1,5 +1,22 @@
 {
     "controllers": {
+        "@arkounay/ux-collection": {
+            "collection": {
+                "enabled": true,
+                "fetch": "eager",
+                "autoimport": {
+                    "@arkounay/ux-collection/src/style.css": true,
+                    "@arkounay/ux-collection/src/style-when-not-using-bootstrap-5.css": true
+                }
+            },
+            "tabbed_collection": {
+                "enabled": true,
+                "fetch": "eager",
+                "autoimport": {
+                    "@arkounay/ux-collection/src/tabbed-style.css": true
+                }
+            }
+        },
         "@symfony/ux-live-component": {
             "live": {
                 "enabled": true,

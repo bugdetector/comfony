@@ -51,6 +51,36 @@
     .action-remove {
         @apply !bg-red-300 dark:!bg-red-600;
     }
+ 
+    /* UX Collection Styles */
+    .arkounay-ux-collection .collection-up, .arkounay-ux-collection .collection-down{
+        @apply me-2 btn;
+    }
+    .arkounay-ux-collection .collection-remove{
+        @apply btn-danger hover:text-gray-200;
+    }
+
+    .btn-collection-container{
+        @apply w-full !relative;
+    }
+
+    .arkounay-ux-collection button[class*="collection-"]{
+        @apply !p-1;
+    }
+    .d-none{
+        @apply !hidden;
+    }
+    .d-flex{
+        @apply flex;
+    }
+    .w-100{
+        @apply w-full;
+    }
+
+    .card{
+        @apply dark:bg-slate-600;
+    }
+    /* UX Collection Styles */
 }
 
 .header-right {

@@ -4,8 +4,57 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8b058bfd310e365f90e858238b144465",
+    "content-hash": "43d0f36679c373592cd2f6d7633e2cc6",
     "packages": [
+        {
+            "name": "arkounay/ux-collection",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Arkounay/ux-collection.git",
+                "reference": "5ece819f3033c2ef9e3f05ea757f4e1030987f93"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Arkounay/ux-collection/zipball/5ece819f3033c2ef9e3f05ea757f4e1030987f93",
+                "reference": "5ece819f3033c2ef9e3f05ea757f4e1030987f93",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/flex": ">=1.3.1",
+                "symfony/form": ">=5.4.0",
+                "symfony/twig-bundle": ">=5.4.0"
+            },
+            "require-dev": {
+                "symfony/framework-bundle": "^5.4|^6.0",
+                "symfony/webpack-encore-bundle": "^1.13"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Arkounay\\Bundle\\UxCollectionBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Antonin M",
+                    "email": "arkounay@gmail.com"
+                }
+            ],
+            "description": "Collection for Symfony forms",
+            "keywords": [
+                "symfony-ux"
+            ],
+            "support": {
+                "issues": "https://github.com/Arkounay/ux-collection/issues",
+                "source": "https://github.com/Arkounay/ux-collection/tree/4.0.0"
+            },
+            "time": "2024-03-01T08:52:35+00:00"
+        },
         {
             "name": "behat/transliterator",
             "version": "v1.5.0",

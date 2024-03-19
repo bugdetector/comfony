@@ -1,4 +1,7 @@
 {
+    "arkounay/ux-collection": {
+        "version": "4.0.0"
+    },
     "doctrine/annotations": {
         "version": "2.0",
         "recipe": {
