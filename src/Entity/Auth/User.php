@@ -68,7 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     #[Image(
-        mimeTypes: ['image/png', 'image/jpg']
+        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/webp']
     )]
     private ?File $profile_photo = null;
 

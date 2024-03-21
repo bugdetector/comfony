@@ -40,7 +40,15 @@ class UserType extends AbstractType
                     new Email()
                 ]
             ])->add("profile_photo", AsyncFileType::class, [
-                "help" => 'Upload a PNG/JPG file.'
+                "help" => 'Upload a PNG/JPG file.',
+                'attr' => [
+                    'accept' => implode(',', [
+                        'image/png',
+                        'image/jpg',
+                        'image/jpeg',
+                        'image/webp'
+                    ])
+                ]
             ])
             ->add('roles', ChoiceType::class, [
                 "choices" => $roleOptions,

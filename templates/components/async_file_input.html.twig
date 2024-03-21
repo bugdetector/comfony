@@ -54,8 +54,7 @@
 		{% endif %}
 
 		<span data-loading>{% trans %}Uploading...{% endtrans %}</span>
-
-		<input type='file' {{ this.vars.attr.multiple|default('') }} name='{{ prefixedName }}' onchange='document.getElementById("{{ this.vars.id }}").click()' class='mt-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'/>
-		<button type='button' id='{{ this.vars.id }}' data-action="live#action" data-action-name="files({{ prefixedName }})|uploadFile" class='hidden'/>
+		<input type='file' {{ this.vars.attr.multiple|default('') }} accept="{{ this.vars.attr.accept|default('') }}" name='{{ prefixedName }}' onchange='document.getElementById("{{ this.vars.id }}").click()' class='mt-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'/>
+		<button type='button' id='{{ this.vars.id }}' data-action="live#action" data-live-action-param="files({{ prefixedName }})|uploadFile" class='hidden'/>
 	</div>
 </div>
