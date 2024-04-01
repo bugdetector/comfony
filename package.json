@@ -8,6 +8,7 @@
         "@hotwired/turbo": "^7.0.1",
         "@iconify-json/tabler": "^1.1.102",
         "@symfony/stimulus-bridge": "^3.2.0",
+        "@symfony/ux-autocomplete": "file:vendor/symfony/ux-autocomplete/assets",
         "@symfony/ux-live-component": "file:vendor/symfony/ux-live-component/assets",
         "@symfony/ux-toggle-password": "file:vendor/symfony/ux-toggle-password/assets",
         "@symfony/ux-turbo": "file:vendor/symfony/ux-turbo/assets",
@@ -20,6 +21,7 @@
         "regenerator-runtime": "^0.13.9",
         "sortablejs": "^1.14.0",
         "tailwindcss": "^3.4.0",
+        "tom-select": "^2.2.2",
         "webpack": "^5.74.0",
         "webpack-cli": "^4.10.0",
         "webpack-notifier": "^1.15.0"
