@@ -52,8 +52,8 @@
         "symfony/webpack-encore-bundle": "^2.1",
         "symfony/yaml": "7.0.*",
         "symfonycasts/reset-password-bundle": "^1.20",
-        "twig/extra-bundle": "^2.12|^3.0",
-        "twig/intl-extra": "^3.8",
+        "twig/extra-bundle": "3.8.0",
+        "twig/intl-extra": "3.8.0",
         "twig/twig": "^2.12|^3.0",
         "zenstruck/schedule-bundle": "^1.8"
     },
