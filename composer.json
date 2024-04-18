@@ -28,6 +28,7 @@
         "symfony/http-client": "7.0.*",
         "symfony/intl": "7.0.*",
         "symfony/mailer": "7.0.*",
+        "symfony/maker-bundle": "^1.0",
         "symfony/mercure-bundle": "^0.3.8",
         "symfony/mime": "7.0.*",
         "symfony/monolog-bundle": "^3.0",
@@ -119,7 +120,6 @@
         "symfony/browser-kit": "7.0.*",
         "symfony/css-selector": "7.0.*",
         "symfony/debug-bundle": "7.0.*",
-        "symfony/maker-bundle": "^1.0",
         "symfony/phpunit-bridge": "^7.0",
         "symfony/stopwatch": "7.0.*",
         "symfony/web-profiler-bundle": "7.0.*"
