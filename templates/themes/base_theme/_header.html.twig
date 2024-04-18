@@ -1,8 +1,15 @@
-<header class="fixed w-full flex items-center justify-between h-14 text-white z-10">
-	<a href="{{ path('homepage') }}" class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 bg-slate-900 text-gray-200 border-none">
-		<img class="h-7 md:h-10 mr-2 rounded-md overflow-hidden" src="{{ asset('assets/favicon.png') }}"/>
-		<span class="hidden md:block ms-2">{{ app_name }}</span>
-	</a>
+<header class="fixed w-full flex items-center justify-between h-14 text-white z-10 bg-white dark:bg-slate-800">
+	<div class="flex ml-1">
+		<button id="sidebar-toggle" data-drawer-target="sidebar" data-drawer-toggle="sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+			<svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+				<path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+			</svg>
+		</button>
+		<a href="{{ path('homepage') }}" class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 dark:bg-slate-800 text-slate-900 dark:text-gray-200 border-none">
+			<img class="h-7 md:h-10 mr-2 rounded-md overflow-hidden" src="{{ asset('assets/favicon.png') }}"/>
+			<span class="hidden md:block ms-2">{{ app_name }}</span>
+		</a>
+	</div>
 	<div class="flex justify-end items-center h-14 bg-white dark:bg-gray-800 header-right">
 		<ul class="flex items-center">
 			<li>
@@ -74,7 +81,7 @@
 								{% set is_active = app.request.locale == locale.code %}
 								{% set is_rtl = locale.code in ['ar', 'fa', 'he'] %}
 								<li class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white {{ is_active ? 'bg-slate-300 dark:bg-slate-600' }} {{ is_rtl ? 'rtl' }}" translate="no">
-									<a class="stretched-link flex justify-between text-gray-800 dark:text-gray-200" lang="{{ locale.code }}" hreflang="{{ locale.code }}" href="{{ path(app.request.get('_route', 'blog_index'), app.request.get('_route_params', [])|merge({_locale: locale.code})) }}">
+									<a class="stretched-link flex justify-between text-gray-800 dark:text-gray-200" lang="{{ locale.code }}" hreflang="{{ locale.code }}" href="{{ path(app.request.get('_route', 'homepage'), app.request.get('_route_params', [])|merge({_locale: locale.code})) }}">
 										{{ locale.name|capitalize }}
 										<small class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{{ locale.code|upper }}</small>
 									</a>

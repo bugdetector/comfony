@@ -7,6 +7,10 @@ import "glightbox/dist/css/glightbox.css"
 
 document.addEventListener('turbo:load', () => {
     initFlowbite();
+    if(document.querySelector("#sidebar").classList.contains("transform-none")){
+        document.querySelector("#sidebar").classList.remove("transform-none");
+        document.querySelector("#sidebar").classList.add("-translate-x-full");
+    }
 })
 
 document.addEventListener('turbo:render', () => {
