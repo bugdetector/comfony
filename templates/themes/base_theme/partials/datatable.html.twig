@@ -18,7 +18,7 @@
 			</div>
 		{% endblock %}
 	</form>
-	<turbo-frame id="datatable-table" data-turbo-action="advance" class="aria-busy:opacity-50 aria-busy:blur-sm transition-all" target="_top">
+	<turbo-frame id="datatable-table" data-turbo-action="advance" class="aria-busy:opacity-50 aria-busy:blur-sm transition-all">
 		<div class='w-full overflow-auto'>
 			<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-200">
 				<caption class="text-start font-bold mb-3 sticky left-0">
@@ -60,7 +60,7 @@
 						{% endblock %}
 					</tr>
 				</thead>
-				<tbody {{ listTopic ? ('id="' ~ listTopic ~ '"')|raw }} {{ listTopic ? turbo_stream_listen(listTopic) }}>
+				<tbody {{ listTopic ? ('id="' ~ listTopic ~ '"')|raw }} {{ listTopic ? turbo_stream_listen(listTopic) }} data-turbo="false">
 					{% block rows %}{% endblock %}
 				</tbody>
 			</table>
