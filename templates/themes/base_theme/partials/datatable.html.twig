@@ -6,19 +6,11 @@
 				<div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
 					<span class='i-tabler-search'></span>
 				</div>
-				<input 
-					type="search" 
-					name="query" 
-					autocomplete='off' 
-					value="{{ this.query }}" 
-					class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-					placeholder="{{'Search'|trans}}"
-					data-action='autosubmit#debouncedSubmit'
-				>
+				<input type="search" name="query" autocomplete='off' value="{{ this.query }}" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="{{'Search'|trans}}" data-action='autosubmit#debouncedSubmit'>
 			</div>
 		{% endblock %}
 	</form>
-	<turbo-frame id="datatable-table" data-turbo-action="advance" class="aria-busy:opacity-50 aria-busy:blur-sm transition-all">
+	<turbo-frame id="datatable-table" data-turbo-action="advance" class="aria-busy:opacity-50 aria-busy:blur-sm transition-all" target="_top">
 		<div class='w-full overflow-auto'>
 			<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-200">
 				<caption class="text-start font-bold mb-3 sticky left-0">
@@ -37,7 +29,7 @@
 									<th class="px-6 py-3 text-nowrap">
 										{% set sorted = pagination.params.sort is defined and pagination.params.sort == column %}
 										{% set direction = pagination.params.direction is defined ? pagination.params.direction %}
-										<a href="?sort={{ column }}&direction={{ direction == 'desc' ? 'asc' : 'desc' }}" role='button'>
+										<a data-turbo-frame="_self" href="?sort={{ column }}&direction={{ direction == 'desc' ? 'asc' : 'desc' }}" role='button'>
 											<div class="flex items-center justify-between">
 												<span>{{ data.label }}</span>
 												{% if sorted %}
@@ -60,14 +52,13 @@
 						{% endblock %}
 					</tr>
 				</thead>
-				<tbody {{ listTopic ? ('id="' ~ listTopic ~ '"')|raw }} {{ listTopic ? turbo_stream_listen(listTopic) }} data-turbo="false">
-					{% block rows %}{% endblock %}
-				</tbody>
-			</table>
-		</div>
+				<tbody {{ listTopic ? ('id="' ~ listTopic ~ '"')|raw }} {{ listTopic ? turbo_stream_listen(listTopic) }}> {% block rows %}{% endblock %}
+					</tbody>
+				</table>
+			</div>
 
-		{% block pagination %}
-			{{ knp_pagination_render(pagination, '@base_theme/partials/pagination.html.twig') }}
-		{% endblock %}
-	</turbo-frame>
-</div>
+			{% block pagination %}
+				{{ knp_pagination_render(pagination, '@base_theme/partials/pagination.html.twig') }}
+			{% endblock %}
+		</turbo-frame>
+	</div>
