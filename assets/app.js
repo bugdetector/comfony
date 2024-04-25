@@ -14,7 +14,6 @@ document.addEventListener('turbo:load', () => {
 })
 
 document.addEventListener('turbo:render', () => {
-    window.initDarkMode();
     window.initLightBox();
 })
 
