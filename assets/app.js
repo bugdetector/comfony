@@ -7,6 +7,7 @@ import "glightbox/dist/css/glightbox.css"
 
 document.addEventListener('turbo:load', () => {
     initFlowbite();
+    window.initDarkMode();
     if(document.querySelector("#sidebar").classList.contains("transform-none")){
         document.querySelector("#sidebar").classList.remove("transform-none");
         document.querySelector("#sidebar").classList.add("-translate-x-full");
@@ -38,6 +39,9 @@ window.initDarkMode = function() {
     var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
     var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
+    if(!themeToggleLightIcon.classList.contains('hidden') || !themeToggleDarkIcon.classList.contains('hidden')){
+        return;
+    }
     // Change the icons inside the button based on previous settings
     if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         themeToggleLightIcon?.classList.remove('hidden');
