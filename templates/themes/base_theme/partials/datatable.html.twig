@@ -52,13 +52,14 @@
 						{% endblock %}
 					</tr>
 				</thead>
-				<tbody {{ listTopic ? ('id="' ~ listTopic ~ '"')|raw }} {{ listTopic ? turbo_stream_listen(listTopic) }}> {% block rows %}{% endblock %}
-					</tbody>
-				</table>
-			</div>
+				<tbody {{ listTopic ? ('id="' ~ listTopic ~ '"')|raw }} {{ listTopic ? turbo_stream_listen(listTopic) }}>
+					{% block rows %}{% endblock %}
+				</tbody>
+			</table>
+		</div>
 
-			{% block pagination %}
-				{{ knp_pagination_render(pagination, '@base_theme/partials/pagination.html.twig') }}
-			{% endblock %}
-		</turbo-frame>
-	</div>
+		{% block pagination %}
+			{{ knp_pagination_render(pagination, '@base_theme/partials/pagination.html.twig') }}
+		{% endblock %}
+	</turbo-frame>
+</div>
