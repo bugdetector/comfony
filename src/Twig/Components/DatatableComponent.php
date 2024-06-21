@@ -42,9 +42,10 @@ abstract class DatatableComponent
     public int $page = 1;
     #[LiveProp(writable: true)]
     public int $pageSize = 25;
+    #[LiveProp(writable: false)]
+    public ?string $listTopic = null;
 
     public array $headers = [];
-    public ?string $listTopic = null;
 
     public function __construct(
         protected readonly PaginatorInterface $paginator,
