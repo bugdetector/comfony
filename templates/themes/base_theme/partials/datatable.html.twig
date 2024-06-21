@@ -27,7 +27,7 @@
 									<th class="px-6 py-3 text-nowrap">
 										<button class="text-blue-500 w-full flex justify-between align-baseline uppercase" data-action="live#action" data-live-action-param="setSort" data-live-sort-param="{{ column }}" data-live-direction-param="{{ this.direction == 'DESC' ? 'ASC' : 'DESC' }}" role='button'>
 										{% set sorted = this.sort == column %}
-											<span class="text-current">{{ data.label }}</span>
+											<span class="text-current me-4">{{ data.label }}</span>
 											{% if sorted %}
 												{% if direction == 'ASC' %}
 													<span class='i-tabler-sort-ascending'></span>
