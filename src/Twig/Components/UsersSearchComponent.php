@@ -14,9 +14,9 @@ namespace App\Twig\Components;
 use App\Entity\Auth\User;
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
+use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 
-#[AsTwigComponent(name: 'users_search')]
+#[AsLiveComponent(name: 'users_search')]
 final class UsersSearchComponent extends DatatableComponent
 {
     #[Override]

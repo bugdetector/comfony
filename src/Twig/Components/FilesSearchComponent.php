@@ -14,9 +14,9 @@ namespace App\Twig\Components;
 use App\Entity\File\File;
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
+use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 
-#[AsTwigComponent(name: 'files_search')]
+#[AsLiveComponent(name: 'files_search')]
 final class FilesSearchComponent extends DatatableComponent
 {
     #[Override]

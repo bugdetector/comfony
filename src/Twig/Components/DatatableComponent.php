@@ -16,22 +16,34 @@ use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
+use Symfony\UX\LiveComponent\Attribute\LiveAction;
+use Symfony\UX\LiveComponent\Attribute\LiveArg;
+use Symfony\UX\LiveComponent\Attribute\LiveListener;
+use Symfony\UX\LiveComponent\Attribute\LiveProp;
+use Symfony\UX\LiveComponent\ComponentToolsTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
-use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
-#[AsTwigComponent(template: '@base_theme/partials/datatable.html.twig')]
+#[AsLiveComponent(template: '@base_theme/partials/datatable.html.twig')]
 abstract class DatatableComponent
 {
     use DefaultActionTrait;
+    use ComponentToolsTrait;
 
     public QueryBuilder $queryBuilder;
 
-    public array $headers = [];
+    #[LiveProp(writable: true, url: true, onUpdated: 'onQueryUpdated')]
     public string $query = '';
-    public string $sort = "";
-    public string $direction = "";
+    #[LiveProp(writable: true, url: true)]
+    public string $sort = '';
+    #[LiveProp(writable: true, url: true)]
+    public string $direction = '';
+    #[LiveProp(writable: true, url: true)]
     public int $page = 1;
-    public int $pageSize = 10;
+    #[LiveProp(writable: true)]
+    public int $pageSize = 25;
+
+    public array $headers = [];
     public ?string $listTopic = null;
 
     public function __construct(
@@ -83,9 +95,27 @@ abstract class DatatableComponent
             $this->page,
             $this->pageSize,
             [
-                "sort" => $this->sort,
-                "direction" => $this->direction
+                "defaultSortFieldName" => $this->sort,
+                "defaultSortDirection" => $this->direction
             ]
         );
+    }
+
+    #[LiveAction]
+    public function setSort(#[LiveArg] $sort, #[LiveArg] $direction)
+    {
+        $this->sort = $sort;
+        $this->direction = $direction;
+    }
+
+    public function onQueryUpdated($previousValue): void
+    {
+        $this->emit('queryUpdated');
+    }
+
+    #[LiveListener('queryUpdated')]
+    public function setPageStart()
+    {
+        $this->page = 1;
     }
 }

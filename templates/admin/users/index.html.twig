@@ -11,6 +11,6 @@
 
 {% block body %}
 	<div class="p-4">
-		{{ component('users_search', app.request.query.all()|merge({listTopic: 'users'})) }}
+		{{ component('users_search', {listTopic: 'users'}) }}
 	</div>
 {% endblock %}

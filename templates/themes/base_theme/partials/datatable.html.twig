@@ -1,18 +1,16 @@
-{% set pagination = this.getPagination() %}
 <div {{ attributes }} class='bg-white p-3 dark:bg-slate-900'>
-	<form data-turbo-frame='datatable-table' {{ stimulus_controller('autosubmit') }}>
-		{% block filters %}
-			<div class="relative mb-5">
-				<div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-					<span class='i-tabler-search'></span>
-				</div>
-				<input type="search" name="query" autocomplete='off' value="{{ this.query }}" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="{{'Search'|trans}}" data-action='autosubmit#debouncedSubmit'>
+	{% block filters %}
+		<div class="relative mb-5">
+			<div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+				<span class='i-tabler-search'></span>
 			</div>
-		{% endblock %}
-	</form>
-	<turbo-frame id="datatable-table" data-turbo-action="advance" class="aria-busy:opacity-50 aria-busy:blur-sm transition-all" target="_top">
+			<input type="search" data-model="debounce(300)|query" autocomplete='off' value="{{ this.query }}" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="{{'Search'|trans}}">
+		</div>
+	{% endblock %}
+	<div id="datatable-table" class="transition-all" data-loading="addClass(opacity-50 blur-sm)">
 		<div class='w-full overflow-auto'>
 			<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-200">
+				{% set pagination = this.getPagination() %}
 				<caption class="text-start font-bold mb-3 sticky left-0">
 					{% set end = ((pagination.getCurrentPageNumber()) * pagination.getItemNumberPerPage()) %}
 					{% trans with {
@@ -27,23 +25,19 @@
 							{% for column, data in this.getTableBuildData()["headers"] %}
 								{% if data.sortable is defined and data.sortable %}
 									<th class="px-6 py-3 text-nowrap">
-										{% set sorted = pagination.params.sort is defined and pagination.params.sort == column %}
-										{% set direction = pagination.params.direction is defined ? pagination.params.direction %}
-										<a data-turbo-frame="_self" href="?sort={{ column }}&direction={{ direction == 'desc' ? 'asc' : 'desc' }}" role='button'>
-											<div class="flex items-center justify-between">
-												<span>{{ data.label }}</span>
-												{% if sorted %}
-													{% if direction == 'asc' %}
-														<span class='i-tabler-sort-ascending'></span>
-													{% else %}
-														<span class='i-tabler-sort-descending'></span>
-													{% endif %}
+										<button class="text-blue-500 text-[0.9rem] w-full flex justify-between" data-action="live#action" data-live-action-param="setSort" data-live-sort-param="{{ column }}" data-live-direction-param="{{ this.direction == 'DESC' ? 'ASC' : 'DESC' }}" role='button'>
+										{% set sorted = this.sort == column %}
+											<span class="text-current">{{ data.label }}</span>
+											{% if sorted %}
+												{% if direction == 'ASC' %}
+													<span class='i-tabler-sort-ascending'></span>
 												{% else %}
-													<span class='i-tabler-arrows-sort'></span>
+													<span class='i-tabler-sort-descending'></span>
 												{% endif %}
-											</div>
-										</a>
-
+											{% else %}
+												<span class='i-tabler-arrows-sort'></span>
+											{% endif %}
+										</button>
 									</th>
 								{% else %}
 									<th class="px-6 py-3">{{ data.label|trans }}</th>
@@ -52,7 +46,7 @@
 						{% endblock %}
 					</tr>
 				</thead>
-				<tbody {{ listTopic ? ('id="' ~ listTopic ~ '"')|raw }} {{ listTopic ? turbo_stream_listen(listTopic) }}>
+				<tbody {{ listTopic ? ('id="' ~ listTopic ~ '"')|raw }} {{ listTopic ? turbo_stream_listen(listTopic) }}> 
 					{% block rows %}{% endblock %}
 				</tbody>
 			</table>
@@ -61,5 +55,5 @@
 		{% block pagination %}
 			{{ knp_pagination_render(pagination, '@base_theme/partials/pagination.html.twig') }}
 		{% endblock %}
-	</turbo-frame>
+	</div>
 </div>

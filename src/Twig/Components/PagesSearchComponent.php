@@ -14,9 +14,9 @@ namespace App\Twig\Components;
 use App\Entity\Page\Page;
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
+use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 
-#[AsTwigComponent(name: 'pages_search')]
+#[AsLiveComponent(name: 'pages_search')]
 final class PagesSearchComponent extends DatatableComponent
 {
     #[Override]
