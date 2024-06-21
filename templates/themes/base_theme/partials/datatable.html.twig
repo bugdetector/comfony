@@ -25,7 +25,7 @@
 							{% for column, data in this.getTableBuildData()["headers"] %}
 								{% if data.sortable is defined and data.sortable %}
 									<th class="px-6 py-3 text-nowrap">
-										<button class="text-blue-500 text-[0.9rem] w-full flex justify-between" data-action="live#action" data-live-action-param="setSort" data-live-sort-param="{{ column }}" data-live-direction-param="{{ this.direction == 'DESC' ? 'ASC' : 'DESC' }}" role='button'>
+										<button class="text-blue-500 w-full flex justify-between align-baseline uppercase" data-action="live#action" data-live-action-param="setSort" data-live-sort-param="{{ column }}" data-live-direction-param="{{ this.direction == 'DESC' ? 'ASC' : 'DESC' }}" role='button'>
 										{% set sorted = this.sort == column %}
 											<span class="text-current">{{ data.label }}</span>
 											{% if sorted %}
