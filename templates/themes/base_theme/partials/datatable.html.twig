@@ -47,7 +47,17 @@
 					</tr>
 				</thead>
 				<tbody {{ listTopic ? ('id="' ~ listTopic ~ '"')|raw }} {{ listTopic ? turbo_stream_listen(listTopic) }}> 
-					{% block rows %}{% endblock %}
+					{% block rows %}
+						{% if this.rowTemplateFile %}
+							{% for object in pagination %}
+								{% include this.rowTemplateFile with {object} %}
+							{% else %}
+								<tr>
+									<td colspan="6" class="px-6 py-3">{{ 'No Result Found'|trans }}</td>
+								</tr>
+							{% endfor %}
+						{% endif %}
+					{% endblock %}
 				</tbody>
 			</table>
 		</div>

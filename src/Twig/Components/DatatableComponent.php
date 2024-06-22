@@ -45,6 +45,9 @@ abstract class DatatableComponent
     #[LiveProp(writable: false)]
     public ?string $listTopic = null;
 
+    #[LiveProp(writable: false)]
+    public ?string $rowTemplateFile = null;
+
     public array $headers = [];
 
     public function __construct(
