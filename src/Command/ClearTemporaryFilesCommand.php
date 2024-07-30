@@ -32,7 +32,7 @@ class ClearTemporaryFilesCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $expiredFiles = $this->fileRepository->createQueryBuilder("f")
             ->where('f.status IN (:statuses)')
-            ->andWhere('f.updated_at <= :two_hours_ago')
+            ->andWhere('f.updatedAt <= :two_hours_ago')
             ->setParameter('statuses', [
                 FileStatus::Temporary,
                 FileStatus::Deleted,
