@@ -34,6 +34,7 @@ export default class TinyMceController extends Controller {
       content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
       branding: false,
       promotion: false,
+      valid_elements : '*[*]',
       setup: function (editor) {
         editor.on('change keyup input', function () {
           editor.save();
