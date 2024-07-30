@@ -35,6 +35,9 @@ export default class TinyMceController extends Controller {
       branding: false,
       promotion: false,
       valid_elements : '*[*]',
+      init_instance_callback: function(editor) {
+        editor.shortcuts.remove('alt+0');
+      },
       setup: function (editor) {
         editor.on('change keyup input', function () {
           editor.save();
