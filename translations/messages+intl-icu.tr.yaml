@@ -88,3 +88,9 @@ page.deleted_successfully: 'Sayfa başarıyla silindi.'
 'You can reset your password using the link below. This link will expire in {expire}': 'Aşağıdaki bağlantıyı kullanarak şifrenizi sıfırlayabilirsiniz. Bu linkin kullanımı {expire} sonra sona erecektir.'
 'Hi {user}': 'Merhaba {user}'
 'Edit File: { name }': 'Dosyayı Düzenle: { name }'
+'Sorry, an unknown error occured.': 'Üzgünüz, bilinmeyen bir hata oluştu.'
+'Back to Homepage': 'Anasayfaya Dön'
+'Page not found': 'Sayfa bulunamadı'
+"Sorry, we can't find the page you requested.": "Üzgünüz, aradığınız sayfayı bulamadık."
+'Access Denied': 'Erişim Engellendi'
+"Sorry, you don't have access to view this page.": "Üzgünüz, bu sayfa erişim izniniz yok."

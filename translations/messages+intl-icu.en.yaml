@@ -87,3 +87,9 @@ page.deleted_successfully: 'Page deleted successfully.'
 'You can reset your password using the link below. This link will expire in {expire}': 'You can reset your password using the link below. This link will expire in {expire}'
 'Hi {user}': 'Hi {user}'
 'Edit File: { name }': 'Edit File: { name }'
+'Sorry, an unknown error occured.': 'Sorry, an unknown error occured.'
+'Back to Homepage': 'Back to Homepage'
+'Page not found': 'Page not found'
+"Sorry, we can't find the page you requested.": "Sorry, we can't find the page you requested."
+'Access Denied': 'Access Denied'
+"Sorry, you don't have access to view this page.": "Sorry, you don't have access to view this page."
