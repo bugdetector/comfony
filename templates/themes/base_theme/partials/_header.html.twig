@@ -1,0 +1,137 @@
+<header class="flex items-center fixed z-10 top-0 left-0 right-0 shrink-0 lg:ms-[--tw-sidebar-width] h-[--tw-header-height] bg-[--tw-page-bg] dark:bg-[--tw-page-bg-dark]" id="header">
+	<div class="container-fluid flex justify-between items-stretch px-5 lg:ps-0 lg:gap-4" id="header_container">
+		<div class="flex items-center mr-1">
+			<div class="flex items-center justify-center gap-2 shrink-0">
+				<button class="btn btn-icon btn-light btn-clear btn-sm -ms-2 lg:hidden" data-drawer-toggle="#sidebar">
+					<i class="ki-filled ki-menu"></i>
+				</button>
+				<a class="mx-1 lg:hidden" href="{{ path('homepage') }}" data-turbo="false">
+					<img class="dark:hidden h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
+					<img class="hidden dark:block h-[40px]" src="{{ asset('assets/logo.png') }}"/>
+				</a>
+			</div>
+		</div>
+		<div class="flex items-center lg:gap-3.5">
+			<div class="menu" data-menu="true">
+				<div class="menu-item" data-menu-item-offset="0px, 9px" data-menu-item-placement="bottom-end" data-menu-item-placement-rtl="bottom-start" data-menu-item-toggle="dropdown" data-menu-item-trigger="click|lg:click">
+					<div class="menu-toggle btn rounded-full gap-2">
+						{% if app.user %}
+							{% if app.user.profilePhoto %}
+								<img alt="{{ app.user.name }}" class="size-8 rounded-full justify-center border border-gray-500 shrink-0" src="{{ upload_asset(app.user.profilePhoto.filePath) }}"/>
+							{% else %}
+								<span class='ki-filled ki-user p-1 text-2xl rounded-full border-2 border-success'></span>
+							{% endif %}
+							<span class="text-nowrap">{{ app.user.name }}</span>
+						{% else %}
+							<span class='ki-filled ki-user p-1 text-2xl rounded-full border-2 border-success'></span>
+							<span class="text-nowrap">{% trans %}Account{% endtrans %}</span>
+						{% endif %}
+					</div>
+					<div class="menu-dropdown menu-default light:border-gray-300 w-screen max-w-[250px]">
+						{% if app.user %}
+							<div class="flex items-center justify-between px-5 py-1.5 gap-1.5">
+								<div class="flex items-center gap-2">
+									{% if app.user.profilePhoto %}
+										<img alt="{{ app.user.name }}" class="size-9 rounded-full border-2 border-success" src="{{ upload_asset(app.user.profilePhoto.filePath) }}">
+										{% else %}
+											<span class='ki-filled ki-user p-1 text-2xl rounded-full border-2 border-success'></span>
+										{% endif %}
+										<div class="flex flex-col gap-1.5">
+											<span class="text-sm text-gray-800 font-semibold leading-none">
+												{{ app.user.name }}
+											</span>
+											<a class="text-xs text-gray-600 hover:text-primary font-medium leading-none" href="mailto:{{ app.user.email }}">
+												{{ app.user.email }}
+											</a>
+										</div>
+									</img>
+								</div>
+							</div>
+							<div class="menu-separator"></div>
+							<div class="flex flex-col">
+								<div class="menu-item">
+									<a class="menu-link" href="html/demo3/account/home/user-profile.html">
+										<span class="menu-icon">
+											<i class="ki-filled ki-profile-circle"></i>
+										</span>
+										<span class="menu-title">
+											{% trans %}Profile{% endtrans %}
+										</span>
+									</a>
+								</div>
+							</div>
+							<div class="menu-separator"></div>
+							<div class="menu-item px-4 py-1.5">
+								<a class="btn btn-sm btn-light justify-center" href="{{ is_granted('IS_IMPERSONATOR') ? impersonation_exit_path(path('homepage')) : path('app_logout') }}" data-turbo="false">
+									{% trans %}Logout{% endtrans %}
+								</a>
+							</div>
+						{% else %}
+							<div class="menu-item px-4 py-1.5">
+								<a class="btn btn-sm btn-light justify-center" href="{{ path('app_login') }}">
+									{% trans %}Login{% endtrans %}
+								</a>
+							</div>
+							<div class="menu-item px-4 py-1.5">
+								<a class="btn btn-sm btn-light justify-center" href="{{ path('app_register') }}">
+									{% trans %}Register{% endtrans %}
+								</a>
+							</div>
+						{% endif %}
+						<div class="flex flex-col">
+							<div class="menu-item mb-0.5">
+								<div class="menu-link">
+									<span class="menu-icon">
+										<i class="ki-filled ki-moon"></i>
+									</span>
+									<span class="menu-title">
+										{% trans %}Dark Mode{% endtrans %}
+									</span>
+									<label class="switch switch-sm">
+										<input data-theme-state="dark" data-theme-toggle="true" name="check" type="checkbox">
+									</input>
+								</label>
+							</div>
+							<div class="menu-item" data-menu-item-offset="-10px, 0" data-menu-item-placement="left-start" data-menu-item-toggle="dropdown" data-menu-item-trigger="click|lg:hover">
+								<div class="menu-link">
+									<span class="menu-icon">
+										<i class="ki-filled ki-icon"></i>
+									</span>
+									<span class="menu-title">
+										{% trans %}Language{% endtrans %}
+									</span>
+									<div class="flex items-center gap-1.5 rounded-md border border-gray-300 text-gray-600 p-1.5 text-2xs font-medium shrink-0">
+										{{ app.request.locale|upper }}
+									</div>
+								</div>
+								<div class="menu-dropdown menu-default light:border-gray-300 w-full max-w-[170px]">
+									{% for locale in locales() %}
+										{% set is_active = app.request.locale == locale.code %}
+										{% set is_rtl = locale.code in ['ar', 'fa', 'he'] %}
+										<div class="menu-item {{ is_active ? 'active' }} {{ is_rtl ? 'rtl' }}" translate="no">
+											<a class="menu-link h-10" lang="{{ locale.code }}" hreflang="{{ locale.code }}" href="{{ path(app.request.get('_route', 'homepage'), app.request.get('_route_params', [])|merge({_locale: locale.code})) }}">
+												<span class="menu-icon">
+													{{ locale.code|upper }}
+												</span>
+												<span class="menu-title">
+													{{ locale.name }}
+												</span>
+												{% if is_active %}
+													<span class="menu-badge">
+														<i class="ki-solid ki-check-circle text-success text-base"></i>
+													</span>
+												{% endif %}
+
+											</a>
+										</div>
+									{% endfor %}
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>

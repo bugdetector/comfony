@@ -1,0 +1,3 @@
+[submodule "assets/theme"]
+	path = assets/theme
+	url = git@github.com:bugdetector/metronic-tailwind.git

@@ -1,3 +1,9 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
+    <div class="fixed bottom-10 end-10">
+        <button type="submit" class="btn btn-success">
+            <i class="ki-filled ki-check"></i>
+            {% trans %}Save{% endtrans %}
+        </button>
+    </div>
 {{ form_end(form) }}

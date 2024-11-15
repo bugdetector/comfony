@@ -15,10 +15,16 @@ use App\Entity\Page\Page;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
+use Symfony\UX\LiveComponent\Attribute\LiveProp;
 
-#[AsLiveComponent(name: 'pages_search')]
+#[AsLiveComponent()]
 final class PagesSearchComponent extends DatatableComponent
 {
+    #[LiveProp(writable: true, url: true)]
+    public string $sort = 'p.createdAt';
+    #[LiveProp(writable: true, url: true)]
+    public string $direction = 'DESC';
+
     #[Override]
     public function getQueryBuilder(): QueryBuilder
     {

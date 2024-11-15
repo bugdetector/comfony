@@ -1,16 +1,18 @@
-{% extends '@base_theme/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block actions %}
-	<a href='{{ path('app_admin_files_new') }}' class="btn-success">
-		<span class="flex justify-center items-center">
-			<span class="i-tabler-upload me-2"></span>
-			{% trans %}Upload New File{% endtrans %}
-		</span>
-	</a>
+	<div class="container-fluid flex justify-end items-center gap-5">
+		<a href='{{ path('app_admin_files_new') }}' class="btn btn-primary btn-sm">
+			<span class="flex justify-center items-center">
+				<span class="ki-solid ki-file-up text-md me-2"></span>
+				{% trans %}Upload New File{% endtrans %}
+			</span>
+		</a>
+	</div>
 {% endblock %}
 
 {% block body %}
 	<div class="p-4">
-		{{ component('files_search', {listTopic: 'files'}) }}
+		{{ component('FilesSearchComponent', {listTopic: 'files'}) }}
 	</div>
 {% endblock %}

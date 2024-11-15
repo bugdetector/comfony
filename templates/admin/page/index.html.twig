@@ -1,16 +1,27 @@
-{% extends '@base_theme/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block actions %}
-	<a href='{{ path('app_admin_page_new') }}' class="btn-success">
-		<span class="flex justify-center items-center">
-			<span class="i-tabler-plus me-2"></span>
-			{% trans %}Add New Page{% endtrans %}
-		</span>
-	</a>
+	<div class="container-fluid flex justify-end items-center gap-5">
+		<a href='{{ path('app_admin_page_new') }}' class="btn btn-primary btn-sm">
+			<span class="flex justify-center items-center">
+				<span class="ki-solid ki-plus-circle text-md me-2"></span>
+				{% trans %}Add New Page{% endtrans %}
+			</span>
+		</a>
+		{% if page is defined and page.id %}
+			<a href='{{ path('app_page_view', {'slug': page.slug}) }}' data-turbo="false" target="_blank" class="btn btn-info btn-sm">
+				<span class="flex justify-center items-center">
+					<span class="ki-solid ki-eye text-md me-2"></span>
+					{% trans %}View Page{% endtrans %}
+				</span>
+			</a>
+		{% endif %}
+		
+	</div>
 {% endblock %}
 
 {% block body %}
 	<div class="p-4">
-		{{ component('pages_search', {listTopic: 'pages'}) }}
+		{{ component('PagesSearchComponent', {listTopic: 'pages'}) }}
 	</div>
 {% endblock %}

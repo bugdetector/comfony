@@ -1,9 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div class="p-4">
-		<div class="bg-white p-3 dark:bg-slate-900">
-			{{ page.body|raw }}
-		</div>
+	<div class="card p-4">
+		{{ page.body|raw }}
 	</div>
 {% endblock %}

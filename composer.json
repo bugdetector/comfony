@@ -44,7 +44,6 @@
         "symfony/twig-bundle": "7.0.*",
         "symfony/ux-autocomplete": "^2.16",
         "symfony/ux-live-component": "^2.13",
-        "symfony/ux-toggle-password": "^2.13",
         "symfony/ux-turbo": "^2.13",
         "symfony/ux-twig-component": "^2.13",
         "symfony/validator": "7.0.*",
@@ -108,6 +107,9 @@
             },
             "gedmo/doctrine-extensions": {
                 "timestampable-entity-nullable": "./patches/timestampable-entity-nullable.patch"
+            },
+            "symfony/ux-live-component": {
+                "live form handle submit form view already been build": "./patches/live-forms-handle-submit-fix.patch"
             }
         },
         "symfony": {

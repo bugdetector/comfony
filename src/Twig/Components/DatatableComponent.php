@@ -24,7 +24,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentToolsTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
-#[AsLiveComponent(template: '@base_theme/partials/datatable.html.twig')]
+#[AsLiveComponent(template: '@base_theme/partials/_datatable.html.twig')]
 abstract class DatatableComponent
 {
     use DefaultActionTrait;
@@ -108,12 +108,14 @@ abstract class DatatableComponent
     #[LiveAction]
     public function setSort(#[LiveArg] $sort, #[LiveArg] $direction)
     {
+        $this->dispatchBrowserEvent('live-component:update');
         $this->sort = $sort;
         $this->direction = $direction;
     }
 
     public function onQueryUpdated($previousValue): void
     {
+        $this->dispatchBrowserEvent('live-component:update');
         $this->emit('queryUpdated');
     }
 

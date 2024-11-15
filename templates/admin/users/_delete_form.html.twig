@@ -1,4 +1,4 @@
 <form method="post" action="{{ path('app_admin_users_delete', {'id': user.id}) }}">
 	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-	{% include "@base_theme/partials/delete_form_button.html.twig" with {objectName: 'User'|trans} %}
+	{% include theme.themeDirectory ~ "/partials/_delete_form_button.html.twig" with {objectName: 'User'|trans} %}
 </form>

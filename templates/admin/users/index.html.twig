@@ -1,16 +1,18 @@
-{% extends '@base_theme/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block actions %}
-	<a href='{{ path('app_admin_users_new') }}' class="btn-success">
-		<span class="flex justify-center items-center">
-			<span class="i-tabler-plus me-2"></span>
-			{% trans %}Add New User{% endtrans %}
-		</span>
-	</a>
+	<div class="container-fluid flex justify-end items-center gap-5">
+		<a href='{{ path('app_admin_users_new') }}' class="btn btn-primary btn-sm">
+			<span class="flex justify-center items-center">
+				<span class="ki-solid ki-plus-circle text-md me-2"></span>
+				{% trans %}Add New User{% endtrans %}
+			</span>
+		</a>
+	</div>
 {% endblock %}
 
 {% block body %}
 	<div class="p-4">
-		{{ component('users_search', {listTopic: 'users'}) }}
+		{{ component('UsersSearchComponent', {listTopic: 'users'}) }}
 	</div>
 {% endblock %}

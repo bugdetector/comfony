@@ -1,14 +1,16 @@
 {% extends 'base.html.twig' %}
 
+{% block backLink %}
+	<div class="flex items-center mx-3 flex-wrap gap-1 lg:gap-5">
+		<a href="{{ path('app_admin_users_index') }}" class="btn btn-light">
+			<i class="ki-filled ki-left"></i>
+			{% trans %}Back{% endtrans %}
+		</a>
+	</div>
+{% endblock %}
 {% block body %}
 	<div class="p-4">
-		<a href='{{ path('app_admin_users_index') }}' class="btn-info w-20">
-			<span class="flex justify-center items-center">
-				<span class="i-tabler-chevron-left me-2"></span>
-				{% trans %}Back{% endtrans %}
-			</span>
-		</a>
-		<div class="flex flex-wrap bg-white p-3 dark:bg-slate-900">
+		<div class="flex flex-wrap p-3">
 			<div class="md:w-9/12 w-full">
 				{{ include('admin/users/_form.html.twig') }}
 			</div>

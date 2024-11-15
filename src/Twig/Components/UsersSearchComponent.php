@@ -15,10 +15,16 @@ use App\Entity\Auth\User;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
+use Symfony\UX\LiveComponent\Attribute\LiveProp;
 
-#[AsLiveComponent(name: 'users_search')]
+#[AsLiveComponent()]
 final class UsersSearchComponent extends DatatableComponent
 {
+    #[LiveProp(writable: true, url: true)]
+    public string $sort = 'u.createdAt';
+    #[LiveProp(writable: true, url: true)]
+    public string $direction = 'DESC';
+
     #[Override]
     public function getQueryBuilder(): QueryBuilder
     {

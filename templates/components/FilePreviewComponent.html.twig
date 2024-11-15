@@ -1,16 +1,16 @@
-{% import "@base_theme/partials/macros.html.twig" as macros %}
+{% import theme.themeDirectory ~ "/partials/macros.html.twig" as macros %}
 
 {% set file = this.getFile() %}
 
 {% if file %}
 	{% set isPreviewable = file.isPreviewable() %}
 	<div class='flex items-center gap-3 justify-between w-full'>
-		<a href='{{ upload_asset(file.filePath) }}' class='text-teal-400 flex items-center gap-2 {{ isPreviewable ? 'glightbox' }}' {{ not isPreviewable ? "target='_blank'" }}>
+		<a href='{{ upload_asset(file.filePath) }}' class='text-gray-900 hover:text-primary-active flex items-center gap-2 {{ isPreviewable ? 'glightbox' }}' {{ not isPreviewable ? "target='_blank'" }}>
 			{{ macros.file_icon(file) }}
 			<span class='text-nowrap'>{{ file.fileName }}</span>
 		</a>
 		<a href='{{ upload_asset(file.filePath) }}' download='{{ file.fileName }}'>
-			<span class='i-tabler-download text-2xl'></span>
+			<i class='ki-filled ki-cloud-download text-2xl'></i>
 		</a>
 	</div>
 {% endif %}

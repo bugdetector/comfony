@@ -1,4 +1,4 @@
-{% import "@base_theme/partials/macros.html.twig" as macros %}
+{% import theme.themeDirectory ~ "/partials/macros.html.twig" as macros %}
 
 <div {{ attributes }}>
 	<div>
@@ -18,8 +18,8 @@
 						</a>
 						{% set modalId = 'delete-modal-' ~ file.id %}
 						{% set objectName = 'File'|trans %}
-						<button type='button' data-modal-target="{{ modalId }}" data-modal-toggle="{{ modalId }}">
-							<span class='i-tabler-trash text-red-500 text-2xl'></span>
+						<button type='button' data-modal-toggle="#{{ modalId }}">
+							<span class='ki-filled ki-trash text-red-500 text-2xl'></span>
 						</button>
 
 						<div id="{{ modalId }}" tabindex="-1" class="hidden modal-container">
@@ -54,7 +54,7 @@
 		{% endif %}
 
 		<span data-loading>{% trans %}Uploading...{% endtrans %}</span>
-		<input type='file' {{ this.vars.attr.multiple|default('') }} accept="{{ this.vars.attr.accept|default('') }}" name='{{ prefixedName }}' onchange='document.getElementById("{{ this.vars.id }}").click()' class='mt-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'/>
+		<input type='file' {{ this.vars.attr.multiple|default('') }} accept="{{ this.vars.attr.accept|default('') }}" name='{{ prefixedName }}' onchange='document.getElementById("{{ this.vars.id }}").click()' class='file-input'/>
 		<button type='button' id='{{ this.vars.id }}' data-action="live#action" data-live-action-param="files({{ prefixedName }})|uploadFile" class='hidden'/>
 	</div>
 </div>

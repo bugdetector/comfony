@@ -1,0 +1,70 @@
+{% set action = action is defined ? action : null %}
+<tr id="user_{{ user.id }}" class='{{ action ? ' action-' ~ action }}'>
+	<td class="px-6 py-3">
+		<div class="flex flex-nowrap gap-2">
+			{% if action != 'remove' %}
+				<a class="btn btn-sm btn-icon btn-clear btn-primary" href="{{ path('app_admin_users_edit', {'id': user.id}) }}">
+					<i class="ki-outline ki-notepad-edit"></i>
+				</a>
+				{% if is_granted('ROLE_ALLOWED_TO_SWITCH') and user.id != app.user.id %}
+					<a class="btn btn-sm btn-icon btn-clear btn-info" data-turbo="false" href="?_switch_user={{ user.email }}" data-tooltip="true">
+						<i class="ki-solid ki-arrow-right"></i>
+						<span class="tooltip">
+							{{ 'Login As User: { email }'|trans({email: user.email}) }}
+						</span>
+					</a>
+				{% endif %}
+			{% endif %}
+		</div>
+	</td>
+	<td class="px-6 py-3">{{ user.id }}</td>
+	<td class="px-6 py-3">{{ user.name }}</td>
+	<td class="px-6 py-3">{{ user.email }}</td>
+	<td class="px-6 py-3">
+		{% if user.status.value == 'Banned' %}
+			<span class="badge badge-danger">
+				{{ user.status.value|trans }}
+			</span>
+		{% endif %}
+
+		{% if user.status.value == 'Blocked' %}
+			<span class="badge badge-warning">
+				{{ user.status.value|trans }}
+			</span>
+		{% endif %}
+
+		{% if user.status.value == 'Active' %}
+			<span class="badge badge-success">
+				{{ user.status.value|trans }}
+			</span>
+		{% endif %}
+	</td>
+	<td class="px-6 py-3">
+		{% set roles = user.roles ?? [] %}
+		<div class="flex flex-wrap items-baseline gap-2">
+			{% if constant('ROLE_SUPER_ADMIN', user) in roles %}
+				<span class="badge badge-outline badge-danger text-nowrap">
+					Super Admin
+				</span>
+			{% endif %}
+
+			{% if constant('ROLE_ADMIN', user) in roles %}
+				<span class="badge badge-outline badge-danger text-nowrap">
+					{% trans %}Admin{% endtrans %}
+				</span>
+			{% endif %}
+
+			{% if constant('ROLE_USER', user) in roles %}
+				<span class="badge badge-outline badge-primary text-nowrap">
+					{% trans %}User{% endtrans %}
+				</span>
+			{% endif %}
+		</div>
+	</td>
+	<td class='px-2'>
+		<time>{{ user.lastAccess ? user.lastAccess|format_datetime() }}</time>
+	</td>
+	<td class='px-2'>
+		<time>{{ user.createdAt|format_datetime() }}</time>
+	</td>
+</tr>

@@ -1,5 +1,18 @@
 # Comfony - Comfortable Symfony boilerplate - developed with tailwindcss, turbo, ux live components
 
+## Submodules
+Because of some theme modules has licence restrictions they are not shared as public. To get it please contact me directly for access.
+
+Init submodule
+```
+git submodule init
+```
+
+Update submodule
+```
+git submodule update --remote
+```
+
 ## Start development enviroment
 ```
 symfony serve
@@ -35,3 +48,11 @@ symfony console schedule:run
 
 ## Code Quality check
 Please run ``` phpcbf ``` then ``` phpcs ``` commands to ensure code visible quality.
+
+## Migrations
+All migration files will automaticaly generated and applied with this command.
+It is not suggested to generate mogration files while using comfony.
+
+```
+symfony console config:import
+```

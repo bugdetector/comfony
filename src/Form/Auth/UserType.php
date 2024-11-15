@@ -12,7 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -72,10 +71,6 @@ class UserType extends AbstractType
             ])->add('status', EnumType::class, [
                 'class' => UserStatus::class,
                 'expanded' => true
-            ])->add('Save', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn-primary'
-                ]
             ]);
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event): void {
             $user = $event->getForm()->getData();

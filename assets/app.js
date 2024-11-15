@@ -1,90 +1,61 @@
 import './bootstrap.js';
 import './styles/app.css';
-import 'flowbite';
+import './theme/core/index.ts';
 import GLightbox from 'glightbox';
 import "glightbox/dist/css/glightbox.css"
 
+// Keen Icons
+import './theme/vendors/keenicons/duotone/style.css';
+import './theme/vendors/keenicons/filled/style.css';
+import './theme/vendors/keenicons/outline/style.css';
+import './theme/vendors/keenicons/solid/style.css';
 
-document.addEventListener('turbo:load', () => {
-    initFlowbite();
-    window.initDarkMode();
-    if(document.querySelector("#sidebar").classList.contains("transform-none")){
-        document.querySelector("#sidebar").classList.remove("transform-none");
-        document.querySelector("#sidebar").classList.add("-translate-x-full");
-    }
+document.addEventListener('turbo:load', (e) => {  
+    console.log(e.type);
+    initializeComponents();
 })
 
-document.addEventListener('turbo:render', () => {
+document.addEventListener('turbo:render', (e) => {
+    console.log(e.type);
+    initializeComponents();
+})
+
+document.addEventListener('turbo:before-stream-render', (e) => {
+    console.log(e.type);
+    initializeComponents();
+})
+
+document.addEventListener('DOMContentLoaded', (e) => {
+    console.log(e.type);
+    initializeComponents();
+})
+
+document.addEventListener('live-component:update', (e) => {
+    console.log(e.type);
+    initializeComponents();
+})
+
+
+window.initializeComponents = function(){
+    KTComponents.init();
     window.initLightBox();
-})
-
-document.addEventListener('turbo:before-stream-render', () => {
-    setTimeout(() => {
-        window.initLightBox();
-        initFlowbite();
-    }, 1000);
-})
-
-document.addEventListener('DOMContentLoaded', () => {
-    window.initDarkMode();
-    window.initLightBox();
-})
-
-document.addEventListener('live-component:update', () => {
-    window.initDarkMode();
-    window.initLightBox();
-})
-
-window.initDarkMode = function() {
-    var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-    var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-
-    if(!themeToggleLightIcon.classList.contains('hidden') || !themeToggleDarkIcon.classList.contains('hidden')){
-        return;
-    }
-    // Change the icons inside the button based on previous settings
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        themeToggleLightIcon?.classList.remove('hidden');
-        document.documentElement.classList.add('dark');
-    } else {
-        themeToggleDarkIcon?.classList.remove('hidden');
-    }
-
-    var themeToggleBtn = document.getElementById('theme-toggle');
-
-    themeToggleBtn?.addEventListener('click', function () {
-
-        // toggle icons inside button
-        themeToggleDarkIcon.classList.toggle('hidden');
-        themeToggleLightIcon.classList.toggle('hidden');
-
-        // if set via local storage previously
-        if (localStorage.getItem('color-theme')) {
-            if (localStorage.getItem('color-theme') === 'light') {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('color-theme', 'dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('color-theme', 'light');
-            }
-
-            // if NOT set via local storage previously
-        } else {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('color-theme', 'light');
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('color-theme', 'dark');
-            }
-        }
-
-    });
 }
+
+window.addEventListener('popstate', function(event) {
+    window.KT_DRAWER_INITIALIZED = false;
+    window.KT_DROPDOWN_INITIALIZED = false;
+    window.KT_MENU_INITIALIZED = false;
+    window.KT_MODAL_INITIALIZED = false;
+    window.KT_REPARENT_INITIALIZED = false;
+    window.KT_SCROLL_INITIALIZED = false;
+    window.KT_TABS_INITIALIZED = false;
+    window.KT_TOOLTIP_INITIALIZED = false;
+}, false);
+
 window.GLightbox = GLightbox;
 window.glightbox = null;
-window.initLightBox = function(){
-    if(glightbox){
+window.initLightBox = function () {
+    if (glightbox) {
         glightbox.destroy();
     }
     glightbox = GLightbox();

@@ -1,0 +1,60 @@
+<nav class="flex justify-center mt-5 w-full">
+	<ul class="flex items-center -space-x-px h-8 text-sm">
+		{% if current == 0 %}
+			{% set current = 1 %}
+			{% set last = 1 %}
+		{% endif %}
+
+		{% if first is defined and current != first %}
+			<li>
+				<button data-model="{{ pageParameterName }}" data-value="{{ first }}" data-action="live#update" role='button' class="btn btn-light border-none">
+					<span class="sr-only">{% trans %}Previous{% endtrans %}</span>
+					<span class='ki-outline ki-black-left-line'></span>
+				</button>
+			</li>
+		{% endif %}
+		{% if previous is defined %}
+			<li>
+				<button data-model="{{ pageParameterName }}" data-value="{{ previous }}" data-action="live#update" role='button' class="btn btn-light border-none">
+					<span class="sr-only">{% trans %}Previous{% endtrans %}</span>
+					<span class='ki-outline ki-black-left rtl:transform rtl:rotate-180'></span>
+				</button>
+			</li>
+		{% endif %}
+		{% for page in pagesInRange %}
+			{% if page != 0 %}
+				{% if page != current %}
+					<li>
+						<button data-model="{{ pageParameterName }}" data-value="{{ page }}" data-action="live#update" role='button' class="btn btn-light border-none">
+							{{page}}
+						</button>
+					</li>
+				{% else %}
+					<li>
+						<button class="btn active disabled">
+							{{page}}
+						</button>
+					</li>
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+
+		{% if next is defined %}
+			<li>
+				<button data-model="{{ pageParameterName }}" data-value="{{ next }}" data-action="live#update" class="btn btn-light border-none">
+					<span class="sr-only">{% trans %}Next{% endtrans %}</span>
+					<span class='ki-outline ki-black-right rtl:transform rtl:rotate-180'></span>
+				</button>
+			</li>
+		{% endif %}
+
+		{% if last is defined and current != last %}
+			<li>
+				<button data-model="{{ pageParameterName }}" data-value="{{ last }}" data-action="live#update" class="btn btn-light border-none">
+					<span class="sr-only">{% trans %}Next{% endtrans %}</span>
+					<span class='ki-outline ki-black-right-line'></span>
+				</button>
+			</li>
+		{% endif %}
+	</ul>
+</nav>

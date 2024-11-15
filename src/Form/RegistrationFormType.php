@@ -49,9 +49,6 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
-                'toggle' => true,
-                'hidden_label' => '',
-                'visible_label' => '',
             ])
         ;
     }

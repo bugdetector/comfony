@@ -1,23 +1,11 @@
-homepage:
-    path: /{_locale}
-    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
-    requirements:
-        _locale: '%app_locales%'
-    defaults:
-        template: home/index.html.twig
-        _locale: '%locale%'
-    options:
-        sitemap: true
 controllers:
     resource:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
-    prefix: /{_locale}
     requirements:
         _locale: '%app_locales%'
     defaults:
         _locale: '%locale%'
 presta_sitemap:
     resource: "@PrestaSitemapBundle/config/routing.yml"
-    prefix: /{_locale}
