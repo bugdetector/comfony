@@ -10,14 +10,12 @@
         "@symfony/stimulus-bridge": "^3.2.0",
         "@symfony/ux-autocomplete": "file:vendor/symfony/ux-autocomplete/assets",
         "@symfony/ux-live-component": "file:vendor/symfony/ux-live-component/assets",
-        "@symfony/ux-toggle-password": "file:vendor/symfony/ux-toggle-password/assets",
         "@symfony/ux-turbo": "file:vendor/symfony/ux-turbo/assets",
         "@symfony/webpack-encore": "^4.0.0",
-        "@tailwindcss/forms": "^0.5.7",
         "autoprefixer": "^10.4.16",
         "core-js": "^3.23.0",
-        "postcss": "^8.4.32",
-        "postcss-loader": "^7.3.3",
+        "postcss": "^8.4.49",
+        "postcss-loader": "^7.3.4",
         "regenerator-runtime": "^0.13.9",
         "sortablejs": "^1.14.0",
         "tailwindcss": "^3.4.0",
@@ -35,11 +33,19 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "copy-webpack-plugin": "^12.0.2",
         "debounce": "^2.0.0",
         "file-loader": "^6.2.0",
         "flowbite": "^2.2.1",
         "glightbox": "^3.2.0",
+        "mini-css-extract-plugin": "^2.9.2",
+        "postcss-import": "^16.1.0",
+        "postcss-nesting": "^13.0.1",
+        "postcss-preset-env": "^10.1.0",
         "sweetalert2": "^11.10.8",
-        "tinymce": "^6"
+        "tinymce": "^6",
+        "ts-loader": "^9.5.1",
+        "typescript": "^5.6.3",
+        "webpack-merge-and-include-globally": "^2.3.4"
     }
 }

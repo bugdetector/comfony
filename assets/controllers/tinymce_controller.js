@@ -7,7 +7,7 @@ import 'tinymce/plugins/image'
 // Connects to data-controller="tinymce"
 export default class TinyMceController extends Controller {
   connect() {
-    var useDarkMode = localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    var useDarkMode = localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
     const config = {
       target: this.element,
       plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
@@ -39,19 +39,22 @@ export default class TinyMceController extends Controller {
         editor.shortcuts.remove('alt+0');
       },
       setup: function (editor) {
-        editor.on('change keyup input', function () {
+        editor.on('change keyup input', () => {
           editor.save();
+          editor.getElement().dispatchEvent(new Event('change', {bubbles: true}))
         });
       }
     };
     tinymce.init(config);
-    document.getElementById('theme-toggle').addEventListener('click', () => {
-      setTimeout(() => {
-        useDarkMode = localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-        config.skin = useDarkMode ? 'oxide-dark' : 'oxide';
-        config.content_css = useDarkMode ? 'dark' : 'default';
-        tinymce.remove();
-        tinymce.init(config);
+    document.querySelectorAll('[data-theme-toggle]').forEach((element) => {
+      element.addEventListener('click', () => {
+        setTimeout(() => {
+          useDarkMode = localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+          config.skin = useDarkMode ? 'oxide-dark' : 'oxide';
+          config.content_css = useDarkMode ? 'dark' : 'default';
+          tinymce.remove();
+          tinymce.init(config);
+        })
       })
     })
   }

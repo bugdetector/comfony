@@ -2,7 +2,7 @@
 {% block create %}
 	<turbo-stream action="prepend" target="users">
 		<template>
-			{% include "admin/users/user_row.html.twig" with {
+			{% include "admin/users/_row.html.twig" with {
             user: entity,
             action: "create"
         } %}
@@ -13,7 +13,7 @@
 {% block update %}
 	<turbo-stream action="replace" target="user_{{ id }}">
 		<template>
-			{% include "admin/users/user_row.html.twig" with {
+			{% include "admin/users/_row.html.twig" with {
 		user: entity,
 		action: "update"
 		} %}
@@ -24,7 +24,7 @@
 {% block remove %}
 	<turbo-stream action="replace" target="user_{{ id }}">
 		<template>
-			{% include "admin/users/user_row.html.twig" with {
+			{% include "admin/users/_row.html.twig" with {
             user: entity,
             action: "remove"
             } %}

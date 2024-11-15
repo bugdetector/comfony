@@ -51,7 +51,9 @@ class UsersController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('success', $translator->trans('user.created_successfully'));
-            return $this->redirectToRoute('app_admin_users_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_users_edit', [
+                'id' => $user->getId()
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/users/new.html.twig', [
@@ -82,7 +84,9 @@ class UsersController extends AbstractController
             }
             $entityManager->flush();
             $this->addFlash('success', $translator->trans('user.updated_successfully'));
-            return $this->redirectToRoute('app_admin_users_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_users_edit', [
+                'id' => $user->getId()
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/users/edit.html.twig', [

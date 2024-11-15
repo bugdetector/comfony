@@ -1,26 +1,29 @@
 {% extends 'security/login.html.twig' %}
 {% block body %}
-	<div class="w-full min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-		<div class="w-full sm:max-w-md p-5 mx-auto">
-			<h2 class="mb-12 text-center text-5xl font-extrabold">{% trans %}Register{% endtrans %}</h2>
-			{{ include('@base_theme/partials/flash_messages.html.twig') }}
-			<form method="post">
-                {% form_theme registrationForm '@base_theme/form_theme.html.twig' %}
-				{{ form_errors(registrationForm) }}
-				{{ form_start(registrationForm) }}
-                    {{ form_row(registrationForm.name) }}
-                    {{ form_row(registrationForm.email) }}
-                    {{ form_row(registrationForm.plainPassword, {label: 'Password'}) }}
-                    {{ form_row(registrationForm.agreeTerms) }}
-                    <div class="mt-6">
-                        <button class="w-full inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold capitalize text-white hover:bg-red-700 active:bg-red-700 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 disabled:opacity-25 transition">Register</button>
-                    </div>
-				{{ form_end(registrationForm) }}
-				<div class="mt-6 text-center">
-					<a href="{{ path('app_login') }}" class="underline">{% trans %}Have an account?{% endtrans %}</a>
-				</div>
-				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-			</form>
+	<form class="card-body flex flex-col gap-5 p-10" id="register_form" method="post" data-turbo="false">
+		{{ form_errors(registrationForm) }}
+		<div class="text-center mb-2.5">
+			<h3 class="text-lg font-medium text-gray-900 leading-none mb-2.5">
+				{% trans %}Register{% endtrans %}
+			</h3>
+			<div class="flex items-center justify-center my-5">
+				<img src="{{ asset('assets/favicon.png') }}"/>
+			</div>
+			<div class="flex items-center justify-center font-medium">
+				<a class="text-2sm link" href="{{ path('app_login') }}">
+					{% trans %}Have an account?{% endtrans %}
+				</a>
+			</div>
 		</div>
-	</div>
+		{{ form_start(registrationForm) }}
+			{{ form_row(registrationForm.name) }}
+			{{ form_row(registrationForm.email) }}
+			{{ form_row(registrationForm.plainPassword, {label: 'Password'}) }}
+			{{ form_row(registrationForm.agreeTerms) }}
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+			<button class="btn btn-primary flex justify-center grow">
+				{% trans %}Register{% endtrans %}
+			</button>
+		{{ form_end(registrationForm) }}
+	</form>
 {% endblock %}

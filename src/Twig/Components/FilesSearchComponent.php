@@ -15,10 +15,16 @@ use App\Entity\File\File;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
+use Symfony\UX\LiveComponent\Attribute\LiveProp;
 
-#[AsLiveComponent(name: 'files_search')]
+#[AsLiveComponent()]
 final class FilesSearchComponent extends DatatableComponent
 {
+    #[LiveProp(writable: true, url: true)]
+    public string $sort = 'f.createdAt';
+    #[LiveProp(writable: true, url: true)]
+    public string $direction = 'DESC';
+
     #[Override]
     public function getQueryBuilder(): QueryBuilder
     {

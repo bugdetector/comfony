@@ -1,0 +1,14 @@
+{% extends theme.themeDirectory ~ '/layout/master.html.twig' %}
+
+{% block layout %}
+	<body class="antialiased flex h-full text-base text-gray-700 dark:bg-coal-500">
+		<div class="flex items-center justify-center grow bg-center bg-no-repeat page-bg">
+			<div class="card max-w-[370px] w-full">
+				{% block flashes %}
+					{{ include(theme.themeDirectory ~ '/partials/_flash_messages.html.twig') }}
+				{% endblock %}
+				{% block body %}{% endblock %}
+			</div>
+		</div>
+	</body>
+{% endblock %}

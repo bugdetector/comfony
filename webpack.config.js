@@ -61,7 +61,7 @@ Encore
     //.enableSassLoader()
 
     // uncomment if you use TypeScript
-    //.enableTypeScriptLoader()
+    .enableTypeScriptLoader()
 
     // uncomment if you use React
     //.enableReactPreset()
@@ -88,6 +88,10 @@ Encore
     .copyFiles({
         from: 'node_modules/tinymce/plugins',
         to: 'plugins/[path]/[name].[ext]'
+    })
+    .copyFiles({
+        from: 'assets/theme/vendors',
+        to: 'theme/vendors/[path]/[name].[ext]'
     })
 ;
 

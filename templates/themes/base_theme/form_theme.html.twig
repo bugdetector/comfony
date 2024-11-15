@@ -7,27 +7,39 @@
 
 {%- block widget_attributes -%}
     {% if type is defined and type == "file" %}
-        {%- set widget_class = widget_class|default('block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400') -%}
-    {% else %}
-        {%- set widget_class = widget_class|default('bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500') -%}
+        {%- set widget_class = widget_class|default('file-input') -%}
+    {% elseif type is not defined or type != "password"  %}
+        {%- set widget_class = widget_class|default('input') -%}
     {% endif %}
     {%- set widget_disabled_class = widget_disabled_class|default('cursor-not-allowed') -%}
-    {%- set widget_errors_class = widget_errors_class|default('mt-2 text-sm text-red-600 dark:text-red-500') -%}
+    {%- set widget_errors_class = widget_errors_class|default('text-danger') -%}
     {{- parent() -}}
 {%- endblock widget_attributes -%}
 
+{%- block choice_widget_expanded -%}
+    {%- set attr = attr|merge({ class: attr.class|default('mt-2') }) -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+            <div class="flex items-center mt-2">
+                {{- form_widget(child) -}}
+                {{- form_label(child, null, { translation_domain: choice_translation_domain }) -}}
+            </div>
+        {% endfor -%}
+    </div>
+{%- endblock choice_widget_expanded -%}
+
 {%- block form_label -%}
-    {%- set label_class = label_class|default('font-bold') -%}
+    {%- set label_class = label_class|default('form-label max-w-56') -%}
     {{- parent() -}}
 {%- endblock form_label -%}
 
 {%- block form_help -%}
-    {%- set help_class = help_class|default('mt-2 text-sm text-gray-500 dark:text-gray-400') -%}
+    {%- set help_class = help_class|default('form-info text-gray-800 text-2sm font-normal') -%}
     {{- parent() -}}
 {%- endblock form_help -%}
 
 {%- block form_errors -%}
-    {%- set error_item_class = error_item_class|default('text-red-800 font-bold') -%}
+    {%- set error_item_class = error_item_class|default('text-danger') -%}
     {{- parent() -}}
 {%- endblock form_errors -%}
 
@@ -38,13 +50,39 @@
     {{- parent() -}}
 {%- endblock button_widget -%}
 
+{%- block checkbox_widget -%}
+    {%- set widget_class = widget_class|default('checkbox mr-2') -%}
+    {{- parent() -}}
+{%- endblock checkbox_widget -%}
+
+
+{%- block radio_widget -%}
+    {%- set widget_class = widget_class|default('radio mr-2') -%}
+    {{- parent() -}}
+{%- endblock radio_widget -%}
+
 {% block async_file_row %}
     <div class='mb-3'>
         {{ form_label(form) }}
         {{ form_errors(form) }}
-        {{ component('async_file_input', {
+        {{ component('AsyncFileInput', {
             vars: form.vars
         }) }}
         {{ form_help(form) }}
     </div>
 {% endblock %}
+
+{%- block form_widget_simple -%}
+    {%- set type = type|default('text') -%}
+    {%- if type == 'password' -%}
+        <div class="input" data-toggle-password="true">
+            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+            <div class="btn btn-icon" data-toggle-password-trigger="true">
+                <i class="ki-outline ki-eye toggle-password-active:hidden"></i>
+                <i class="ki-outline ki-eye-slash !hidden toggle-password-active:!block"></i>
+            </div>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {%- endif -%}
+{%- endblock form_widget_simple -%}

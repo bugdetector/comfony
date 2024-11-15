@@ -6,15 +6,15 @@ use App\Entity\Auth\User;
 use App\Form\RegistrationFormType;
 use App\Repository\Auth\UserRepository;
 use App\Security\LoginFormAuthenticator;
+use App\Theme\BaseTheme\AuthLayoutController;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
-class RegistrationController extends AbstractController
+class RegistrationController extends AuthLayoutController
 {
     #[Route('/register', name: 'app_register')]
     public function register(

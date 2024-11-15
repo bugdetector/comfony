@@ -1,8 +1,8 @@
-{% extends "@base_theme/partials/datatable.html.twig" %}
+{% extends theme.themeDirectory ~ "/partials/_datatable.html.twig" %}
 
 {% block rows %}
 	{% for page in pagination %}
-		{% include "admin/page/page_row.html.twig" with {page} %}
+		{% include "admin/page/_row.html.twig" with {page} %}
 	{% else %}
 		<tr>
 			<td colspan="6" class="px-6 py-3">{{ 'No Result Found'|trans }}</td>

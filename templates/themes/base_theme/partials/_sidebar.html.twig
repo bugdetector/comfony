@@ -1,0 +1,75 @@
+<div class="fixed max-w-full w-64 lg:w-[--tw-sidebar-width] top-0 bottom-0 z-20 hidden lg:flex flex-col shrink-0 group py-3 lg:py-0 sidebar" data-drawer="true" data-drawer-class="drawer drawer-start top-0 bottom-0" data-drawer-enable="true|lg:false" id="sidebar">
+	<div class="flex grow shrink-0" id="sidebar_content">
+		<div class="scrollable-y-auto grow gap-2.5 shrink-0 flex items-start p-3 flex-col" data-scrollable="true" data-scrollable-height="auto" data-scrollable-offset="0px" data-scrollable-wrappers="#sidebar_content">
+			<div class='sidebar-item lg:hidden' data-drawer-toggle="#sidebar">
+				<span class="sidebar-icon">
+					<span class="menu-icon">
+						<i class="ki-filled ki-menu"></i>
+					</span>
+				</span>
+				<span class="tooltip">
+					<img class="dark:hidden h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
+					<img class="hidden dark:block h-[40px]" src="{{ asset('assets/logo.png') }}"/>
+				</span>
+			</div>
+			<div class='hidden lg:flex items-center w-full p-0.5 rounded-lg'>
+				<a href="{{ path('homepage') }}" data-turbo="false">
+					<img class="dark:hidden h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
+					<img class="hidden dark:block h-[40px]" src="{{ asset('assets/logo.png') }}"/>
+				</a>
+			</div>
+			<a href="{{ path('homepage') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+				<span class="sidebar-icon">
+					<span class="menu-icon">
+						<i class="ki-filled ki-home"></i>
+					</span>
+				</span>
+				<span class="tooltip">
+					{% trans %}Home{% endtrans %}
+				</span>
+			</a>
+			{% if is_granted('ROLE_ADMIN') %}
+				<a href="{{ path('app_admin') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+					<span class="sidebar-icon">
+						<span class="menu-icon">
+							<i class="ki-filled ki-chart-line-star"></i>
+						</span>
+					</span>
+					<span class="tooltip">
+						{% trans %}Dashboard{% endtrans %}
+					</span>
+				</a>
+				<a href="{{ path('app_admin_users_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+					<span class="sidebar-icon">
+						<span class="menu-icon">
+							<i class="ki-filled ki-users"></i>
+						</span>
+					</span>
+					<span class="tooltip">
+						{% trans %}Users{% endtrans %}
+					</span>
+				</a>
+				<a href="{{ path('app_admin_files_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+					<span class="sidebar-icon">
+						<span class="menu-icon">
+							<i class="ki-filled ki-files"></i>
+						</span>
+					</span>
+					<span class="tooltip">
+						{% trans %}Files{% endtrans %}
+					</span>
+				</a>
+				<a href="{{ path('app_admin_page_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+					<span class="sidebar-icon">
+						<span class="menu-icon">
+							<i class="ki-filled ki-files"></i>
+						</span>
+					</span>
+					<span class="tooltip">
+						{% trans %}Pages{% endtrans %}
+					</span>
+				</a>
+			{% endif %}
+		</div>
+	</div>
+</div>

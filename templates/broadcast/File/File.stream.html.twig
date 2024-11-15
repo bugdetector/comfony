@@ -2,7 +2,7 @@
 {% block create %}
 	<turbo-stream action="prepend" target="files">
 		<template>
-			{% include "admin/files/file_row.html.twig" with {
+			{% include "admin/files/_row.html.twig" with {
 				file: entity,
 				action: "create"
 			} %}
@@ -13,7 +13,7 @@
 {% block update %}
 	<turbo-stream action="replace" target="file_{{ id }}">
 		<template>
-			{% include "admin/files/file_row.html.twig" with {
+			{% include "admin/files/_row.html.twig" with {
 				file: entity,
 				action: "update"
 			} %}
@@ -24,7 +24,7 @@
 {% block remove %}
 	<turbo-stream action="replace" target="file_{{ id }}">
 		<template>
-			{% include "admin/files/file_row.html.twig" with {
+			{% include "admin/files/_row.html.twig" with {
 				file: entity,
 				action: "remove"
             } %}

@@ -38,7 +38,9 @@ class PageController extends AbstractController
             $entityManager->persist($page);
             $entityManager->flush();
             $this->addFlash('success', $this->translator->trans('page.created_successfully'));
-            return $this->redirectToRoute('app_admin_page_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_page_edit', [
+                'id' => $page->getId(),
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/page/new.html.twig', [
@@ -57,7 +59,9 @@ class PageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
             $this->addFlash('success', $this->translator->trans('page.updated_successfully'));
-            return $this->redirectToRoute('app_admin_page_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_page_edit', [
+                'id' => $page->getId(),
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/page/edit.html.twig', [
