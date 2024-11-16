@@ -3,8 +3,12 @@
 ## Submodules
 Because of some theme modules has licence restrictions they are not shared as public. To get it please contact me directly for access.
 
+Init submodule
+```
+git submodule init
+```
 
-Init - Update submodule
+Update submodule
 ```
 git submodule update --remote
 ```
