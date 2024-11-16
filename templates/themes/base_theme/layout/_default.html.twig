@@ -11,19 +11,19 @@
 			{% endblock %}
 			<div class="flex flex-col lg:flex-row grow pt-[--tw-header-height]">
 				<turbo-frame id='base-content' data-turbo-action="advance" class="flex flex-col lg:flex-row grow">
-					<div class="flex items-stretch lg:fixed z-5 top-[--tw-header-height] start-[--tw-sidebar-width] end-5 h-[--tw-navbar-height] mx-5 lg:mx-0 bg-[--tw-page-bg] dark:bg-[--tw-page-bg-dark]" id="navbar">
-						<div class="rounded-t-xl border border-gray-400 dark:border-gray-200 border-b-gray-300 dark:border-b-gray-200 bg-[--tw-content-bg] dark:bg-[--tw-content-bg-dark] flex items-stretch grow">
+					<div class="flex items-stretch lg:fixed z-5 top-[--tw-header-height] start-[--tw-sidebar-width] end-5 min-h-[--tw-navbar-height] mx-5 lg:mx-0 bg-[--tw-page-bg] dark:bg-[--tw-page-bg-dark]" id="navbar">
+						<div class="rounded-t-xl border border-gray-400 dark:border-gray-200 border-b-gray-300 dark:border-b-gray-200 bg-[--tw-content-bg] dark:bg-[--tw-content-bg-dark] flex items-stretch grow flex-wrap md:flex-nowrap gap-y-2 pt-3 md:pt-0">
 							{% block backLink %}{% endblock %}
 							{% block title %}
 								<div class="flex items-center mx-3 flex-wrap gap-1 lg:gap-5">
 										<script>document.title = "{{ title ?? app_name }}";</script>
-									<h1 class="font-medium text-lg text-gray-900 text-nowrap">
+									<h1 class="font-medium text-lg text-gray-900 md:text-nowrap">
 										{{ title ?? app_name }}
 									</h1>
 								</div>
 							{% endblock %}
 							{% block actions %}
-								<div class="container-fluid flex justify-between items-stretch gap-5"></div>
+								<div class="container-fluid flex md:justify-end items-center my-3 gap-5"></div>
 							{% endblock %}
 						</div>
 					</div>
