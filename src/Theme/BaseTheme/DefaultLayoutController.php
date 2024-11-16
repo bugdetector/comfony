@@ -11,8 +11,7 @@ class DefaultLayoutController extends AbstractController
     public function __construct(
         public ThemeHelper $theme,
         protected TranslatorInterface $translator
-    )
-    {
+    ) {
         $this->theme = $theme;
         $this->init();
     }

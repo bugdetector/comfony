@@ -93,3 +93,8 @@ page.deleted_successfully: 'Page deleted successfully.'
 "Sorry, we can't find the page you requested.": "Sorry, we can't find the page you requested."
 'Access Denied': 'Access Denied'
 "Sorry, you don't have access to view this page.": "Sorry, you don't have access to view this page."
+'Profile updated successfully': 'Profile updated successfully'
+Profile: Profile
+Upload: Upload
+'Dark Mode': 'Dark Mode'
+Language: Language

@@ -6,12 +6,12 @@ use App\Theme\ThemeHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class AuthLayoutController extends AbstractController {
+class AuthLayoutController extends AbstractController
+{
     public function __construct(
         public ThemeHelper $theme,
         protected TranslatorInterface $translator
-    )
-    {
+    ) {
         $this->theme = $theme;
         $this->init();
     }

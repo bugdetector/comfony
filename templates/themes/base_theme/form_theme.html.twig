@@ -8,7 +8,9 @@
 {%- block widget_attributes -%}
     {% if type is defined and type == "file" %}
         {%- set widget_class = widget_class|default('file-input') -%}
-    {% elseif type is not defined or type != "password"  %}
+    {% elseif type is defined and type == "password" %}
+        {%- set widget_class = widget_class|default('input border-s-0 rounded-r-none') -%}
+    {% else %}
         {%- set widget_class = widget_class|default('input') -%}
     {% endif %}
     {%- set widget_disabled_class = widget_disabled_class|default('cursor-not-allowed') -%}
@@ -75,7 +77,7 @@
 {%- block form_widget_simple -%}
     {%- set type = type|default('text') -%}
     {%- if type == 'password' -%}
-        <div class="input" data-toggle-password="true">
+        <div class="input ps-0 items-stretch" data-toggle-password="true">
             <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
             <div class="btn btn-icon" data-toggle-password-trigger="true">
                 <i class="ki-outline ki-eye toggle-password-active:hidden"></i>

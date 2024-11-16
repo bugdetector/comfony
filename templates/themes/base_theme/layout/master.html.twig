@@ -6,11 +6,22 @@
 		{% set title = title is defined and title ? title : app_name %}
 		<title>{{ title }}</title>
 		<link rel="icon" href="{{ asset('assets/favicon.ico') }}"/>
+
+		{% for metaTag in theme.metaTags %}
+			<meta {% for key, value in metaTag %} {{ key }}="{{ value }}" {% endfor %}>
+		{% endfor %}
+
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
+			{% for cssFile in theme.cssFiles %}
+				<link rel="stylesheet" href="{{ asset(cssFile) }}">
+			{% endfor %}
 		{% endblock %}
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}
+			{% for jsFile in theme.javascriptFiles %}
+				<script src="{{ asset(jsFile) }}"></script>
+			{% endfor %}
 		{% endblock %}
 	</head>
 
