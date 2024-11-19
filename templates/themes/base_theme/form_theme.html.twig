@@ -31,7 +31,7 @@
 {%- endblock choice_widget_expanded -%}
 
 {%- block form_label -%}
-    {%- set label_class = label_class|default('form-label max-w-56') -%}
+    {%- set label_class = label_class|default('form-label') -%}
     {{- parent() -}}
 {%- endblock form_label -%}
 
@@ -46,9 +46,9 @@
 {%- endblock form_errors -%}
 
 {%- block button_widget -%}
-    {%- set attr = {
+    {%- set attr = attr|merge({
         class: attr.class|default('btn btn-primary')
-    } -%}
+    }) -%}
     {{- parent() -}}
 {%- endblock button_widget -%}
 
@@ -63,6 +63,11 @@
     {{- parent() -}}
 {%- endblock radio_widget -%}
 
+{%- block textarea_widget -%}
+    {%- set widget_class = widget_class|default('textarea') -%}
+    {{- parent() -}}
+{%- endblock textarea_widget -%}
+
 {% block async_file_row %}
     <div class='mb-3'>
         {{ form_label(form) }}
@@ -74,6 +79,161 @@
     </div>
 {% endblock %}
 
+{% block live_collection_button_add_widget %}
+    {% set attr = attr|merge({'class': attr.class|default('btn btn-success btn-sm mt-1')}) %}
+    {% set translation_domain = false %}
+    {% set label_html = true %}
+    {%- set label -%}
+        <i class='ki-filled ki-plus'></i>
+        {{ label|default('Add')|trans({}, 'forms') }}
+    {%- endset -%}
+    {{ block('button_widget') }}
+{% endblock live_collection_button_add_widget %}
+
+{% block live_collection_button_delete_widget %}
+    {% set attr = attr|merge({'class': attr.class|default('btn btn-danger btn-sm')}) %}
+    {% set translation_domain = false %}
+    {% set label_html = true %}
+    {%- set label -%}
+        <i class='ki-filled ki-trash'></i>
+        {{ label|default('Delete')|trans({}, 'forms') }}
+    {%- endset -%}
+    {{ block('button_widget') }}
+{% endblock live_collection_button_delete_widget %}
+
+{% block live_table_collection_row %}
+    {% set attr = attr|merge({'class': attr.class|default('')}) %}
+     <div {{ block('widget_container_attributes') }} >
+        <table class="table table-border caption-top">
+            <caption class="text-start font-bold mb-3 sticky left-0 text-3xl p-3">
+                {{ form_label(form) }}
+            </caption>
+            <thead class="text-xs uppercase">
+                <tr class="border-b border-t">
+                    {% for prototypeChild in prototype %}
+                        <th class="min-w-10 text-gray-700 font-normal text-start text-nowrap">
+                            <span>{{ form_label(prototypeChild) }}</span>
+                        </th>
+                    {% endfor %}
+                <tr>
+            </thead>
+            <tbody>
+                {% for index, child in form %}
+                    <tr>
+                    {% if not child.rendered %}
+                        {% for innerChild in child %}
+                            {% if not innerChild.rendered %}
+                                <td class="px-2 py-2 align-baseline">
+                                    {{ form_widget(innerChild) }}
+                                    {{ form_errors(innerChild) }}
+                                </td>
+                            {% endif %}
+                        {% endfor %}
+                        {%- if child.vars.button_delete is defined and not child.vars.button_delete.rendered -%}
+                            <td class="px-2 py-2 align-baseline">
+                                {{ form_row(child.vars.button_delete) }}
+                            </td>
+                        {%- endif -%}
+                    {% endif %}
+                    </tr>
+                {%- endfor -%}
+            </tbody>
+        </table>
+        {%- if button_add is defined and not button_add.rendered -%}
+            {{ form_row(button_add) }}
+        {%- endif -%}
+    </div>
+{% endblock %}
+
+{% block table_collection_row %}
+    
+    {% set attr = attr|merge({'data-name-prefix': full_name}) %}
+    {% set attr = attr|merge({'class': attr.class|default('')}) %}
+    {% set attr = attr|merge({'data-name-prefix': full_name}) %}
+
+     <div {{ block('widget_container_attributes') }} data-controller='table-collection'>
+        <table class="table table-border caption-top">
+            <caption class="text-start font-extrabold mb-3 sticky left-0 text-3xl p-3">
+                {{ form.vars.label }}
+            </caption>
+            <thead class="text-xs uppercase">
+                <tr>
+                    {% for prototypeChild in prototype %}
+                        <th class="px-6 py-3 text-nowrap">
+                            <span>{{ form_label(prototypeChild) }}</span>
+                        </th>
+                    {% endfor %}
+                <tr>
+            </thead>
+            <tbody>
+            {% for index, child in form %}
+                    <tr>
+                    {% if not child.rendered %}
+                        {% for innerChild in child %}
+                            {% if not innerChild.rendered %}
+                                <td class="px-2 py-2 align-baseline">
+                                    {{ form_widget(innerChild) }}
+                                    {{ form_errors(innerChild) }}
+                                </td>
+                            {% endif %}
+                        {% else %}
+                             <td class="px-2 py-2 align-baseline">
+                                {{ form_widget(child) }}
+                                {{ form_errors(child) }}
+                            </td>
+                        {% endfor %}
+                        {% if allow_delete %}
+                            <td class="px-2 py-2 align-baseline">
+                                <button type='button' class='btn btn-danger btn-sm delete-table-collection-item'>
+                                    <i class='ki-filled ki-trash'></i>
+                                </button>
+                            </td>
+                        {% endif %}
+                    {% endif %}
+                    </tr>
+            {%- endfor -%}
+            </tbody>
+        </table>
+        {% if allow_add %}
+                {% if prototype is defined %}
+                <template>
+                    <tr class='hover:bg-gray-200 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600'>
+                        {% for prototypeChild in prototype %}
+                            {% if not prototypeChild.rendered %}
+                                <td class="px-2 py-2 align-baseline">
+                                    {{ form_widget(prototypeChild) }}
+                                    {{ form_errors(prototypeChild) }}
+                                </td>
+                            {% endif %}
+                        {% else %}
+                             <td class="px-2 py-2 align-baseline">
+                                {{ form_widget(prototype) }}
+                                {{ form_errors(prototype) }}
+                            </td>
+                        {% endfor %}
+                        {% if allow_delete %}
+                            <td class="px-2 py-2 align-baseline">
+                                <button type='button' class='btn btn-danger btn-sm delete-table-collection-item'>
+                                    <i class='ki-filled ki-trash'></i>
+                                </button>
+                            </td>
+                        {% endif %}
+                    </tr>
+                </template>
+                {% endif %}
+            <button class="btn btn-sm btn-primary mt-2 add-new-table-collection-item" type='button'>
+                <i class='ki-filled ki-plus'></i>
+                <span>
+                    {% if form.vars.label %}
+                        {% trans with {label: form.vars.label} %}Add New label{% endtrans %}
+                    {% else %}
+                        {% trans %}Add{% endtrans %}
+                    {% endif %}
+                </span>
+            </button>
+        {% endif %}
+    </div>
+{% endblock %}
 {%- block form_widget_simple -%}
     {%- set type = type|default('text') -%}
     {%- if type == 'password' -%}
