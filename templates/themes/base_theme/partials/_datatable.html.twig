@@ -12,7 +12,7 @@
 		<div class="card-body">
 			<div class="overflow-x-auto">
 				{% set pagination = this.getPagination() %}
-				<table class="table table-border caption-top">
+				<table class="table table-border caption-top" data-loading="addClass(opacity-50 blur-sm)">
 					<caption class="text-start font-bold my-3 ms-3">
 						{% set end = ((pagination.getCurrentPageNumber()) * pagination.getItemNumberPerPage()) %}
 						{% trans with {
@@ -71,58 +71,3 @@
 		</div>
 	</div>
 </div>
-
-{# <div {{ attributes }} class='bg-white p-3 dark:bg-slate-900'>
-	<div id="datatable-table" class="transition-all" data-loading="addClass(opacity-50 blur-sm)">
-		<div class='w-full overflow-auto'>
-			<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-200">
-				{% set pagination = this.getPagination() %}
-				
-				<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-200">
-					<tr>
-						{% block headers %}
-							{% for column, data in this.getTableBuildData()["headers"] %}
-								{% if data.sortable is defined and data.sortable %}
-									<th class="px-6 py-3 text-nowrap">
-										<button class="text-blue-500 w-full flex justify-between align-baseline uppercase" data-action="live#action" data-live-action-param="setSort" data-live-sort-param="{{ column }}" data-live-direction-param="{{ this.direction == 'DESC' ? 'ASC' : 'DESC' }}" role='button'>
-										{% set sorted = this.sort == column %}
-											<span class="text-current me-4">{{ data.label }}</span>
-											{% if sorted %}
-												{% if direction == 'ASC' %}
-													<span class='i-tabler-sort-ascending'></span>
-												{% else %}
-													<span class='i-tabler-sort-descending'></span>
-												{% endif %}
-											{% else %}
-												<span class='i-tabler-arrows-sort'></span>
-											{% endif %}
-										</button>
-									</th>
-								{% else %}
-									<th class="px-6 py-3">{{ data.label|trans }}</th>
-								{% endif %}
-							{% endfor %}
-						{% endblock %}
-					</tr>
-				</thead>
-				<tbody {{ listTopic ? ('id="' ~ listTopic ~ '"')|raw }} {{ listTopic ? turbo_stream_listen(listTopic) }}> 
-					{% block rows %}
-						{% if this.rowTemplateFile %}
-							{% for object in pagination %}
-								{% include this.rowTemplateFile with {object} %}
-							{% else %}
-								<tr>
-									<td colspan="6" class="px-6 py-3">{{ 'No Result Found'|trans }}</td>
-								</tr>
-							{% endfor %}
-						{% endif %}
-					{% endblock %}
-				</tbody>
-			</table>
-		</div>
-
-		{% block pagination %}
-			{{ knp_pagination_render(pagination, theme.themeDirectory ~ '/partials/pagination.html.twig') }}
-		{% endblock %}
-	</div>
-</div> #}
