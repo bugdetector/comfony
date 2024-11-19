@@ -5,14 +5,22 @@
 				<button class="btn btn-icon btn-light btn-clear btn-sm -ms-2 lg:hidden" data-drawer-toggle="#sidebar">
 					<i class="ki-filled ki-menu"></i>
 				</button>
-				<a class="mx-1 lg:hidden" href="{{ path('homepage') }}" data-turbo="false">
+				<a class="mx-1 flex items-center" href="{{ path('homepage') }}" data-turbo="false">
 					<img class="dark:hidden h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
-					<img class="hidden dark:block h-[40px]" src="{{ asset('assets/logo.png') }}"/>
+					<img class="hidden dark:block h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
+					{% block title %}
+						<h1 class="font-medium text-lg text-gray-900 md:text-nowrap" id="page-title">
+							{{ title ?? app_name }}
+						</h1>
+					{% endblock %}
 				</a>
 			</div>
 		</div>
 		<div class="flex items-center lg:gap-3.5">
 			<div class="menu" data-menu="true">
+				{% if is_granted('ROLE_SUPER_ADMIN') %}
+					<a href="{{ path('api_doc') }}" class="btn btn-primary mr-1 sm:mr-0">{% trans %}Api Docs{% endtrans %}</a>
+				{% endif %}
 				<div class="menu-item" data-menu-item-offset="0px, 9px" data-menu-item-placement="bottom-end" data-menu-item-placement-rtl="bottom-start" data-menu-item-toggle="dropdown" data-menu-item-trigger="click|lg:click">
 					<div class="menu-toggle btn rounded-full gap-2">
 						{% if app.user %}

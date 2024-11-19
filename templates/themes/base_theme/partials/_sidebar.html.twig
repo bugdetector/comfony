@@ -1,6 +1,6 @@
 <div class="fixed max-w-full w-64 lg:w-[--tw-sidebar-width] top-0 bottom-0 z-20 hidden lg:flex flex-col shrink-0 group py-3 lg:py-0 sidebar" data-drawer="true" data-drawer-class="drawer drawer-start top-0 bottom-0" data-drawer-enable="true|lg:false" id="sidebar">
 	<div class="flex grow shrink-0" id="sidebar_content">
-		<div class="scrollable-y-auto grow gap-2.5 shrink-0 flex items-start p-3 flex-col" data-scrollable="true" data-scrollable-height="auto" data-scrollable-offset="0px" data-scrollable-wrappers="#sidebar_content">
+		<div class="scrollable-y-auto grow gap-2.5 shrink-0 flex items-start p-3 flex-col" data-scrollable="true" data-scrollable-height="auto" data-scrollable-offset="0px" data-scrollable-wrappers="#sidebar_content" data-accordion="true">
 			<div class='sidebar-item' data-drawer-toggle="#sidebar">
 				<span class="sidebar-icon">
 					<span class="menu-icon">
@@ -8,8 +8,13 @@
 					</span>
 				</span>
 				<span class="tooltip">
-					<img class="dark:hidden h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
-					<img class="hidden dark:block h-[40px]" src="{{ asset('assets/logo.png') }}"/>
+					<div class="flex items-center">
+						<img class="dark:hidden h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
+						<img class="hidden dark:block h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
+						<h1 class="font-medium text-lg text-gray-900 md:text-nowrap inline">
+							{{ app_name }}
+						</h1>
+					</div>
 				</span>
 			</div>
 			<a href="{{ path('homepage') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
@@ -33,6 +38,16 @@
 						{% trans %}Dashboard{% endtrans %}
 					</span>
 				</a>
+				<a href="{{ path('app_admin_rota') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+					<span class="sidebar-icon">
+						<span class="menu-icon">
+							<i class="ki-filled ki-calendar"></i>
+						</span>
+					</span>
+					<span class="tooltip">
+						{% trans %}Rota{% endtrans %}
+					</span>
+				</a>
 				<a href="{{ path('app_admin_users_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
 					<span class="sidebar-icon">
 						<span class="menu-icon">
@@ -43,26 +58,212 @@
 						{% trans %}Users{% endtrans %}
 					</span>
 				</a>
-				<a href="{{ path('app_admin_files_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+				{% if is_granted('ROLE_SUPER_ADMIN') %}
+					<a href="{{ path('app_admin_files_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+						<span class="sidebar-icon">
+							<span class="menu-icon">
+								<i class="ki-filled ki-files"></i>
+							</span>
+						</span>
+						<span class="tooltip">
+							{% trans %}Files{% endtrans %}
+						</span>
+					</a>
+					<a href="{{ path('app_admin_page_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+						<span class="sidebar-icon">
+							<span class="menu-icon">
+								<i class="ki-filled ki-files"></i>
+							</span>
+						</span>
+						<span class="tooltip">
+							{% trans %}Pages{% endtrans %}
+						</span>
+					</a>
+				{% endif %}
+				<a href="{{ path('app_admin_shifts_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
 					<span class="sidebar-icon">
 						<span class="menu-icon">
-							<i class="ki-filled ki-files"></i>
+							<i class="ki-filled ki-calendar-search"></i>
 						</span>
 					</span>
 					<span class="tooltip">
-						{% trans %}Files{% endtrans %}
+						{% trans %}Shifts{% endtrans %}
 					</span>
 				</a>
-				<a href="{{ path('app_admin_page_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+				<a href="{{ path('app_admin_agency_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
 					<span class="sidebar-icon">
 						<span class="menu-icon">
-							<i class="ki-filled ki-files"></i>
+							<i class="ki-filled ki-pointers"></i>
 						</span>
 					</span>
 					<span class="tooltip">
-						{% trans %}Pages{% endtrans %}
+						{% trans %}Agencies{% endtrans %}
 					</span>
 				</a>
+				<a href="{{ path('app_admin_units_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+					<span class="sidebar-icon">
+						<span class="menu-icon">
+							<i class="ki-filled ki-pin"></i>
+						</span>
+					</span>
+					<span class="tooltip">
+						{% trans %}Units{% endtrans %}
+					</span>
+				</a>
+				<div class="w-full" data-accordion-item="true">
+					<button href="{{ path('app_admin_units_index') }}" class="sidebar-item menu-item-accordion" data-accordion-toggle="#settings_menu_content">
+						<span class="sidebar-icon">
+							<span class="menu-icon">
+								<i class="ki-filled ki-setting-2"></i>
+							</span>
+						</span>
+						<span class="tooltip">
+							{% trans %}Settings{% endtrans %}
+						</span>
+						<div class="ms-auto me-2">
+							<i class="ki-outline ki-down text-gray-600 text-2sm block accordion-active:hidden"></i>
+							<i class="ki-outline ki-up text-gray-600 text-2sm !hidden accordion-active:!block"></i>
+						</div>
+					</button>
+					<div class="accordion-content hidden border-t ps-3" id="settings_menu_content">
+						<a href="{{ path('app_admin_bank_holidays_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+							<span class="sidebar-icon">
+								<span class="menu-icon">
+									<i class="ki-filled ki-bank"></i>
+								</span>
+							</span>
+							<span class="tooltip">
+								{% trans %}Bank Holidays{% endtrans %}
+							</span>
+						</a>
+						<a href="{{ path('app_admin_positions_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+							<span class="sidebar-icon">
+								<span class="menu-icon">
+									<i class="ki-outline ki-category"></i>
+								</span>
+							</span>
+							<span class="tooltip">
+								{% trans %}Positions{% endtrans %}
+							</span>
+						</a>
+						<a href="{{ path('app_admin_contracts_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+							<span class="sidebar-icon">
+								<span class="menu-icon">
+									<i class="ki-outline ki-document"></i>
+								</span>
+							</span>
+							<span class="tooltip">
+								{% trans %}Contracts{% endtrans %}
+							</span>
+						</a>
+					</div>
+				</div>
+				<div class="w-full" data-accordion-item="true">
+					<button href="{{ path('app_admin_units_index') }}" class="sidebar-item menu-item-accordion" data-accordion-toggle="#stock_take_menu_content">
+						<span class="sidebar-icon">
+							<span class="menu-icon">
+								<i class="i-tabler-stack-3"></i>
+							</span>
+						</span>
+						<span class="tooltip">
+							{% trans %}Stock Take{% endtrans %}
+						</span>
+						<div class="ms-auto me-2">
+							<i class="ki-outline ki-down text-gray-600 text-2sm block accordion-active:hidden"></i>
+							<i class="ki-outline ki-up text-gray-600 text-2sm !hidden accordion-active:!block"></i>
+						</div>
+					</button>
+					<div class="accordion-content hidden border-t ps-3" id="stock_take_menu_content">
+						<a href="{{ path('app_admin_stock_check_current_stock') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+							<span class="sidebar-icon">
+								<span class="menu-icon">
+									<i class="i-tabler-stack-3"></i>
+								</span>
+							</span>
+							<span class="tooltip">
+								{% trans %}Current Stock Requirement{% endtrans %}
+							</span>
+						</a>
+						<a href="{{ path('app_admin_stock_check_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+							<span class="sidebar-icon">
+								<span class="menu-icon">
+									<i class="i-tabler-stack-3"></i>
+								</span>
+							</span>
+							<span class="tooltip">
+								{% trans %}Stock Checks{% endtrans %}
+							</span>
+						</a>
+						<a href="{{ path('app_admin_products_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+							<span class="sidebar-icon">
+								<span class="menu-icon">
+									<i class="ki-outline ki-package"></i>
+								</span>
+							</span>
+							<span class="tooltip">
+								{% trans %}Products{% endtrans %}
+							</span>
+						</a>
+						<a href="{{ path('app_admin_product_categories_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+							<span class="sidebar-icon">
+								<span class="menu-icon">
+									<i class="ki-outline ki-category"></i>
+								</span>
+							</span>
+							<span class="tooltip">
+								{% trans %}Product Categories{% endtrans %}
+							</span>
+						</a>
+					</div>
+				</div>
+				<div class="w-full" data-accordion-item="true">
+					<button href="{{ path('app_admin_units_index') }}" class="sidebar-item menu-item-accordion" data-accordion-toggle="#checklist_menu_content">
+						<span class="sidebar-icon">
+							<span class="menu-icon">
+								<span class="i-tabler-list-check"></span>
+							</span>
+						</span>
+						<span class="tooltip">
+							{% trans %}Checklist{% endtrans %}
+						</span>
+						<div class="ms-auto me-2">
+							<i class="ki-outline ki-down text-gray-600 text-2sm block accordion-active:hidden"></i>
+							<i class="ki-outline ki-up text-gray-600 text-2sm !hidden accordion-active:!block"></i>
+						</div>
+					</button>
+					<div class="accordion-content hidden border-t ps-3" id="checklist_menu_content">
+						<a href="{{ path('app_admin_checklist_report') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+							<span class="sidebar-icon">
+								<span class="menu-icon">
+									<span class="i-tabler-report"></span>
+								</span>
+							</span>
+							<span class="tooltip">
+								{% trans %}Checklist Report{% endtrans %}
+							</span>
+						</a>
+						<a href="{{ path('app_admin_checklist_templates_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+							<span class="sidebar-icon">
+								<span class="menu-icon">
+									<span class="i-tabler-list-check"></span>
+								</span>
+							</span>
+							<span class="tooltip">
+								{% trans %}Checklist Templates{% endtrans %}
+							</span>
+						</a>
+						<a href="{{ path('app_admin_checklist_index') }}" class="sidebar-item" data-turbo-frame="base-content" data-drawer-hide>
+							<span class="sidebar-icon">
+								<span class="menu-icon">
+									<span class="i-tabler-list-check"></span>
+								</span>
+							</span>
+							<span class="tooltip">
+								{% trans %}Checklists{% endtrans %}
+							</span>
+						</a>
+					</div>
+				</div>
 			{% endif %}
 		</div>
 	</div>
