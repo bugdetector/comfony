@@ -21,7 +21,7 @@ class TranslationListener
     {
         $request = $event->getRequest();
 
-        if (!$request->hasPreviousSession()) {
+        if ($request->get('_stateless') || !$request->hasSession() || !$request->hasPreviousSession()) {
             return;
         }
         // try to see if the locale has been set as a _locale routing parameter
