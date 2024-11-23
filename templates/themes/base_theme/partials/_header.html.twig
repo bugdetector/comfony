@@ -18,9 +18,6 @@
 		</div>
 		<div class="flex items-center lg:gap-3.5">
 			<div class="menu" data-menu="true">
-				{% if is_granted('ROLE_SUPER_ADMIN') %}
-					<a href="{{ path('api_doc') }}" class="btn btn-primary mr-1 sm:mr-0">{% trans %}Api Docs{% endtrans %}</a>
-				{% endif %}
 				<div class="menu-item" data-menu-item-offset="0px, 9px" data-menu-item-placement="bottom-end" data-menu-item-placement-rtl="bottom-start" data-menu-item-toggle="dropdown" data-menu-item-trigger="click|lg:click">
 					<div class="menu-toggle btn rounded-full gap-2">
 						{% if app.user %}
