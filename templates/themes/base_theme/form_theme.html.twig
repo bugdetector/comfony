@@ -68,6 +68,21 @@
     {{- parent() -}}
 {%- endblock textarea_widget -%}
 
+{%- block form_widget_simple -%}
+    {%- set type = type|default('text') -%}
+    {%- if type == 'password' -%}
+        <div class="input ps-0 items-stretch" data-toggle-password="true">
+            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+            <div class="btn btn-icon" data-toggle-password-trigger="true">
+                <i class="ki-outline ki-eye toggle-password-active:hidden"></i>
+                <i class="ki-outline ki-eye-slash !hidden toggle-password-active:!block"></i>
+            </div>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {%- endif -%}
+{%- endblock form_widget_simple -%}
+
 {% block async_file_row %}
     <div class='mb-3'>
         {{ form_label(form) }}
@@ -105,7 +120,7 @@
     {% set attr = attr|merge({'class': attr.class|default('')}) %}
      <div {{ block('widget_container_attributes') }} >
         <table class="table table-border caption-top">
-            <caption class="text-start font-bold mb-3 sticky left-0 text-3xl p-3">
+            <caption class="text-start font-bold mb-3 sticky left-0 text-xl p-3">
                 {{ form_label(form) }}
             </caption>
             <thead class="text-xs uppercase">
@@ -146,105 +161,189 @@
 {% endblock %}
 
 {% block table_collection_row %}
-    
+    {% set prototypeHtml = "<tr class='collection-item'>" %}
+    {% for prototypeChild in prototype %}
+        {% if not prototypeChild.rendered %}
+            {% set prototypeHtml = prototypeHtml ~ 
+            "<td class='px-2 py-2 align-baseline'>
+                #{ form_widget(prototypeChild) }
+                #{ form_errors(prototypeChild) }
+            </td>" %}
+        {% endif %}
+    {% else %}
+        {% set prototypeHtml = prototypeHtml ~ 
+            "<td class='px-2 py-2 align-baseline'>
+                #{ form_widget(prototype) }
+                #{ form_errors(prototype) }
+            </td>" %}
+    {% endfor %}
+    {% if allow_delete %}
+        {% set prototypeHtml = prototypeHtml ~ "<td class='px-2 py-2 align-baseline'>
+            <button type='button' class='btn btn-danger btn-sm' #{ stimulus_action('form-collection', 'removeCollectionItem') }>
+                <i class='ki-filled ki-trash'></i>
+            </button>
+        </td>" %}
+    {% endif %}
+    {% set prototypeHtml = prototypeHtml ~ "</tr>" %}
     {% set attr = attr|merge({'data-name-prefix': full_name}) %}
-    {% set attr = attr|merge({'class': attr.class|default('')}) %}
+    {% set attr = attr|merge({'class': attr.class|default('collection-widget-container')}) %}
     {% set attr = attr|merge({'data-name-prefix': full_name}) %}
 
-     <div {{ block('widget_container_attributes') }} data-controller='table-collection'>
-        <table class="table table-border caption-top">
-            <caption class="text-start font-extrabold mb-3 sticky left-0 text-3xl p-3">
-                {{ form.vars.label }}
-            </caption>
-            <thead class="text-xs uppercase">
-                <tr>
-                    {% for prototypeChild in prototype %}
-                        <th class="px-6 py-3 text-nowrap">
-                            <span>{{ form_label(prototypeChild) }}</span>
-                        </th>
-                    {% endfor %}
-                <tr>
-            </thead>
-            <tbody>
-            {% for index, child in form %}
-                    <tr>
-                    {% if not child.rendered %}
-                        {% for innerChild in child %}
-                            {% if not innerChild.rendered %}
-                                <td class="px-2 py-2 align-baseline">
-                                    {{ form_widget(innerChild) }}
-                                    {{ form_errors(innerChild) }}
-                                </td>
+     <div {{ block('widget_container_attributes') }}>
+        <div class='card' 
+            {{ stimulus_controller('form-collection') }}
+            data-form-collection-index-value="{{ value ? value.count() : 0 }}"
+            data-form-collection-container-tag-value="tr"
+            data-form-collection-prototype-value="{{ prototypeHtml }}">
+            <div class='card-body overflow-auto'>
+                <table class="table table-border caption-top">
+                    <caption class="text-start font-bold mb-3 sticky left-0 text-xl p-3">
+                        {{ form.vars.label }}
+                    </caption>
+                    <thead class="text-xs uppercase">
+                        <tr>
+                            {% for prototypeChild in prototype %}
+                                <th class="px-6 py-3 text-nowrap">
+                                    <span>{{ form_label(prototypeChild) }}</span>
+                                </th>
+                            {% endfor %}
+                        <tr>
+                    </thead>
+                    <tbody {{ stimulus_target('form-collection', 'collectionContainer') }}>
+                    {% for index, child in form %}
+                            <tr class="collection-item">
+                            {% if not child.rendered %}
+                                {% for innerChild in child %}
+                                    {% if not innerChild.rendered %}
+                                        <td class="px-2 py-2 align-baseline">
+                                            {{ form_widget(innerChild) }}
+                                            {{ form_errors(innerChild) }}
+                                        </td>
+                                    {% endif %}
+                                {% else %}
+                                    <td class="px-2 py-2 align-baseline">
+                                        {{ form_widget(child) }}
+                                        {{ form_errors(child) }}
+                                    </td>
+                                {% endfor %}
+                                {% if allow_delete %}
+                                    <td class="px-2 py-2 align-baseline">
+                                        <button type='button' class='btn btn-danger btn-sm' {{ stimulus_action('form-collection', 'removeCollectionItem') }}>
+                                            <i class='ki-filled ki-trash'></i>
+                                        </button>
+                                    </td>
+                                {% endif %}
                             {% endif %}
-                        {% else %}
-                             <td class="px-2 py-2 align-baseline">
-                                {{ form_widget(child) }}
-                                {{ form_errors(child) }}
-                            </td>
-                        {% endfor %}
-                        {% if allow_delete %}
-                            <td class="px-2 py-2 align-baseline">
-                                <button type='button' class='btn btn-danger btn-sm delete-table-collection-item'>
-                                    <i class='ki-filled ki-trash'></i>
-                                </button>
-                            </td>
-                        {% endif %}
-                    {% endif %}
-                    </tr>
-            {%- endfor -%}
-            </tbody>
-        </table>
-        {% if allow_add %}
-                {% if prototype is defined %}
-                <template>
-                    <tr class='hover:bg-gray-200 border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600'>
-                        {% for prototypeChild in prototype %}
-                            {% if not prototypeChild.rendered %}
-                                <td class="px-2 py-2 align-baseline">
-                                    {{ form_widget(prototypeChild) }}
-                                    {{ form_errors(prototypeChild) }}
-                                </td>
+                            </tr>
+                    {%- endfor -%}
+                    </tbody>
+                </table>
+            </div>
+            {% if allow_add %}
+                <div class='card-footer'>
+                    <button class="btn btn-sm btn-primary mt-2" type='button' {{ stimulus_action('form-collection', 'addCollectionItem') }}>
+                        <i class='ki-filled ki-plus'></i>
+                        <span>
+                            {% if form.vars.label %}
+                                {% trans with {label: form.vars.label} %}Add New label{% endtrans %}
+                            {% else %}
+                                {% trans %}Add{% endtrans %}
                             {% endif %}
-                        {% else %}
-                             <td class="px-2 py-2 align-baseline">
-                                {{ form_widget(prototype) }}
-                                {{ form_errors(prototype) }}
-                            </td>
-                        {% endfor %}
-                        {% if allow_delete %}
-                            <td class="px-2 py-2 align-baseline">
-                                <button type='button' class='btn btn-danger btn-sm delete-table-collection-item'>
-                                    <i class='ki-filled ki-trash'></i>
-                                </button>
-                            </td>
-                        {% endif %}
-                    </tr>
-                </template>
-                {% endif %}
-            <button class="btn btn-sm btn-primary mt-2 add-new-table-collection-item" type='button'>
-                <i class='ki-filled ki-plus'></i>
-                <span>
-                    {% if form.vars.label %}
-                        {% trans with {label: form.vars.label} %}Add New label{% endtrans %}
-                    {% else %}
-                        {% trans %}Add{% endtrans %}
-                    {% endif %}
-                </span>
-            </button>
-        {% endif %}
+                        </span>
+                    </button>
+                </div>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
-{%- block form_widget_simple -%}
-    {%- set type = type|default('text') -%}
-    {%- if type == 'password' -%}
-        <div class="input ps-0 items-stretch" data-toggle-password="true">
-            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
-            <div class="btn btn-icon" data-toggle-password-trigger="true">
-                <i class="ki-outline ki-eye toggle-password-active:hidden"></i>
-                <i class="ki-outline ki-eye-slash !hidden toggle-password-active:!block"></i>
+
+{%- block collection_widget -%}
+    {% set prototypeHtml = "<div class='card mb-3'>
+					<button class='card-header active' role='button' data-collapse='#__name___content'>
+						<h3 class='card-title '>
+							" ~ label ~ "
+							-
+							<span>__name_index__</span>
+						</h3>
+                        <div>
+                            <i class='ki-outline ki-arrow-down collapse-active:hidden'></i>
+                            <i class='ki-outline ki-arrow-up !hidden collapse-active:!block'></i>
+                        </div>
+					</button>
+					<div class='card-body transition-all duration-300 active' id='__name___content'>
+						" ~ form_widget(prototype) ~ "
+					</div>" ~ (
+                        allow_delete ?
+                        "<div class='card-footer'>
+							<button type='button' class='btn btn-danger btn-sm' " ~ stimulus_action('form-collection', 'removeCollectionItem') ~ ">
+								<i class='ki-filled ki-trash'></i>
+                                " ~ "Delete"|trans ~ "
+							</button>
+						</div>" : ""
+                    ) ~
+				"</div>" %}
+    <div {{ stimulus_controller('form-collection') }} 
+        class='card mb-3 collection-widget-container'
+        id="{{ id }}"
+        data-form-collection-index-value="{{ value ? value.count() : 0 }}"
+        data-form-collection-container-tag-value="li"
+        data-form-collection-prototype-value="{{ prototypeHtml }}">
+        <button class='card-header active' role='button' data-collapse="#{{ id }}_content">
+            <h3 class="card-title">
+                {{ form.vars.label }}
+            </h3>
+            <div>
+                <i class="ki-outline ki-arrow-down collapse-active:hidden"></i>
+                <i class="ki-outline ki-arrow-up !hidden collapse-active:!block"></i>
             </div>
+        </button>
+        <div class="card-body transition-all duration-300 active" id="{{ id }}_content">
+            <ul {{ stimulus_target('form-collection', 'collectionContainer') }}>
+                {% for index, child in form %}
+                    <div class='card mb-3 collection-item' id="{{ child.vars.id }}">
+                        <button class="card-header active" role='button' data-collapse="#{{ child.vars.id }}_content">
+                            <h3 class="card-title">
+                                {{ label }}
+                                -
+                                {{ index + 1 }}
+                            </h3>
+                            <div>
+                                <i class="ki-outline ki-arrow-down collapse-active:hidden"></i>
+                                <i class="ki-outline ki-arrow-up !hidden collapse-active:!block"></i>
+                            </div>
+                        </button>
+                        <div class='card-body transition-all duration-300 active' id="{{ child.vars.id }}_content">
+                            {% if not child.rendered %}
+                                {{ form_widget(child) }}
+                            {% endif %}
+                        </div>
+                        {% if allow_delete %}
+                            <div class="card-footer">
+                                <button type='button' class='btn btn-danger btn-sm' {{ stimulus_action('form-collection', 'removeCollectionItem') }}>
+                                    <i class='ki-filled ki-trash'></i>
+                                    <span>{% trans %}Delete{% endtrans %}</span>
+                                </button>
+                            </div>
+                        {% endif %}
+                    </div>
+                {%- endfor -%}
+            </ul>
         </div>
-    {% else %}
-        {{ parent() }}
-    {%- endif -%}
-{%- endblock form_widget_simple -%}
+        <div class="card-footer">
+            {% if allow_add and prototype is defined %}
+                <button type="button" class="btn btn-sm btn-primary mt-2" {{ stimulus_action('form-collection', 'addCollectionItem') }}>
+                    <i class='ki-filled ki-plus'></i>
+                    <span>
+                        {% if form.vars.label %}
+                            {% trans with {label: form.vars.label} %}Add New label{% endtrans %}
+                        {% else %}
+                            {% trans %}Add{% endtrans %}
+                        {% endif %}
+                    </span>
+                </button>
+            {% endif %}
+        </div>
+    </div>
+{%- endblock collection_widget -%}
+
+
