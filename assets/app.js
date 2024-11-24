@@ -25,6 +25,14 @@ document.addEventListener('turbo:before-stream-render', (e) => {
     initializeComponents();
 })
 
+document.addEventListener('turbo:before-frame-render', (e) => {
+    console.log(e.type);
+    KTModal.hide();
+    setTimeout(() => {
+        initializeComponents();
+    }, 200);
+})
+
 document.addEventListener('DOMContentLoaded', (e) => {
     console.log(e.type);
     initializeComponents();
@@ -33,6 +41,10 @@ document.addEventListener('DOMContentLoaded', (e) => {
 document.addEventListener('live-component:update', (e) => {
     console.log(e.type);
     initializeComponents();
+})
+
+document.addEventListener('app-hide-modal', (e) => {
+    KTModal.hide();
 })
 
 
