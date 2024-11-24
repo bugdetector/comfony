@@ -100,7 +100,7 @@
     {% set label_html = true %}
     {%- set label -%}
         <i class='ki-filled ki-plus'></i>
-        {{ label|default('Add')|trans({}, 'forms') }}
+        {{ label|default('Add')|trans }}
     {%- endset -%}
     {{ block('button_widget') }}
 {% endblock live_collection_button_add_widget %}
@@ -111,10 +111,50 @@
     {% set label_html = true %}
     {%- set label -%}
         <i class='ki-filled ki-trash'></i>
-        {{ label|default('Delete')|trans({}, 'forms') }}
+        {{ (label|default('Delete'))|trans }}
     {%- endset -%}
     {{ block('button_widget') }}
 {% endblock live_collection_button_delete_widget %}
+
+{%- block live_collection_widget -%}
+    <div class='card'>
+        <button class='card-header active' role="button" data-collapse='#{{ id }}_wrapper_content'>
+            <h3 class='card-title'>{{ block('form_label_content') }}</h3>
+            <div>
+                <i class="ki-outline ki-arrow-down collapse-active:hidden"></i>
+                <i class="ki-outline ki-arrow-up !hidden collapse-active:!block"></i>
+            </div>
+        </button>
+        <div class='card-body transition-all duration-300 active' id="{{ id }}_wrapper_content">
+            {{ block('form_widget') }}
+        </div>
+        <div class='card-footer'>
+            {%- if button_add is defined and not button_add.rendered -%}
+                {{ form_row(button_add) }}
+            {%- endif -%}
+        </div>
+    </div>
+{%- endblock -%}
+
+{%- block live_collection_entry_row -%}
+    <div class='card mb-3'>
+        <button class='card-header active' data-collapse='#{{ id }}_content'>
+            <h3 class='card-title'>{{ (form.parent.vars.label ? form.parent.vars.label|trans ~ ' - ' : '') ~  (name + 1) }}</h3>
+            <div>
+                <i class="ki-outline ki-arrow-down collapse-active:hidden"></i>
+                <i class="ki-outline ki-arrow-up !hidden collapse-active:!block"></i>
+            </div>
+        </button>
+        <div class='card-body transition-all duration-300 active' id="{{ id }}_content">
+            {{ block('form_row') }}
+        </div>
+        {%- if button_delete is defined and not button_delete.rendered -%}
+            <div class='card-footer'>
+                {{ form_row(button_delete) }}
+            </div>
+        {%- endif -%}
+    </div>
+{%- endblock live_collection_entry_row -%}
 
 {% block live_table_collection_row %}
     {% set attr = attr|merge({'class': attr.class|default('')}) %}
