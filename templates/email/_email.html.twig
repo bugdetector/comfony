@@ -1,0 +1,23 @@
+{% apply inky_to_html|inline_css(source('@emails/foundation-emails.css')) %}
+    <container>
+        <row class="header">
+            <columns>
+                <spacer size="16"></spacer>
+                <a href="{{ url('homepage') }}">
+                    <img src="{{ email.image('@assets/logo.png') }}" class="logo" alt="{{ app_name }} Logo">
+                </a>
+                <spacer size="16"></spacer>
+            </columns>
+        </row>
+
+        {% block content %}
+        {% endblock %}
+
+        <row class="footer">
+            <columns>
+                <p>{{ app_name }}</p>
+            </columns>
+        </row>
+        <spacer size="16"></spacer>
+    </container>
+{% endapply %}

@@ -1,5 +1,4 @@
 {% extends 'security/login.html.twig' %}
-{% block flashes %}{% endblock %}
 {% block body %}
 	<div class="flex items-center justify-center grow bg-center bg-no-repeat page-bg">
 		<div class="card max-w-[440px] w-full">
@@ -25,22 +24,5 @@
 			</div>
 		</div>
 	</div>
-	{# 
-			<div class="w-full min-h-screen flex flex-col sm:justify-center items-center pt-4 sm:pt-0">
-				<div class="w-full sm:max-w-md mx-auto">
-					<h2 class="mb-12 text-center text-5xl font-extrabold">{% trans %}Reset your password{% endtrans %}</h2>
-		            {{ include(theme.themeDirectory ~ '/partials/_flash_messages.html.twig') }}
-					{% trans with {
-						expire: resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle'),
-						forgot_password_path: path('app_forgot_password_request')
-					} %}reset_password.check_mail{% endtrans %}
-					<div class="mt-6 text-center">
-						<a href="{{ path('homepage') }}" class="btn-danger">
-							<span class='i-tabler-chevron-left text-xl'></span>
-							<span>{% trans %}Back to mainpage{% endtrans %}</span>
-						</a>
-					</div>
-				</div>
-			</div> #}
 
 {% endblock %}

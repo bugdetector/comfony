@@ -5,6 +5,8 @@ twig:
         theme: '@App\Theme\ThemeHelper'
     paths: 
         '%kernel.project_dir%/templates/themes/base_theme' : base_theme
+        '%kernel.project_dir%/templates/email': emails
+        '%kernel.project_dir%/public/assets': assets
     form_themes: ['@base_theme/form_theme.html.twig']
 when@test:
     twig:
