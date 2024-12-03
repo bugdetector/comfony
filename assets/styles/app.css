@@ -37,29 +37,41 @@
     }
 
     /* Tom Select Styles */
+    .ts-wrapper{
+        @apply p-0;
+    }
+    .ts-wrapper.single .ts-control{
+            @apply flex flex-row flex-nowrap text-nowrap;
+            background-image: none;
+    }
     .ts-control{
-        @apply dark:bg-slate-700 border-inherit;
+        @apply dark:bg-secondary dark:text-dark-inverse border-inherit;
+    }
+    .ts-control .clear-button{
+        @apply text-4xl mt-[-0.4rem]
     }
     .ts-control input{
-        @apply dark:placeholder-gray-200 dark:text-gray-100;
+        @apply dark:placeholder-dark dark:text-dark-inverse;
+    }
+    .ts-wrapper.single .ts-control{
+        @apply dark:bg-secondary dark:text-dark-inverse shadow-none;
     }
     .ts-wrapper.multi .ts-control > div{
-        background-image: none !important;
-        @apply bg-slate-300 border-slate-300 text-slate-800 dark:bg-slate-800 dark:border-slate-800 dark:text-slate-300;
+        @apply dark:bg-secondary dark:text-dark-inverse;
     }
     .ts-wrapper.plugin-remove_button:not(.rtl) .item .remove{
-        @apply border-s-slate-800;
+        @apply dark:border-dark;
     }
     .ts-dropdown{
-        @apply bg-slate-300 text-slate-800 dark:bg-slate-800 dark:text-slate-300;
+        @apply dark:bg-secondary dark:text-dark-inverse;
     }
 
     .ts-dropdown .active{
-        @apply bg-blue-400 text-slate-800 dark:bg-blue-600 dark:text-slate-300;
+        @apply bg-blue-300 dark:bg-primary-active dark:text-dark-inverse;
     }
 
     .ts-dropdown .create{
-        @apply  text-slate-800 dark:text-slate-300;
+        @apply  dark:text-dark-inverse;
     }
     /* Tom Select Styles */
 }
