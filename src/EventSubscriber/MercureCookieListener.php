@@ -2,6 +2,7 @@
 
 namespace App\EventSubscriber;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -14,7 +15,8 @@ class MercureCookieListener
     public function __construct(
         private Security $security,
         private Discovery $discovery,
-        private Authorization $authorization
+        private Authorization $authorization,
+        private LoggerInterface $logger
     ) {
     }
 
@@ -23,10 +25,15 @@ class MercureCookieListener
     {
         /** @var User */
         $user = $this->security?->getUser();
+        $request = $requestEvent->getRequest();
         // Check if user is logged in and it is not a rest api request
-        if ($user && !$requestEvent->getRequest()->headers->get('authorization')) {
-            $this->discovery->addLink($requestEvent->getRequest());
-            $this->authorization->setCookie($requestEvent->getRequest(), ['*']);
+        if ($user && !$request->get('_stateless') && $request->hasSession()) {
+            try{
+                $this->discovery->addLink($request);
+                $this->authorization->setCookie($request, ['*']);
+            } catch(\Exception $ex){
+                $this->logger->error($ex->getMessage());
+            }
         }
     }
 }
