@@ -17,8 +17,8 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LiveAsyncFileType extends AbstractType {
-
+class LiveAsyncFileType extends AbstractType
+{
     public function __construct(
         private EntityManagerInterface $entityManager,
         private AsyncFileTransformer $asyncFileTransformer,
@@ -71,10 +71,10 @@ class LiveAsyncFileType extends AbstractType {
         }
 
         $value = null;
-        if($view->vars['value'] instanceof File ){
+        if ($view->vars['value'] instanceof File) {
             $value = $view->vars['value']->getId();
-        } else if($view->vars['value'] instanceof Collection) {
-            $value = $view->vars['value']->map(function(\App\Entity\File\File $file){
+        } elseif ($view->vars['value'] instanceof Collection) {
+            $value = $view->vars['value']->map(function (\App\Entity\File\File $file) {
                 return $file->getId();
             })->toArray();
         }

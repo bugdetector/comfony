@@ -22,7 +22,7 @@ class AsyncFileTransformer implements DataTransformerInterface
      */
     public function transform(mixed $files): File|Collection|null
     {
-        if($files instanceof PersistentCollection && !$files->isInitialized()) {
+        if ($files instanceof PersistentCollection && !$files->isInitialized()) {
             $files->initialize();
         }
         return $files;

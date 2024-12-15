@@ -28,10 +28,10 @@ class MercureCookieListener
         $request = $requestEvent->getRequest();
         // Check if user is logged in and it is not a rest api request
         if ($user && !$request->get('_stateless') && $request->hasSession()) {
-            try{
+            try {
                 $this->discovery->addLink($request);
                 $this->authorization->setCookie($request, ['*']);
-            } catch(\Exception $ex){
+            } catch (\Exception $ex) {
                 $this->logger->error($ex->getMessage());
             }
         }

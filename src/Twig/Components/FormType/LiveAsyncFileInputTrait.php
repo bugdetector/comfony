@@ -16,7 +16,8 @@ use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 
-trait LiveAsyncFileInputTrait {
+trait LiveAsyncFileInputTrait
+{
     use ComponentWithFormTrait;
 
     protected FileRepository $fileRepository;
@@ -30,7 +31,7 @@ trait LiveAsyncFileInputTrait {
     {
         $propertyPath = $this->fieldNameToPropertyPath($name, $this->formName);
         $data = $propertyAccessor->getValue($this->formValues, $propertyPath);
-        
+
         preg_match_all(
             '/\w+/',
             str_replace("file_input_", "", $name),
@@ -43,10 +44,10 @@ trait LiveAsyncFileInputTrait {
             $uploadedFiles = $uploadedFiles[$namePart];
         }
         try {
-            if(!is_array($uploadedFiles)) {
+            if (!is_array($uploadedFiles)) {
                 $uploadedFiles = [$uploadedFiles];
             }
-            foreach($uploadedFiles as $uploadedFile){
+            foreach ($uploadedFiles as $uploadedFile) {
                 $file = new File();
                 File::saveUploadedFile(
                     $file,
@@ -55,12 +56,11 @@ trait LiveAsyncFileInputTrait {
                     $this->entityManager,
                     nameParts: [$firstPart, ...$nameParts]
                 );
-                if(is_array($data)){
+                if (is_array($data)) {
                     $data[] = $file->getId();
                 } else {
                     $data = $file->getId();
                 }
-                
             }
             $propertyAccessor->setValue($this->formValues, $propertyPath, $data);
         } catch (\Exception $ex) {
@@ -70,12 +70,15 @@ trait LiveAsyncFileInputTrait {
     }
 
     #[LiveAction]
-    public function removeFile(PropertyAccessorInterface $propertyAccessor, #[LiveArg] string $name, #[LiveArg] int $index)
-    {
+    public function removeFile(
+        PropertyAccessorInterface $propertyAccessor,
+        #[LiveArg] string $name,
+        #[LiveArg] int $index
+    ) {
         $propertyPath = $this->fieldNameToPropertyPath($name, $this->formName);
         $data = $propertyAccessor->getValue($this->formValues, $propertyPath);
         $file = null;
-        if(is_array($data)){
+        if (is_array($data)) {
             $file = $this->fileRepository->find($data[$index]);
             unset($data[$index]);
             $propertyAccessor->setValue($this->formValues, $propertyPath, $data);
@@ -83,7 +86,7 @@ trait LiveAsyncFileInputTrait {
             $file = $this->fileRepository->find($data);
             $propertyAccessor->setValue($this->formValues, $propertyPath, null);
         }
-        
+
         if ($file) {
             $file->setStatus(FileStatus::Deleted);
             $this->entityManager->persist($file);
