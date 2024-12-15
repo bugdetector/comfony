@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Twig\Components;
+namespace App\Twig\Components\FormType;
 
 use App\Entity\File\File;
 use App\Entity\File\FileStatus;

@@ -6,6 +6,7 @@ use App\Entity\File\File;
 use App\Repository\FileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
@@ -21,6 +22,9 @@ class AsyncFileTransformer implements DataTransformerInterface
      */
     public function transform(mixed $files): File|Collection|null
     {
+        if($files instanceof PersistentCollection && !$files->isInitialized()) {
+            $files->initialize();
+        }
         return $files;
     }
 

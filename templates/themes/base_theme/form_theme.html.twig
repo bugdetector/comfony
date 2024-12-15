@@ -87,9 +87,29 @@
     <div class='mb-3'>
         {{ form_label(form) }}
         {{ form_errors(form) }}
-        {{ component('AsyncFileInput', {
+        {{ component('FormType:AsyncFileInput', {
             vars: form.vars
         }) }}
+        {{ form_help(form) }}
+    </div>
+{% endblock %}
+
+{% block live_async_file_row %}
+    {% import theme.themeDirectory ~ "/partials/macros.html.twig" as macros %}
+    <div class='mb-3'>
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {% set isMultiple = form.vars.attr.multiple|default(false) %}
+        {% if isMultiple %}
+            {% for index, file in data %}
+                {{ macros.live_async_file_preview(file, full_name, index) }}
+            {% endfor %}
+        {% elseif data %}
+            {{ macros.live_async_file_preview(data, full_name, 0) }}
+        {% endif %}
+        {% set prefixedName = "live_file_input_" ~ full_name %}
+        <input type='file' {{ isMultiple ? 'multiple' }} accept="{{ form.vars.attr.accept|default('') }}" name='live_file_input_{{ full_name  ~ (isMultiple ? "[]") }}' onchange='document.getElementById("{{ form.vars.id }}").click()' class='file-input'/>
+		<button type='button' id='{{ form.vars.id }}' data-action="live#action" data-live-action-param="files(live_file_input_{{ full_name ~ (isMultiple ? "[]") }})|uploadFile" data-live-name-param="{{ full_name }}" class='hidden'></button>
         {{ form_help(form) }}
     </div>
 {% endblock %}
