@@ -51,7 +51,7 @@
         @apply text-4xl mt-[-0.4rem]
     }
     .ts-control input{
-        @apply dark:placeholder-dark dark:text-dark-inverse;
+        @apply placeholder-dark dark:placeholder-white dark:text-dark-inverse;
     }
     .ts-wrapper.single .ts-control{
         @apply dark:bg-secondary dark:text-dark-inverse shadow-none;
