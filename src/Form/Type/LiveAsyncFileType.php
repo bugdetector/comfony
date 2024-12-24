@@ -8,7 +8,6 @@ use App\Entity\File\FileStatus;
 use App\Form\Extension\DataTransformer\AsyncFileTransformer;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -41,6 +40,7 @@ class LiveAsyncFileType extends AbstractType
             'multiple' => false,
             'allow_file_upload' => true,
             'invalid_message' => 'Please select a valid file.',
+            'allow_delete' => true,
         ]);
     }
 
@@ -69,6 +69,7 @@ class LiveAsyncFileType extends AbstractType
         if ($options['multiple']) {
             $view->vars['attr']['multiple'] = 'multiple';
         }
+        $view->vars['allow_delete'] = $options['allow_delete'];
 
         $value = null;
         if ($view->vars['value'] instanceof File) {

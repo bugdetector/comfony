@@ -102,10 +102,10 @@
         {% set isMultiple = form.vars.attr.multiple|default(false) %}
         {% if isMultiple %}
             {% for index, file in data %}
-                {{ macros.live_async_file_preview(file, full_name, index) }}
+                {{ macros.live_async_file_preview(file, full_name, index, allow_delete) }}
             {% endfor %}
         {% elseif data %}
-            {{ macros.live_async_file_preview(data, full_name, 0) }}
+            {{ macros.live_async_file_preview(data, full_name, 0, allow_delete) }}
         {% endif %}
         {% set prefixedName = "live_file_input_" ~ full_name %}
         <input type='file' {{ isMultiple ? 'multiple' }} accept="{{ form.vars.attr.accept|default('') }}" name='live_file_input_{{ full_name  ~ (isMultiple ? "[]") }}' onchange='document.getElementById("{{ form.vars.id }}").click()' class='file-input'/>

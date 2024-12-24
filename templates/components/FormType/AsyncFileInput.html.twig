@@ -16,34 +16,35 @@
 						<a href='{{ upload_asset(file.filePath) }}' download='{{ file.fileName }}'>
 							<span class='i-tabler-download text-2xl'></span>
 						</a>
-						{% set modalId = 'delete-modal-' ~ file.id %}
-						{% set objectName = 'File'|trans %}
-						<button type='button' data-modal-toggle="#{{ modalId }}">
-							<span class='ki-filled ki-trash text-red-500 text-2xl'></span>
-						</button>
-						<div class="modal" data-modal="true" id="{{ modalId }}">
-							<div class="modal-content modal-center-y max-w-[600px] max-h-[95%]">
-								<div class="modal-header">
-									<button type="button" class="btn btn-xs btn-icon btn-light" data-modal-dismiss="true">
-										<i class="ki-outline ki-cross"></i>
-										<span class="sr-only">{% trans %}Close{% endtrans %}</span>
-									</button>
-								</div>
-								<div class="modal-body text-center">
-									<span class="ki-filled ki-information-3 mx-auto mb-4 text-8xl"></span>
-									<h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">{% trans with {'object': objectName} %}Are you sure you want to delete this :objectName?{% endtrans %}</h3>
-									<div class="flex justify-center gap-3">
-										<button data-modal-dismiss="true" type="button" class="btn btn-danger" data-action="live#action"  data-live-action-param="removeFile" data-live-index-param="{{ index }}">
-											{% trans %}Yes{% endtrans %}
+						{% if this.vars.allow_delete %}
+							{% set modalId = 'delete-modal-' ~ file.id %}
+							{% set objectName = 'File'|trans %}
+							<button type='button' data-modal-toggle="#{{ modalId }}">
+								<span class='ki-filled ki-trash text-red-500 text-2xl'></span>
+							</button>
+							<div class="modal" data-modal="true" id="{{ modalId }}">
+								<div class="modal-content modal-center-y max-w-[600px] max-h-[95%]">
+									<div class="modal-header">
+										<button type="button" class="btn btn-xs btn-icon btn-light" data-modal-dismiss="true">
+											<i class="ki-outline ki-cross"></i>
+											<span class="sr-only">{% trans %}Close{% endtrans %}</span>
 										</button>
-										<button data-modal-dismiss="true" type="button" class="btn btn-light">
-											{% trans %}No{% endtrans %}
-										</button>
+									</div>
+									<div class="modal-body text-center">
+										<span class="ki-filled ki-information-3 mx-auto mb-4 text-8xl"></span>
+										<h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">{% trans with {'object': objectName} %}Are you sure you want to delete this :objectName?{% endtrans %}</h3>
+										<div class="flex justify-center gap-3">
+											<button data-modal-dismiss="true" type="button" class="btn btn-danger" data-action="live#action"  data-live-action-param="removeFile" data-live-index-param="{{ index }}">
+												{% trans %}Yes{% endtrans %}
+											</button>
+											<button data-modal-dismiss="true" type="button" class="btn btn-light">
+												{% trans %}No{% endtrans %}
+											</button>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-
+						{% endif %}
 						<input type='hidden' name='{{ this.getFullName() }}' value='{{ file.id }}'/>
 					</div>
 				</div>

@@ -40,6 +40,7 @@ class AsyncFileType extends AbstractType
             'multiple' => false,
             'allow_file_upload' => true,
             'invalid_message' => 'Please select a valid file.',
+            'allow_delete' => true,
         ]);
     }
 
@@ -69,6 +70,7 @@ class AsyncFileType extends AbstractType
             $view->vars['full_name'] .= '[]';
             $view->vars['attr']['multiple'] = 'multiple';
         }
+        $view->vars['allow_delete'] = $options['allow_delete'];
 
         $view->vars = array_replace($view->vars, [
             'type' => 'hidden',
