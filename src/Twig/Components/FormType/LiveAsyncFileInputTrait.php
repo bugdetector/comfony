@@ -94,4 +94,19 @@ trait LiveAsyncFileInputTrait
         }
         $this->dispatchBrowserEvent('live-component:update');
     }
+
+    private function fieldNameToPropertyPath(string $collectionFieldName, string $rootFormName): string
+    {
+        $propertyPath = $collectionFieldName;
+
+        if (str_starts_with($collectionFieldName, $rootFormName)) {
+            $propertyPath = substr_replace($collectionFieldName, '', 0, mb_strlen($rootFormName));
+        }
+
+        if (!str_starts_with($propertyPath, '[')) {
+            $propertyPath = "[$propertyPath]";
+        }
+
+        return $propertyPath;
+    }
 }
