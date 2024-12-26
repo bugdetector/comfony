@@ -5,7 +5,7 @@
 				<div class="relative">
 					<div class="input input-md w-full sm:w-64">
 						<i class="ki-outline ki-magnifier"></i>
-						<input type="search" data-model="debounce(300)|query" autocomplete='off' value="{{ this.query }}" placeholder="{{'Search'|trans}}">
+						<input type="search" data-model="debounce(300)|query" autocomplete='off' value="{{ this.query }}" placeholder="{{'Search'|trans}}" class="{{filterForm ? 'pe-16'}}">
 					</div>
 					{% if filterForm %}
 						<div class="dropdown absolute end-0 top-0" data-dropdown="true" data-dropdown-trigger="click" data-dropdown-placement="bottom-end">
