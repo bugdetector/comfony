@@ -96,6 +96,14 @@ page.deleted_successfully: 'Sayfa başarıyla silindi.'
 "Sorry, you don't have access to view this page.": 'Üzgünüz, bu sayfa erişim izniniz yok.'
 'Profile updated successfully': 'Profile başarıyla güncellendi.'
 Profile: Profil
-Upload: Dosya Yükle
+Upload: 'Dosya Yükle'
 'Dark Mode': 'Karanlık Mod'
 Language: Dil
+'Registration Date (From)': 'Üyelik Tarihi (Başlangıç)'
+'Registration Date (To)': 'Üyelik Tarihi (Bitiş)'
+All: Tümü
+Clear: Temizle
+'Add New label': 'Yeni label ekle'
+Add: Ekle
+'Created At (From)': 'Oluşturulma Tarihi (Başlangıç)'
+'Created At (To)': 'Oluşturulma Tarihi (Bitiş)'

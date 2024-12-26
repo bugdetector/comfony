@@ -12,8 +12,11 @@
 namespace App\Twig\Components;
 
 use App\Entity\File\File;
+use App\Entity\File\FileStatus;
 use Doctrine\ORM\QueryBuilder;
 use Override;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 
@@ -74,7 +77,50 @@ final class FilesSearchComponent extends DatatableComponent
             ],
             "filters" => [
                 'f.file_name' => [
-                    'label' => 'Name'
+                    'options' => [
+                        'label' => 'file_name',
+                    ]
+                ],
+                'f.mime_type' => [
+                    'options' => [
+                        'label' => 'mime_type',
+                    ]
+                ],
+                'f.extension' => [
+                    'options' => [
+                        'label' => 'Extension',
+                    ]
+                ],
+                'f.status' => [
+                    'type' => ChoiceType::class,
+                    'options' => [
+                        'label' => 'Status',
+                        'placeholder' => $this->translator->trans('All'),
+                        'choices' => [
+                            FileStatus::Permanent->value => FileStatus::Permanent->name,
+                            FileStatus::Temporary->value => FileStatus::Temporary->name,
+                            FileStatus::Deleted->value => FileStatus::Deleted->name,
+                        ],
+                    ]
+                ],
+                'f.createdAtStart' => [
+                    'type' => DateType::class,
+                    'column' => 'f.createdAt',
+                    'comparison' => '>=',
+                    'options' => [
+                        'label' => 'Created At (From)',
+                    ]
+                ],
+                'f.createdAtEnd' => [
+                    'type' => DateType::class,
+                    'column' => 'f.createdAt',
+                    'comparison' => '<=',
+                    'valueProcessor' => function ($value) {
+                        return $value . " 23:59:59";
+                    },
+                    'options' => [
+                        'label' => 'Created At (To)',
+                    ]
                 ],
             ]
         ];

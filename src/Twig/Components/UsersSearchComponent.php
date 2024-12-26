@@ -12,8 +12,11 @@
 namespace App\Twig\Components;
 
 use App\Entity\Auth\User;
+use App\Entity\Auth\UserStatus;
 use Doctrine\ORM\QueryBuilder;
 use Override;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 
@@ -72,11 +75,54 @@ final class UsersSearchComponent extends DatatableComponent
             ],
             "filters" => [
                 'u.name' => [
-                    'label' => 'Name'
+                    'options' => [
+                        'label' => 'Name',
+                    ]
                 ],
                 'u.email' => [
-                    'label' => 'Email'
-                ]
+                    'options' => [
+                        'label' => 'Email',
+                    ]
+                ],
+                'u.roles' => [
+                    'type' => ChoiceType::class,
+                    'options' => [
+                        'label' => 'Roles',
+                        'placeholder' => $this->translator->trans('All'),
+                        'choices' => User::ROLES,
+                    ]
+                ],
+                'u.status' => [
+                    'type' => ChoiceType::class,
+                    'options' => [
+                        'label' => 'Status',
+                        'placeholder' => $this->translator->trans('All'),
+                        'choices' => [
+                            'Active' => UserStatus::Active->name,
+                            'Blocked' => UserStatus::Blocked->name,
+                            'Banned' => UserStatus::Banned->name,
+                        ]
+                    ]
+                ],
+                'u.createdAtStart' => [
+                    'type' => DateType::class,
+                    'column' => 'u.createdAt',
+                    'comparison' => '>=',
+                    'options' => [
+                        'label' => 'Registration Date (From)',
+                    ]
+                ],
+                'u.createdAtEnd' => [
+                    'type' => DateType::class,
+                    'column' => 'u.createdAt',
+                    'comparison' => '<=',
+                    'valueProcessor' => function ($value) {
+                        return $value . " 23:59:59";
+                    },
+                    'options' => [
+                        'label' => 'Registration Date (To)',
+                    ]
+                ],
             ]
         ];
     }

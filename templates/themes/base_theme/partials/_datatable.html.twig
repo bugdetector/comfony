@@ -1,11 +1,37 @@
 <div {{ attributes }} class="grid gap-5 lg:gap-7.5">
 	<div class="card card-grid min-w-full">
-		<div class="card-header py-5 flex-wrap gap-2">
+		<div class="card-header py-5 flex-wrap justify-end gap-2">
 			{% block filters %}
-				<div class="flex grow gap-6">
-					<div class="relative w-full">
-						<input type="search"  class="input input-md w-full sm:w-64"  data-model="debounce(300)|query" autocomplete='off' value="{{ this.query }}" placeholder="{{'Search'|trans}}">
+				<div class="relative">
+					<div class="input input-md w-full sm:w-64">
+						<i class="ki-outline ki-magnifier"></i>
+						<input type="search" data-model="debounce(300)|query" autocomplete='off' value="{{ this.query }}" placeholder="{{'Search'|trans}}">
 					</div>
+					{% if filterForm %}
+						<div class="dropdown absolute end-0 top-0" data-dropdown="true" data-dropdown-trigger="click" data-dropdown-placement="bottom-end">
+							<button class="dropdown-toggle btn">
+								<i class="ki-solid ki-filter"></i>
+								<i class="ki-outline ki-down dropdown-open:!hidden"></i>
+								<i class="ki-outline ki-up !hidden dropdown-open:!block"></i>
+							</button>
+							<div class="dropdown-content ">
+								{{ form_start(filterForm) }}
+								<div class="p-4 w-64 max-h-96 scrollable-y">
+									{% for field in filterForm %}
+										<div class="form-group">
+											{{ form_row(field) }}
+										</div>
+									{% endfor %}
+								</div>
+								<div class="sticky bottom-0 bg-[--tw-page-bg]">
+									<button type="reset" class="btn btn-danger btn-outline btn-sm w-full rounded-t-none justify-center" data-action="live#action" data-live-action-param="resetFilters">
+										{{ 'Clear'|trans }}
+									</button>
+								</div>
+								{{ form_end(filterForm) }}
+							</div>
+						</div>
+					{% endif %}
 				</div>
 			{% endblock %}
 		</div>

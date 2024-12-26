@@ -14,6 +14,7 @@ namespace App\Twig\Components;
 use App\Entity\Page\Page;
 use Doctrine\ORM\QueryBuilder;
 use Override;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 
@@ -64,7 +65,20 @@ final class PagesSearchComponent extends DatatableComponent
             ],
             "filters" => [
                 'p.title' => [
-                    'label' => 'Name'
+                    'options' => [
+                        'label' => 'Title',
+                    ],
+                ],
+                'p.published' => [
+                    'type' => ChoiceType::class,
+                    'options' => [
+                        'label' => 'Published',
+                        'placeholder' => $this->translator->trans('All'),
+                        'choices' => [
+                            'Published' => 1,
+                            'Unpublished' => 0,
+                        ],
+                    ],
                 ],
             ]
         ];
