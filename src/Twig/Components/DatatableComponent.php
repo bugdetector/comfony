@@ -130,7 +130,7 @@ abstract class DatatableComponent extends AbstractController
         if ($this->filters) {
             $buildFilters = @$this->getTableBuildData()['filters'];
             foreach ($this->filters as $inputName => $value) {
-                if ($value === null) {
+                if ($value === null || $value === '') {
                     continue;
                 }
                 $name = str_replace('-', '.', $inputName);
