@@ -29,7 +29,7 @@ trait LiveAsyncFileInputTrait
     #[LiveAction]
     public function uploadFile(Request $request, PropertyAccessorInterface $propertyAccessor, #[LiveArg] string $name)
     {
-        $propertyPath = $this->fieldNameToPropertyPath($name, $this->formName);
+        $propertyPath = $this->convertFieldNameToPropertyPath($name, $this->formName);
         $data = $propertyAccessor->getValue($this->formValues, $propertyPath);
 
         preg_match_all(
@@ -75,7 +75,7 @@ trait LiveAsyncFileInputTrait
         #[LiveArg] string $name,
         #[LiveArg] int $index
     ) {
-        $propertyPath = $this->fieldNameToPropertyPath($name, $this->formName);
+        $propertyPath = $this->convertFieldNameToPropertyPath($name, $this->formName);
         $data = $propertyAccessor->getValue($this->formValues, $propertyPath);
         $file = null;
         if (is_array($data)) {
@@ -95,7 +95,7 @@ trait LiveAsyncFileInputTrait
         $this->dispatchBrowserEvent('live-component:update');
     }
 
-    private function fieldNameToPropertyPath(string $collectionFieldName, string $rootFormName): string
+    private function convertFieldNameToPropertyPath(string $collectionFieldName, string $rootFormName): string
     {
         $propertyPath = $collectionFieldName;
 
