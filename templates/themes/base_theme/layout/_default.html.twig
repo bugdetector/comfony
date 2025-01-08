@@ -18,7 +18,7 @@
 							document.getElementById('page-title').innerText = "{{ newTitle }}";
 						</script>
 					{% endblock %}
-					<div class="flex items-stretch lg:fixed z-5 top-[--tw-header-height] start-[--tw-sidebar-width] end-5 min-h-[--tw-navbar-height] mx-5 lg:mx-0 bg-[--tw-page-bg] dark:bg-[--tw-page-bg-dark]" id="navbar">
+					<div class="flex items-stretch lg:fixed z-5 top-[--tw-header-height] start-[--tw-sidebar-width] end-5 min-h-[--tw-navbar-height] mx-0 lg:mx-0 bg-[--tw-page-bg] dark:bg-[--tw-page-bg-dark]" id="navbar">
 						<div class="rounded-t-xl border border-gray-400 dark:border-gray-200 border-b-gray-300 dark:border-b-gray-200 bg-[--tw-content-bg] dark:bg-[--tw-content-bg-dark] flex items-stretch grow flex-wrap md:flex-nowrap gap-y-2 pt-3 md:pt-0">
 							{% block backLink %}{% endblock %}
 							{% block actions %}
@@ -26,7 +26,7 @@
 							{% endblock %}
 						</div>
 					</div>
-					<div class="flex grow rounded-b-xl bg-[--tw-content-bg] dark:bg-[--tw-content-bg-dark] border-x border-b border-gray-400 dark:border-gray-200 lg:mt-[--tw-navbar-height] mx-5 lg:ms-[--tw-sidebar-width] mb-5">
+					<div class="flex grow rounded-b-xl bg-[--tw-content-bg] dark:bg-[--tw-content-bg-dark] border-x border-b border-gray-400 dark:border-gray-200 lg:mt-[--tw-navbar-height] mx-0 lg:mx-5 lg:ms-[--tw-sidebar-width] mb-5">
 						<div class="flex flex-col grow lg:scrollable-y lg:[scrollbar-width:auto] lg:light:[--tw-scrollbar-thumb-color:var(--tw-content-scrollbar-color)] pt-7 lg:[&_.container-fluid]:pe-4" id="scrollable_content">
 							<main class="grow" role="content">
 								<div class="pb-6">

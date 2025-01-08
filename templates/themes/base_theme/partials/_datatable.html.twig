@@ -2,7 +2,7 @@
 	<div class="card card-grid min-w-full">
 		<div class="card-header py-5 flex-wrap justify-end gap-2">
 			{% block filters %}
-				<div class="relative">
+				<div class="relative max-w-full">
 					<div class="input input-md w-full sm:w-64">
 						<i class="ki-outline ki-magnifier"></i>
 						<input type="search" data-model="debounce(300)|query" autocomplete='off' value="{{ this.query }}" placeholder="{{'Search'|trans}}" class="{{filterForm ? 'pe-16'}}">
