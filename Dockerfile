@@ -32,6 +32,9 @@ RUN set -eux; \
 		opcache \
 		zip \
 		xsl \
+		sockets \
+		pdo \
+		pdo_mysql \
 	;
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
@@ -54,7 +57,7 @@ CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile" ]
 # Dev FrankenPHP image
 FROM frankenphp_base AS frankenphp_dev
 
-ENV APP_ENV=dev XDEBUG_MODE=off
+ENV APP_ENV=dev XDEBUG_MODE=debug
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
