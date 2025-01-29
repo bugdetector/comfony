@@ -51,10 +51,8 @@ if [ "$1" = 'frankenphp' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 		else
 			echo 'The database is now ready and reachable'
 		fi
-
-		if [ "$( find ./migrations -iname '*.php' -print -quit )" ]; then
-			php bin/console doctrine:migrations:migrate --no-interaction --all-or-nothing
-		fi
+		
+		php bin/console config:import
 	fi
 
 	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
