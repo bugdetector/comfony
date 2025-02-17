@@ -35,6 +35,7 @@ jobs:
             *.cache-from=type=gha,scope=${{github.ref}}
             *.cache-from=type=gha,scope=refs/heads/main
             *.cache-to=type=gha,scope=${{github.ref}},mode=max
+          github-token: ${{ secrets.TOKEN }}
       -
         name: Start services
         run: docker compose up --build -d

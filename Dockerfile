@@ -87,8 +87,8 @@ RUN set -eux; \
 	composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
 
 # install npm dependencies
-RUN npm install
-RUN npm run build
+RUN npm install; \
+	npm run build;
 # copy sources
 COPY --link . ./
 RUN rm -Rf frankenphp/
