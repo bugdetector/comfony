@@ -5,14 +5,13 @@ namespace App\Twig\Components\FormType;
 use App\Entity\File\File;
 use App\Entity\File\FileStatus;
 use App\Repository\FileRepository;
+use App\Service\FileManager;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -34,9 +33,8 @@ final class AsyncFileInput
 
     public function __construct(
         private FileRepository $fileRepository,
-        private SluggerInterface $slugger,
         private EntityManagerInterface $entityManager,
-        private ParameterBagInterface $parameterBag,
+        private FileManager $fileManager,
         private TranslatorInterface $translator
     ) {
     }
@@ -50,6 +48,7 @@ final class AsyncFileInput
             $matches
         );
         $nameParts = $matches[0];
+        $nameParts = array_filter($nameParts, fn($part) => !is_numeric($part));
         $firstPart = array_shift($nameParts);
         $uploadedFiles = $request->files->get("file_input_" . $firstPart);
         foreach ($nameParts as $namePart) {
@@ -61,11 +60,9 @@ final class AsyncFileInput
                 foreach ($uploadedFiles as $uploadedFile) {
                     if (!$uploadedFile->getError()) {
                         $file = new File();
-                        File::saveUploadedFile(
+                        $this->fileManager->saveUploadedFile(
                             $file,
                             $uploadedFile,
-                            $this->slugger,
-                            $this->entityManager,
                             nameParts: [$firstPart, ...$nameParts]
                         );
                         $this->vars["data"][] = $file;
@@ -80,11 +77,9 @@ final class AsyncFileInput
                 }
             } else {
                 $file = new File();
-                File::saveUploadedFile(
+                $this->fileManager->saveUploadedFile(
                     $file,
                     $uploadedFiles,
-                    $this->slugger,
-                    $this->entityManager,
                     nameParts: [$firstPart, ...$nameParts]
                 );
                 $this->vars["value"] = $file->getId();

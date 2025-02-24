@@ -6,8 +6,8 @@ use App\Entity\Auth\User;
 use App\Entity\Auth\UserStatus;
 use App\Repository\Auth\UserRepository;
 use DateTime;
-use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Gedmo\Blameable\BlameableListener;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -63,6 +63,19 @@ class UserActivityListener
                 }
                 $event->stopPropagation();
             }
+        }
+    }
+
+    #[AsEventListener(KernelEvents::REQUEST)]
+    public function setBlameableListener(KernelEvent $event)
+    {
+        /** @var User */
+        $user = $this->security->getUser();
+        if ($user) {
+            $blameableListener = new BlameableListener();
+            $blameableListener->setUserValue($user->getId());
+
+            $this->entityManager->getEventManager()->addEventSubscriber($blameableListener);
         }
     }
 }

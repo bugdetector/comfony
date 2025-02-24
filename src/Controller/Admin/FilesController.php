@@ -6,14 +6,15 @@ use App\Entity\File\File;
 use App\Entity\File\FileStatus;
 use App\Form\File\FileType;
 use App\Repository\FileRepository;
+use App\Service\FileManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/admin/files')]
@@ -33,8 +34,10 @@ class FilesController extends AbstractController
     }
 
     #[Route('/new', name: 'app_admin_files_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
-    {
+    public function new(
+        Request $request,
+        FileManager $fileManager,
+    ): Response {
         $file = new File();
         $form = $this->createForm(FileType::class, $file);
         $form->handleRequest($request);
@@ -43,11 +46,9 @@ class FilesController extends AbstractController
             $uploadedFile = $form->get('file')->getData();
             if ($uploadedFile) {
                 try {
-                    File::saveUploadedFile(
+                    $fileManager->saveUploadedFile(
                         $file,
                         $uploadedFile,
-                        $slugger,
-                        $entityManager,
                         FileStatus::Permanent
                     );
                     $this->addFlash('success', $this->translator->trans('file.uploaded_successfully'));
@@ -68,10 +69,10 @@ class FilesController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_admin_files_edit', methods: ['GET', 'POST'])]
     public function edit(
+        KernelInterface $kernel,
         Request $request,
         File $file,
-        EntityManagerInterface $entityManager,
-        SluggerInterface $slugger
+        FileManager $fileManager,
     ): Response {
         $form = $this->createForm(FileType::class, $file);
         $form->handleRequest($request);
@@ -81,11 +82,9 @@ class FilesController extends AbstractController
             $uploadedFile = $form->get('file')->getData();
             if ($uploadedFile) {
                 try {
-                    File::saveUploadedFile(
+                    $fileManager->saveUploadedFile(
                         $file,
                         $uploadedFile,
-                        $slugger,
-                        $entityManager,
                         FileStatus::Permanent
                     );
                     $this->addFlash('success', $this->translator->trans('file.uploaded_successfully'));

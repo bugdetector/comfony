@@ -120,38 +120,6 @@ class File
         return $this;
     }
 
-    public static function saveUploadedFile(
-        File $file,
-        UploadedFile $uploadedFile,
-        SluggerInterface $slugger,
-        EntityManagerInterface $entityManager,
-        FileStatus $fileStatus = FileStatus::Temporary,
-        array $nameParts = ['files', 'file']
-    ) {
-        $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-        $safeFilename = $slugger->slug($originalFilename);
-        $size = $uploadedFile->getSize();
-        $mimeType = $uploadedFile->getMimeType();
-        $extension = $uploadedFile->guessExtension();
-        $newFilename = $safeFilename . '-' . uniqid() . '.' . $extension;
-        $directory =  "/" . implode('/', $nameParts) . "/";
-        $uploadedFile->move(
-            "uploads/" . $directory,
-            $newFilename
-        );
-        if ($file->getFilePath()) {
-            unlink("uploads" . $file->getFilePath());
-        }
-        $file->setFileName($originalFilename);
-        $file->setFilePath($directory . $newFilename);
-        $file->setFileSize($size);
-        $file->setMimeType($mimeType);
-        $file->setExtension($extension);
-        $file->setStatus($fileStatus);
-        $entityManager->persist($file);
-        $entityManager->flush();
-    }
-
     public function __toString()
     {
         return 'uploads' . $this->file_path;
