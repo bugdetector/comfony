@@ -43,6 +43,9 @@ class File
     #[ORM\Column(enumType: FileStatus::class)]
     private ?FileStatus $status = FileStatus::Temporary;
 
+    #[ORM\Column]
+    private ?bool $compressed = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -145,5 +148,17 @@ class File
         return $this->isImage() ||
             $this->isVideo() ||
             $this->isPdf();
+    }
+
+    public function isCompressed(): ?bool
+    {
+        return $this->compressed;
+    }
+
+    public function setCompressed(bool $compressed): static
+    {
+        $this->compressed = $compressed;
+
+        return $this;
     }
 }
