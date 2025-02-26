@@ -35,6 +35,7 @@ RUN set -eux; \
 		sockets \
 		pdo \
 		pdo_mysql \
+		gd \
 	;
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
