@@ -23,10 +23,6 @@
 			{{ component('FilePreviewComponent', {file: file}) }}
 			{{ include('admin/files/_form.html.twig') }}
 		</div>
-		<div class="md:w-3/12 w-full">
-			<div class='md:p-3 p-0'>
-				{{ include('admin/files/_delete_form.html.twig') }}
-			</div>
-		</div>
 	</div>
+	{{ include('admin/files/_delete_form.html.twig') }}
 {% endblock %}

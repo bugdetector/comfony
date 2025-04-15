@@ -91,7 +91,7 @@ class ResetPasswordController extends AuthLayoutController
         Request $request,
         UserPasswordHasherInterface $passwordHasher,
         TranslatorInterface $translator,
-        string $token = null
+        ?string $token = null
     ): Response {
 
         if ($this->getUser()) {

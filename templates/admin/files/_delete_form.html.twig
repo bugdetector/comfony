@@ -1,4 +1,10 @@
 <form method="post" action="{{ path('app_admin_files_delete', {'id': file.id}) }}">
-	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ file.id) }}">
-	{% include theme.themeDirectory ~ "/partials/_delete_form_button.html.twig" with {objectName: 'File'|trans} %}
+	<div class="fixed bottom-10 end-40 z-10">
+		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ file.id) }}">
+		{% set modalId = 'delete-modal-' ~ file.id %}
+		<button type='button' class='btn btn-danger' data-modal-toggle="#{{ modalId }}">
+			<span class='ki-outline ki-trash text-xl'></span>
+		</button>
+	</div>
+	{% include theme.themeDirectory ~ "/partials/_delete_modal.html.twig" with {modalId: modalId, objectName: "File"|trans} %}
 </form>

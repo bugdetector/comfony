@@ -1,4 +1,10 @@
 <form method="post" action="{{ path('app_admin_users_delete', {'id': user.id}) }}">
-	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-	{% include theme.themeDirectory ~ "/partials/_delete_form_button.html.twig" with {objectName: 'User'|trans} %}
+	<div class="fixed bottom-10 end-36 z-10">
+		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+		{% set modalId = 'delete-modal-' ~ user.id %}
+		<button type='button' class='btn btn-danger' data-modal-toggle="#{{ modalId }}">
+			<span class='ki-outline ki-trash text-xl'></span>
+		</button>
+	</div>
+	{% include theme.themeDirectory ~ "/partials/_delete_modal.html.twig" with {modalId: modalId, objectName: "User"|trans} %}
 </form>
