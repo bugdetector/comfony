@@ -203,6 +203,11 @@
                                     {{ form_errors(innerChild) }}
                                 </td>
                             {% endif %}
+                        {% else %}
+                            <td class="px-2 py-2 align-baseline">
+                                {{ form_widget(child) }}
+                                {{ form_errors(child) }}
+                            </td>
                         {% endfor %}
                         {%- if child.vars.button_delete is defined and not child.vars.button_delete.rendered -%}
                             <td class="px-2 py-2 align-baseline">

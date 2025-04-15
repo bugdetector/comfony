@@ -9,6 +9,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Event\PostUpdateEventArgs;
+use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Doctrine\ORM\Events;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
@@ -27,6 +28,7 @@ class FileReferenceListener extends AbstractController implements EventSubscribe
         return [
             Events::postPersist,
             Events::postUpdate,
+            Events::preRemove,
         ];
     }
 
@@ -48,8 +50,18 @@ class FileReferenceListener extends AbstractController implements EventSubscribe
         $this->checkFileReferences($object, 'update');
     }
 
+    public function preRemove(PreRemoveEventArgs $args)
+    {
+        $object = $args->getObject();
+        $this->checkFileReferences($object, 'remove');
+    }
+
     private function checkFileReferences(object $object, string $action): void
     {
+        $newStatus = FileStatus::Permanent;
+        if ($action == 'remove') {
+            $newStatus = FileStatus::Deleted;
+        }
         if ($object instanceof File) {
             return;
         }
@@ -60,23 +72,23 @@ class FileReferenceListener extends AbstractController implements EventSubscribe
             $property->setAccessible(true);
             $value = $property->getValue($object);
             if ($value instanceof Collection) {
-                $value->forAll(function ($index, $object) {
+                $value->forAll(function ($index, $object) use ($newStatus) {
                     if ($object instanceof File) {
-                        $this->updateFileStatus($object);
+                        $this->updateFileStatus($object, $newStatus);
                         return true;
                     }
                     return false;
                 });
             } else {
-                $this->updateFileStatus($object);
+                $this->updateFileStatus($value, $newStatus);
             }
         }
     }
 
-    private function updateFileStatus($object)
+    private function updateFileStatus($object, $newStatus)
     {
         if ($object instanceof File) {
-            $object->setStatus(FileStatus::Permanent);
+            $object->setStatus($newStatus);
             $this->entityManager->persist($object);
             $this->entityManager->flush();
         }
