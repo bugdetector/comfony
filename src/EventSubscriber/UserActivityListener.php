@@ -44,22 +44,42 @@ class UserActivityListener
                 ->execute();
             if ($user->getStatus() != UserStatus::Active) {
                 $this->security->logout(false);
+                $request = $event->getRequest();
                 /** @var Session */
-                $session = $event->getRequest()->getSession();
+                $session = !$request->get('_stateless') && $request->hasSession() ?
+                    $request->getSession() : null;
                 if ($user->getStatus() == UserStatus::Blocked) {
-                    $session->getFlashBag()->add(
-                        'error',
-                        $this->translator->trans(
-                            'Your account has been blocked. Please login after reset password.'
-                        )
-                    );
+                    if ($session) {
+                        $session->getFlashBag()->add(
+                            'error',
+                            $this->translator->trans(
+                                'Your account has been blocked. Please login after reset password.'
+                            )
+                        );
+                    } else {
+                        throw new \Symfony\Component\HttpKernel\Exception\HttpException(
+                            401,
+                            $this->translator->trans(
+                                'Your account has been blocked. Please login after reset password.'
+                            )
+                        );
+                    }
                 } elseif ($user->getStatus() == UserStatus::Banned) {
-                    $session->getFlashBag()->add(
-                        'error',
-                        $this->translator->trans(
-                            'This account has been banned. You are not able to login with this account.'
-                        )
-                    );
+                    if ($session) {
+                        $session->getFlashBag()->add(
+                            'error',
+                            $this->translator->trans(
+                                'This account has been banned. You are not able to login with this account.'
+                            )
+                        );
+                    } else {
+                        throw new \Symfony\Component\HttpKernel\Exception\HttpException(
+                            401,
+                            $this->translator->trans(
+                                'This account has been banned. You are not able to login with this account.'
+                            )
+                        );
+                    }
                 }
                 $event->stopPropagation();
             }
