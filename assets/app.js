@@ -20,9 +20,15 @@ document.addEventListener('turbo:render', (e) => {
     initializeComponents();
 })
 
-document.addEventListener('turbo:before-stream-render', (e) => {
+document.addEventListener('turbo:before-stream-render', (event) => {
     console.log(e.type);
-    initializeComponents();
+    const fallbackToDefaultActions = event.detail.render;
+
+    event.detail.render = function (streamElement) {
+        fallbackToDefaultActions(streamElement);
+        initializeComponents();
+    }
+    
 })
 
 document.addEventListener('turbo:before-frame-render', (e) => {
