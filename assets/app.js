@@ -21,7 +21,7 @@ document.addEventListener('turbo:render', (e) => {
 })
 
 document.addEventListener('turbo:before-stream-render', (event) => {
-    console.log(e.type);
+    console.log(event.type);
     const fallbackToDefaultActions = event.detail.render;
 
     event.detail.render = function (streamElement) {
