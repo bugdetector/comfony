@@ -76,7 +76,7 @@ class FileManager
             imagesavealpha($image, true);
             imagepng($image, $fullPath, 9);
             $file->setFileSize(filesize($fullPath));
-        } elseif ($file->getMimeType() == 'image/jpg') {
+        } elseif (in_array($file->getMimeType(), ['image/jpg', 'image/jpeg'])) {
             imagejpeg($image, $fullPath, 75);
             $file->setFileSize(filesize($fullPath));
         }
