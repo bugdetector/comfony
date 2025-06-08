@@ -36,6 +36,7 @@ RUN set -eux; \
 		pdo \
 		pdo_mysql \
 		gd \
+		exif \
 	;
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser

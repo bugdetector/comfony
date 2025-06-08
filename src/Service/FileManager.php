@@ -77,6 +77,20 @@ class FileManager
             imagepng($image, $fullPath, 9);
             $file->setFileSize(filesize($fullPath));
         } elseif (in_array($file->getMimeType(), ['image/jpg', 'image/jpeg'])) {
+            $exif = exif_read_data($fullPath);
+            if (!empty($exif['Orientation'])) {
+                switch ($exif['Orientation']) {
+                    case 8:
+                        $image = imagerotate($image, 90, 0);
+                        break;
+                    case 3:
+                        $image = imagerotate($image, 180, 0);
+                        break;
+                    case 6:
+                        $image = imagerotate($image, -90, 0);
+                        break;
+                }
+            }
             imagejpeg($image, $fullPath, 75);
             $file->setFileSize(filesize($fullPath));
         }
