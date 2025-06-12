@@ -11,6 +11,15 @@
             "ref": "64d8583af5ea57b7afa4aba4b159907f3a148b05"
         }
     },
+    "doctrine/deprecations": {
+        "version": "1.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "87424683adc81d7dc305eefec1fced883084aab9"
+        }
+    },
     "doctrine/doctrine-bundle": {
         "version": "2.11",
         "recipe": {
@@ -312,12 +321,12 @@
         ]
     },
     "symfony/ux-turbo": {
-        "version": "2.24",
+        "version": "2.26",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
-            "version": "2.19",
-            "ref": "9dd2778a116b6e5e01e5e1582d03d5a9e82630de"
+            "version": "2.20",
+            "ref": "c85ff94da66841d7ff087c19cbcd97a2df744ef9"
         }
     },
     "symfony/ux-twig-component": {

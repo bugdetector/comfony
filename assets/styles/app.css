@@ -1,7 +1,5 @@
 /* Tailwind core */
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+/* @import "tailwindcss";
 
 .sidebar{
     @apply [.open&]:lg:w-64 [.open&]:border-r-2 [.open&]:border-gray-300 hover:lg:w-64 hover:border-r-2 hover:border-gray-300 duration-300 bg-[--tw-page-bg] dark:bg-[--tw-page-bg-dark];
@@ -35,8 +33,6 @@
     .action-remove {
         @apply !bg-red-300 dark:!bg-red-600;
     }
-
-    /* Tom Select Styles */
     .ts-wrapper{
         @apply p-0;
     }
@@ -73,5 +69,4 @@
     .ts-dropdown .create{
         @apply  dark:text-dark-inverse;
     }
-    /* Tom Select Styles */
-}
+} */
