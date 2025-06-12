@@ -1,5 +1,9 @@
 /* Tailwind core */
-/* @import "tailwindcss";
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dracula;
+}
+/* 
 
 .sidebar{
     @apply [.open&]:lg:w-64 [.open&]:border-r-2 [.open&]:border-gray-300 hover:lg:w-64 hover:border-r-2 hover:border-gray-300 duration-300 bg-[--tw-page-bg] dark:bg-[--tw-page-bg-dark];

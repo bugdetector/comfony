@@ -32,6 +32,18 @@ Encore
     // but, you probably want this, unless you're building a single-page app
     .enableSingleRuntimeChunk()
 
+    .configureWatchOptions((watchOptions) => {
+        watchOptions.poll = 250;
+        watchOptions.ignored = [
+            "**/*.php",
+            "**/node_modules",
+            "**/public",
+            "**/var",
+            "**/vendor",
+            "**/*.log",
+        ];
+    })
+
     /*
      * FEATURE CONFIG
      *
