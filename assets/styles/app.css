@@ -1,5 +1,9 @@
 /* Tailwind core */
 @import "tailwindcss";
+@source "../../templates/**/*.twig";
+@source "../**/*.js";
+@source "../../vendor/**/*.twig";
+@source "../../vendor/**/*.js";
 @plugin "daisyui" {
   themes: light --default, dracula;
 }

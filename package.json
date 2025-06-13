@@ -1,6 +1,5 @@
 {
     "devDependencies": {
-        "@arkounay/ux-collection": "file:vendor/arkounay/ux-collection/assets",
         "@babel/core": "^7.17.0",
         "@babel/preset-env": "^7.16.0",
         "@egoist/tailwindcss-icons": "^1.7.1",
