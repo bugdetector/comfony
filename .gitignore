@@ -26,7 +26,6 @@ npm-debug.log
 yarn-error.log
 package-lock.json
 yarn.lock
-/.vscode
 ###< symfony/webpack-encore-bundle ###
 
 ###> Comfony ###

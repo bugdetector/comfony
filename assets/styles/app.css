@@ -1,80 +1,50 @@
 /* Tailwind core */
 @import "tailwindcss";
+@import './sidebar.css';
 @source "../../templates/**/*.twig";
 @source "../**/*.js";
 @source "../../vendor/**/*.twig";
 @source "../../vendor/**/*.js";
+
 @plugin "daisyui" {
-  themes: light --default, dracula;
-}
-/* 
-
-.sidebar{
-    @apply [.open&]:lg:w-64 [.open&]:border-r-2 [.open&]:border-gray-300 hover:lg:w-64 hover:border-r-2 hover:border-gray-300 duration-300 bg-[--tw-page-bg] dark:bg-[--tw-page-bg-dark];
-    transition-property: width;
-    overflow: auto;
-}
-.sidebar:hover .tooltip, .sidebar.open .tooltip{
-    @apply block !bg-inherit text-black dark:text-white hover:text-black dark:hover:text-white shadow-none !transform-none;
-    position: initial !important;
+  exclude: rootscrollgutter, rootcolor;
+  themes: light --default, dracula --prefersdark;
+  root: ":root";
 }
 
-.sidebar-item{
-    @apply flex items-center w-full p-0.5 rounded-lg;
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: oklch(98% 0 0);
+  --color-base-200: oklch(96% 0.001 286.375);
+  --color-base-300: oklch(92% 0.004 286.32);
+  --color-base-content: oklch(21% 0.006 285.885);
+  --color-primary: oklch(58% 0.158 241.966);
+  --color-primary-content: oklch(98% 0.014 180.72);
+  --color-secondary: oklch(43% 0 0);
+  --color-secondary-content: oklch(98% 0.031 120.757);
+  --color-accent: oklch(0% 0 0);
+  --color-accent-content: oklch(100% 0 0);
+  --color-neutral: oklch(21% 0.006 285.885);
+  --color-neutral-content: oklch(98% 0 0);
+  --color-info: oklch(71% 0.143 215.221);
+  --color-info-content: oklch(98% 0.019 200.873);
+  --color-success: oklch(70% 0.14 182.503);
+  --color-success-content: oklch(98% 0.014 180.72);
+  --color-warning: oklch(70% 0.213 47.604);
+  --color-warning-content: oklch(98% 0.016 73.684);
+  --color-error: oklch(63% 0.237 25.331);
+  --color-error-content: oklch(97% 0.013 17.38);
 }
 
-.sidebar-icon{
-    @apply btn btn-icon btn-icon-lg rounded-full size-10 border border-transparent text-gray-600 [.active&]:bg-light [.active&]:text-primary [.active&]:border-gray-300
+@plugin '@egoist/tailwindcss-icons';
+
+.menu li > *:not(.menu-active, .dropdown-content):hover {
+   background-color: color-mix(in oklab,var(--color-base-content)10%,transparent) !important; 
 }
 
-.sidebar-item:hover, .sidebar-item:hover .sidebar-icon{
-    @apply bg-light text-primary border-gray-300;
+.menu li > *:not(.menu-active, .dropdown-content):active {
+   background-color: color-mix(in oklab,var(--color-base-content)40%,transparent) !important; 
 }
-
-@layer components {
-    .action-create {
-        @apply !bg-green-300 dark:!bg-green-600;
-    }
-    .action-update {
-        @apply !bg-yellow-300 dark:text-slate-600;
-    }
-    .action-remove {
-        @apply !bg-red-300 dark:!bg-red-600;
-    }
-    .ts-wrapper{
-        @apply p-0;
-    }
-    .ts-wrapper.single .ts-control{
-            @apply flex flex-row flex-nowrap text-nowrap;
-            background-image: none;
-    }
-    .ts-control{
-        @apply dark:bg-secondary dark:text-dark-inverse border-inherit;
-    }
-    .ts-control .clear-button{
-        @apply text-4xl mt-[-0.4rem]
-    }
-    .ts-control input{
-        @apply placeholder-dark dark:placeholder-white dark:text-dark-inverse;
-    }
-    .ts-wrapper.single .ts-control{
-        @apply dark:bg-secondary dark:text-dark-inverse shadow-none;
-    }
-    .ts-wrapper.multi .ts-control > div{
-        @apply dark:bg-secondary dark:text-dark-inverse;
-    }
-    .ts-wrapper.plugin-remove_button:not(.rtl) .item .remove{
-        @apply dark:border-dark;
-    }
-    .ts-dropdown{
-        @apply dark:bg-secondary dark:text-dark-inverse;
-    }
-
-    .ts-dropdown .active{
-        @apply bg-blue-300 dark:bg-primary-active dark:text-dark-inverse;
-    }
-
-    .ts-dropdown .create{
-        @apply  dark:text-dark-inverse;
-    }
-} */

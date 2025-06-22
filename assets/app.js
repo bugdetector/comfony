@@ -1,5 +1,6 @@
 import './bootstrap.js';
 import './styles/app.css';
+import 'daisyui';
 import GLightbox from 'glightbox';
 import "glightbox/dist/css/glightbox.css"
 
@@ -47,6 +48,25 @@ document.addEventListener('app-hide-modal', (e) => {
 
 window.initializeComponents = function(){
     window.initLightBox();
+    if (!window.sidebarInitialized) {
+        document.querySelectorAll('.sidebar-toggle').forEach(function(toggle) {
+            toggle.addEventListener('click', function() {
+                const sidebar = document.getElementById('sidebar');
+                if (sidebar) {
+                    sidebar.classList.toggle('open');
+                }
+            });
+        });
+        document.querySelectorAll('.sidebar .menu li').forEach(function(toggle) {
+            toggle.addEventListener('click', function() {
+                const sidebar = document.getElementById('sidebar');
+                if (sidebar) {
+                    sidebar.classList.remove('open');
+                }
+            });
+        });
+        window.sidebarInitialized = true;
+    }
 }
 
 window.addEventListener('popstate', function(event) {

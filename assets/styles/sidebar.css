@@ -1,0 +1,50 @@
+@layer components {
+    .sidebar {
+        transition: all 0.3s ease-in-out;
+        width: calc(var(--spacing) * 15);
+        position: fixed;
+        z-index: 1000;
+    }
+
+    .sidebar img {
+        object-fit: contain;
+    }
+
+    @media screen and (min-width: 768px) {
+        .sidebar:not(.open, :hover) .menu a span {
+            visibility: hidden;
+        }
+
+        .sidebar:not(.open, :hover) .sidebar-mark {
+            display: none;
+        }
+
+        .sidebar.open,
+        .sidebar:hover {
+            transform: translateX(0);
+            width: calc(var(--spacing) * 64);
+        }
+    }
+
+
+
+    @media screen and (max-width: 768px) {
+        .sidebar:not(.open, :hover) .menu a span {
+            visibility: hidden;
+        }
+
+        .sidebar {
+            transform: translateX(-100%);
+            position: fixed;
+        }
+
+        .sidebar.open {
+            transform: translateX(0);
+            width: 100vw;
+        }
+
+        .sidebar-placeholder {
+            display: none;
+        }
+    }
+}

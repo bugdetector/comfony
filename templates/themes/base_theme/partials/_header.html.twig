@@ -1,142 +1,122 @@
-<header class="flex items-center fixed z-10 top-0 left-0 right-0 shrink-0 lg:ms-[--tw-sidebar-width] h-[--tw-header-height] bg-[--tw-page-bg] dark:bg-[--tw-page-bg-dark]" id="header">
-	<div class="container-fluid flex justify-between items-stretch px-5 lg:ps-0 lg:gap-4" id="header_container">
-		<div class="flex items-center mr-1">
-			<div class="flex items-center justify-center gap-2 shrink-0">
-				<button class="btn btn-icon btn-light btn-clear btn-sm -ms-2 lg:hidden" data-drawer-toggle="#sidebar">
-					<i class="ki-filled ki-menu"></i>
-				</button>
-				<a class="mx-1 flex items-center" href="{{ path('homepage') }}" data-turbo="false">
-					<img class="dark:hidden h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
-					<img class="hidden dark:block h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
-					{% block title %}
-						<h1 class="font-medium text-lg text-gray-900 md:text-nowrap" id="page-title">
-							{{ title ?? app_name }}
-						</h1>
-					{% endblock %}
-				</a>
-			</div>
+<nav class="navbar bg-base-100 border-b border-base-300 px-4 sticky top-0 z-10" id="header">
+	<div class="navbar-start">
+		<button class="btn btn-ghost sidebar-toggle">
+			<span class="i-tabler-menu text-2xl"></span>
+		</button>
+		<div class="flex-1">
+			<a href="{{ path('homepage') }}" class="flex items-center gap-2" data-turbo="false">
+				<img class="dark:hidden h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
+				<img class="hidden dark:block h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
+				{% block title %}
+					<h1 class="text-lg font-semibold" id="page-title">{{ title ?? app_name }}</h1>
+				{% endblock %}
+			</a>
 		</div>
-		<div class="flex items-center lg:gap-3.5">
-			<div class="menu" data-menu="true">
-				<div class="menu-item" data-menu-item-offset="0px, 9px" data-menu-item-placement="bottom-end" data-menu-item-placement-rtl="bottom-start" data-menu-item-toggle="dropdown" data-menu-item-trigger="click|lg:click">
-					<div class="menu-toggle btn rounded-full gap-2">
-						{% if app.user %}
-							{% if app.user.profilePhoto %}
-								<img alt="{{ app.user.name }}" class="size-8 rounded-full justify-center border border-gray-500 shrink-0" src="{{ upload_asset(app.user.profilePhoto.filePath) }}"/>
+	</div>
+	<div class="navbar-end">
+		<div class="flex-none flex items-center gap-4">
+			<div class="dropdown dropdown-end">
+				<div tabindex="0" role="button" class="btn btn-ghost">
+					<div class="avatar">
+						<div class="w-8 rounded-full">
+							{% if app.user and app.user.profilePhoto %}
+								<img alt="{{ app.user.name }}" src="{{ upload_asset(app.user.profilePhoto.filePath) }}"/>
 							{% else %}
-								<span class='ki-filled ki-user p-1 text-2xl rounded-full border-2 border-success'></span>
+								<span class='i-tabler-user text-3xl'></span>
 							{% endif %}
-							<span class="text-nowrap">{{ app.user.name }}</span>
-						{% else %}
-							<span class='ki-filled ki-user p-1 text-2xl rounded-full border-2 border-success'></span>
-							<span class="text-nowrap">{% trans %}Account{% endtrans %}</span>
-						{% endif %}
-					</div>
-					<div class="menu-dropdown menu-default light:border-gray-300 w-screen max-w-[250px]">
-						{% if app.user %}
-							<div class="flex items-center justify-between px-5 py-1.5 gap-1.5">
-								<div class="flex items-center gap-2">
-									{% if app.user.profilePhoto %}
-										<img alt="{{ app.user.name }}" class="size-9 rounded-full border-2 border-success" src="{{ upload_asset(app.user.profilePhoto.filePath) }}">
-										{% else %}
-											<span class='ki-filled ki-user p-1 text-2xl rounded-full border-2 border-success'></span>
-										{% endif %}
-										<div class="flex flex-col gap-1.5">
-											<span class="text-sm text-gray-800 font-semibold leading-none">
-												{{ app.user.name }}
-											</span>
-											<a class="text-xs text-gray-600 hover:text-primary font-medium leading-none" href="mailto:{{ app.user.email }}">
-												{{ app.user.email }}
-											</a>
-										</div>
-									</img>
-								</div>
-							</div>
-							<div class="menu-separator"></div>
-							<div class="flex flex-col">
-								<div class="menu-item">
-									<a class="menu-link" href="{{ path('app_profile') }}" data-turbo-frame="base-content">
-										<span class="menu-icon">
-											<i class="ki-filled ki-profile-circle"></i>
-										</span>
-										<span class="menu-title">
-											{% trans %}Profile{% endtrans %}
-										</span>
-									</a>
-								</div>
-							</div>
-							<div class="menu-separator"></div>
-							<div class="menu-item px-4 py-1.5">
-								<a class="btn btn-sm btn-light justify-center" href="{{ is_granted('IS_IMPERSONATOR') ? impersonation_exit_path(path('homepage')) : path('app_logout') }}" data-turbo="false">
-									{% trans %}Logout{% endtrans %}
-								</a>
-							</div>
-						{% else %}
-							<div class="menu-item px-4 py-1.5">
-								<a class="btn btn-sm btn-light justify-center" href="{{ path('app_login') }}">
-									{% trans %}Login{% endtrans %}
-								</a>
-							</div>
-							<div class="menu-item px-4 py-1.5">
-								<a class="btn btn-sm btn-light justify-center" href="{{ path('app_register') }}">
-									{% trans %}Register{% endtrans %}
-								</a>
-							</div>
-						{% endif %}
-						<div class="flex flex-col">
-							<div class="menu-item mb-0.5">
-								<div class="menu-link">
-									<span class="menu-icon">
-										<i class="ki-filled ki-moon"></i>
-									</span>
-									<span class="menu-title">
-										{% trans %}Dark Mode{% endtrans %}
-									</span>
-									<label class="switch switch-sm">
-										<input class="toggle theme-controller" value="dracula" type="checkbox">
-									</input>
-								</label>
-							</div>
-							<div class="menu-item" data-menu-item-offset="-10px, 0" data-menu-item-placement="left-start" data-menu-item-toggle="dropdown" data-menu-item-trigger="click|lg:hover">
-								<div class="menu-link">
-									<span class="menu-icon">
-										<i class="ki-filled ki-icon"></i>
-									</span>
-									<span class="menu-title">
-										{% trans %}Language{% endtrans %}
-									</span>
-									<div class="flex items-center gap-1.5 rounded-md border border-gray-300 text-gray-600 p-1.5 text-2xs font-medium shrink-0">
-										{{ app.request.locale|upper }}
-									</div>
-								</div>
-								<div class="menu-dropdown menu-default light:border-gray-300 w-full max-w-[170px]">
-									{% for locale in locales() %}
-										{% set is_active = app.request.locale == locale.code %}
-										{% set is_rtl = locale.code in ['ar', 'fa', 'he'] %}
-										<div class="menu-item {{ is_active ? 'active' }} {{ is_rtl ? 'rtl' }}" translate="no">
-											<a class="menu-link h-10" lang="{{ locale.code }}" hreflang="{{ locale.code }}" href="?_locale={{ locale.code }}" data-turbo="false">
-												<span class="menu-icon">
-													{{ locale.code|upper }}
-												</span>
-												<span class="menu-title">
-													{{ locale.name }}
-												</span>
-												{% if is_active %}
-													<span class="menu-badge">
-														<i class="ki-solid ki-check-circle text-success text-base"></i>
-													</span>
-												{% endif %}
-
-											</a>
-										</div>
-									{% endfor %}
-
-								</div>
-							</div>
 						</div>
 					</div>
+					<span class="font-medium min-w-24 text-wrap">{{ app.user ? app.user.name : 'Account' }}</span>
+					<span class="i-tabler-chevron-down text-lg"></span>
 				</div>
+				<ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+					{% if app.user %}
+						<li>
+							<a href="{{ path('app_profile') }}" data-turbo-frame="base-content">{% trans %}Profile{% endtrans %}</a>
+						</li>
+					{% endif %}
+					<li>
+						<button popovertarget="nav-theme-popover" style="anchor-name:--anchor-nav-theme-popover">
+							<span>{% trans %}Theme{% endtrans %}</span>
+							<span class="i-tabler-chevron-right text-lg ms-auto"></span>
+						</button>
+						<ul class="dropdown dropdown-content menu rounded-box !bg-base-100 shadow-sm z-20" popover id="nav-theme-popover" style="position-anchor:--anchor-nav-theme-popover">
+							<li>
+								<label class="flex items-center gap-2 cursor-pointer">
+									<input type="radio" name="theme" value="light" class="theme-controller radio radio-sm" checked/>
+									<span>{% trans %}Light{% endtrans %}</span>
+								</label>
+							</li>
+							<li>
+								<label class="flex items-center gap-2 cursor-pointer">
+									<input type="radio" name="theme" value="dracula" class="theme-controller radio radio-sm"/>
+									<span>{% trans %}Dark{% endtrans %}</span>
+								</label>
+							</li>
+							<li>
+								<label class="flex items-center gap-2 cursor-pointer">
+									<input type="radio" name="theme" value="system" class="theme-controller radio radio-sm"/>
+									<span>{% trans %}System{% endtrans %}</span>
+								</label>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<button popovertarget="nav-language-popover" style="anchor-name:--anchor-nav-language-popover">
+							<span>{% trans %}Language{% endtrans %}</span>
+							<div class="badge badge-outline badge-primary">
+								{{ app.request.locale|upper }}
+							</div>
+							<span class="i-tabler-chevron-right text-lg ms-auto"></span>
+						</button>
+						<ul class="dropdown dropdown-content menu rounded-box !bg-base-100 shadow-sm z-20" popover id="nav-language-popover" style="position-anchor:--anchor-nav-language-popover">
+							{% for locale in locales() %}
+								{% set is_active = app.request.locale == locale.code %}
+								{% set is_rtl = locale.code in ['ar', 'fa', 'he'] %}
+								<li>
+									<a class="flex justify-around" translate="no" lang="{{ locale.code }}" hreflang="{{ locale.code }}" href="?_locale={{ locale.code }}" data-turbo="false">
+										{% if is_active %}
+											<div class="indicator">
+												<span class="indicator-item status status-success"></span>
+												<div class="badge badge-outline badge-secondary">
+													{{ locale.code|upper }}
+													-
+													{{ locale.name }}
+												</div>
+											</div>
+										{% else %}
+											<div class="badge badge-outline badge-secondary">
+												{{ locale.code|upper }}
+												-
+												{{ locale.name }}
+											</div>
+										{% endif %}
+									</a>
+								</li>
+							{% endfor %}
+						</ul>
+					</li>
+					{% if app.user %}
+						<li>
+							<a class="text-primary" href="{{ is_granted('IS_IMPERSONATOR') ? impersonation_exit_path(path('homepage')) : path('app_logout') }}" data-turbo="false">
+								{% trans %}Logout{% endtrans %}
+							</a>
+						</li>
+					{% else %}
+						<li>
+							<a class="text-primary" href="{{ path('app_login') }}" data-turbo="false">
+								{% trans %}Login{% endtrans %}
+							</a>
+						</li>
+						<li>
+							<a class="text-red-500" href="{{ path('app_register') }}" data-turbo="false">
+								{% trans %}Register{% endtrans %}
+							</a>
+						</li>
+					{% endif %}
+
+				</ul>
 			</div>
 		</div>
 	</div>
-</header>
+</nav>
