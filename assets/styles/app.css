@@ -1,15 +1,14 @@
 /* Tailwind core */
-@import "tailwindcss";
 @import './sidebar.css';
-@source "../../templates/**/*.twig";
+@import "tailwindcss";
+@source "../../templates/**/*.html.twig";
 @source "../**/*.js";
-@source "../../vendor/**/*.twig";
+@source "../../vendor/**/*.html.twig";
 @source "../../vendor/**/*.js";
 
 @plugin "daisyui" {
   exclude: rootscrollgutter, rootcolor;
   themes: light --default, dracula --prefersdark;
-  root: ":root";
 }
 
 @plugin "daisyui/theme" {

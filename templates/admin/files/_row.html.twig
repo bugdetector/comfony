@@ -1,21 +1,23 @@
 {% set action = action is defined ? action : null %}
 <tr id="file_{{ file.id }}" class='{{ action ? ' action-' ~ action }}'>
-	<td class="px-6 py-3 flex gap-2">
-		{% if action != 'remove' %}
-			<a class="btn btn-sm btn-icon btn-clear btn-primary" href="{{ path('app_admin_files_edit', {'id': file.id}) }}">
-				<i class="ki-outline ki-notepad-edit"></i>
-			</a>
-			{% if action == null %}
-				<form method="post" action="{{ path('app_admin_files_delete', {'id': file.id}) }}">
-					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ file.id) }}">
-					{% set modalId = 'delete-modal-' ~ file.id %}
-					<button type='button' class="btn btn-sm btn-icon btn-clear btn-danger" data-modal-toggle="#{{ modalId }}">
-						<i class="ki-outline ki-trash"></i>
-					</button>
-					{% include theme.themeDirectory ~ "/partials/_delete_modal.html.twig" with {modalId: modalId, objectName: "File"|trans} %}
-				</form>
+	<td class="px-6 py-3">
+		<div class="flex gap-2">
+			{% if action != 'remove' %}
+				<a class="btn btn-sm btn-primary btn-outline" href="{{ path('app_admin_files_edit', {'id': file.id}) }}">
+					<i class="i-tabler-edit text-lg"></i>
+				</a>
+				{% if action == null %}
+					<form method="post" action="{{ path('app_admin_files_delete', {'id': file.id}) }}">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ file.id) }}">
+						{% set modalId = 'delete-modal-' ~ file.id %}
+						<button type='button' class="btn btn-sm btn-error btn-outliner" data-modal-toggle="#{{ modalId }}">
+							<i class="i-tabler-trash text-lg"></i>
+						</button>
+						{% include theme.themeDirectory ~ "/partials/_delete_modal.html.twig" with {modalId: modalId, objectName: "File"|trans} %}
+					</form>
+				{% endif %}
 			{% endif %}
-		{% endif %}
+		</div>
 	</td>
 	<td class="px-6 py-3">{{ file.id }}</td>
 	<td class="px-6 py-3 flex flex-nowrap gap-3">
@@ -38,7 +40,7 @@
 		{% endif %}
 
 		{% if file.status == 'Deleted' %}
-			<span class="badge badge-outline badge-danger">
+			<span class="badge badge-outline badge-error">
 				{{ file.status|trans }}
 			</span>
 		{% endif %}

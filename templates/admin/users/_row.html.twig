@@ -3,15 +3,13 @@
 	<td class="px-6 py-3">
 		<div class="flex flex-nowrap gap-2">
 			{% if action != 'remove' %}
-				<a class="btn btn-sm btn-icon btn-clear btn-primary" href="{{ path('app_admin_users_edit', {'id': user.id}) }}">
-					<i class="ki-outline ki-notepad-edit"></i>
+				<a class="btn btn-sm btn-primary btn-outline" href="{{ path('app_admin_users_edit', {'id': user.id}) }}">
+					<i class="i-tabler-edit text-lg"></i>
 				</a>
+				
 				{% if is_granted('ROLE_ALLOWED_TO_SWITCH') and user.id != app.user.id %}
-					<a class="btn btn-sm btn-icon btn-clear btn-info" data-turbo="false" href="?_switch_user={{ user.email }}" data-tooltip="true">
-						<i class="ki-solid ki-arrow-right"></i>
-						<span class="tooltip">
-							{{ 'Login As User: { email }'|trans({email: user.email}) }}
-						</span>
+					<a class="btn btn-sm btn-info btn-outline" data-turbo="false" href="?_switch_user={{ user.email }}" data-tooltip="true">
+						<i class="i-tabler-login-2 text-lg"></i>
 					</a>
 				{% endif %}
 			{% endif %}
@@ -43,13 +41,13 @@
 		{% set roles = user.roles ?? [] %}
 		<div class="flex flex-wrap items-baseline gap-2">
 			{% if constant('ROLE_SUPER_ADMIN', user) in roles %}
-				<span class="badge badge-outline badge-danger text-nowrap">
+				<span class="badge badge-outline badge- text-nowrap">
 					Super Admin
 				</span>
 			{% endif %}
 
 			{% if constant('ROLE_ADMIN', user) in roles %}
-				<span class="badge badge-outline badge-danger text-nowrap">
+				<span class="badge badge-outline badge-error text-nowrap">
 					{% trans %}Admin{% endtrans %}
 				</span>
 			{% endif %}

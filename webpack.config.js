@@ -101,10 +101,6 @@ Encore
         from: 'node_modules/tinymce/plugins',
         to: 'plugins/[path]/[name].[ext]'
     })
-    .copyFiles({
-        from: 'assets/theme/vendors',
-        to: 'theme/vendors/[path]/[name].[ext]'
-    })
 ;
 
 module.exports = Encore.getWebpackConfig({

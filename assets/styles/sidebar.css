@@ -10,11 +10,19 @@
         object-fit: contain;
     }
 
-    @media screen and (min-width: 768px) {
-        .sidebar:not(.open, :hover) .menu a span {
-            visibility: hidden;
-        }
+    .sidebar:not(.open, :hover) .menu a span {
+        display: none;
+    }
 
+    .sidebar .menu a span {
+        white-space: nowrap;
+    }
+
+    .sidebar:not(.open, :hover) .menu a i {
+        @apply text-2xl;
+    }
+
+    @media screen and (min-width: 768px) {
         .sidebar:not(.open, :hover) .sidebar-mark {
             display: none;
         }
@@ -29,9 +37,6 @@
 
 
     @media screen and (max-width: 768px) {
-        .sidebar:not(.open, :hover) .menu a span {
-            visibility: hidden;
-        }
 
         .sidebar {
             transform: translateX(-100%);
@@ -41,10 +46,6 @@
         .sidebar.open {
             transform: translateX(0);
             width: 100vw;
-        }
-
-        .sidebar-placeholder {
-            display: none;
         }
     }
 }

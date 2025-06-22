@@ -1,11 +1,11 @@
-<div class="sidebar-placeholder w-15"></div>
+<div class="sidebar-placeholder w-15 hidden md:block"></div>
 <aside class="bg-base-200 border-r border-base-300 flex flex-col h-screen overflow-auto sidebar" id="sidebar">
 	<div class="py-4 px-3 text-xl font-bold tracking-wide">
 		<div class="flex items-center gap-2">
 			<img class="dark:hidden h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
 			<img class="hidden dark:block h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
 			<div class="sidebar-mark">{{ app_name }}</div>
-			<button class="btn btn-ghost sidebar-toggle ms-auto">
+			<button class="btn btn-ghost btn-sm sidebar-toggle ms-auto">
 				<span class="i-tabler-x text-2xl"></span>
 			</button>
 		</div>
