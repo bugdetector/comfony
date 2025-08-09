@@ -37,6 +37,7 @@
         "flowbite": "^2.2.1",
         "glightbox": "^3.2.0",
         "mini-css-extract-plugin": "^2.9.2",
+        "minimatch": "^10.0.3",
         "postcss": "^8.5.5",
         "postcss-import": "^16.1.0",
         "postcss-loader": "^8.1.1",
