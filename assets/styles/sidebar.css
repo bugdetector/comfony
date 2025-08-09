@@ -22,6 +22,14 @@
         @apply text-2xl;
     }
 
+    .sidebar .menu.menu-vertical {
+        @apply gap-2;
+    }
+
+    .sidebar .menu.menu-vertical li a {
+        @apply py-2;
+    }
+
     @media screen and (min-width: 768px) {
         .sidebar:not(.open, :hover) .sidebar-mark {
             display: none;

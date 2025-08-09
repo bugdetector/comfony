@@ -22,6 +22,12 @@
 							document.getElementById('page-title').innerText = "{{ newTitle }}";
 						</script>
 					{% endblock %}
+					<div class="flex justify-between flex-wrap grow">
+						{% block backLink %}{% endblock %}
+						<div class="flex flex-wrap items-center gap-5 ml-auto">
+							{% block actions %}{% endblock %}
+						</div>
+					</div>
 					{% block flashes %}
 						{{ include(theme.themeDirectory ~ '/partials/_flash_messages.html.twig') }}
 					{% endblock %}

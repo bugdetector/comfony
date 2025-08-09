@@ -5,7 +5,7 @@ if [ "$1" = 'frankenphp' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 	composer install --prefer-dist --no-progress --no-interaction
 	if [ -f 'package.json' ]; then
 		yarn install
-		yarn build
+		yarn watch &
 	fi
 
 	# Display information about the current project

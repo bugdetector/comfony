@@ -1,14 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block actions %}
-	<div class="container-fluid flex md:justify-end items-center my-3 gap-5">
-		<a href='{{ path('app_admin_files_new') }}' class="btn btn-primary btn-sm">
-			<span class="flex justify-center items-center">
-				<span class="ki-solid ki-file-up text-md me-2"></span>
-				{% trans %}Upload New File{% endtrans %}
-			</span>
-		</a>
-	</div>
+	<a href='{{ path('app_admin_files_new') }}' class="btn btn-primary btn-outline">
+		<i class="i-tabler-upload text-lg"></i>
+		{% trans %}Upload New File{% endtrans %}
+	</a>
 {% endblock %}
 
 {% block body %}
