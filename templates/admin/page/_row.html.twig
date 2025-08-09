@@ -1,18 +1,18 @@
 {% set action = action is defined ? action : null %}
-<tr id="page_{{ page.id }}" class='{{ action ? ' action-' ~ action }}'>
+<tr id="page_{{ object.id }}" class='{{ action ? ' action-' ~ action }}'>
 	<td class="px-6 py-3">
 		<div class="flex gap-2">
 			{% if action != 'remove' %}
-				<a class="btn btn-sm btn-primary btn-outline" href="{{ path('app_admin_page_edit', {'id': page.id}) }}">
+				<a class="btn btn-sm btn-primary btn-outline" href="{{ path('app_admin_page_edit', {'id': object.id}) }}">
 					<i class="i-tabler-edit text-lg"></i>
 				</a>
-				<a class="btn btn-sm btn-secondary btn-outline" href="{{ path('app_page_view', {'slug': page.slug}) }}" target="_blank">
+				<a class="btn btn-sm btn-secondary btn-outline" href="{{ path('app_page_view', {'slug': object.slug}) }}" target="_blank">
 					<i class="i-tabler-eye text-lg"></i>
 				</a>
 				{% if action == null %}
-					<form method="post" action="{{ path('app_admin_page_delete', {'id': page.id}) }}">
-						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ page.id) }}">
-						{% set modalId = 'delete-modal-' ~ page.id %}
+					<form method="post" action="{{ path('app_admin_page_delete', {'id': object.id}) }}">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ object.id) }}">
+						{% set modalId = 'delete-modal-' ~ object.id %}
 						<button type='button' class="btn btn-sm btn-error btn-outliner" data-controller="modal" data-modal-target-modal-value="{{ modalId }}">
 							<i class="i-tabler-trash text-lg"></i>
 						</button>
@@ -22,10 +22,10 @@
 			{% endif %}
 		</div>
 	</td>
-	<td class="px-6 py-3">{{ page.id }}</td>
-	<td class="px-6 py-3">{{ page.title }}</td>
+	<td class="px-6 py-3">{{ object.id }}</td>
+	<td class="px-6 py-3">{{ object.title }}</td>
 	<td class="px-6 py-3">
-		{% if page.published %}
+		{% if object.published %}
 			<span class="badge badge-success">
 				{% trans %}Published{% endtrans %}
 			</span>
@@ -37,9 +37,9 @@
 
 	</td>
 	<td class='px-6 py-3 text-nowrap'>
-		<time>{{ page.createdAt|format_datetime() }}</time>
+		<time>{{ object.createdAt|format_datetime() }}</time>
 	</td>
 	<td class='px-6 py-3 text-nowrap'>
-		<time>{{ page.updatedAt|format_datetime() }}</time>
+		<time>{{ object.updatedAt|format_datetime() }}</time>
 	</td>
 </tr>

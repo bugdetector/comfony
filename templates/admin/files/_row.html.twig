@@ -1,15 +1,15 @@
 {% set action = action is defined ? action : null %}
-<tr id="file_{{ file.id }}" class='{{ action ? ' action-' ~ action }}'>
+<tr id="file_{{ object.id }}" class='{{ action ? ' action-' ~ action }}'>
 	<td class="px-6 py-3">
 		<div class="flex gap-2">
 			{% if action != 'remove' %}
-				<a class="btn btn-sm btn-primary btn-outline" href="{{ path('app_admin_files_edit', {'id': file.id}) }}">
+				<a class="btn btn-sm btn-primary btn-outline" href="{{ path('app_admin_files_edit', {'id': object.id}) }}">
 					<i class="i-tabler-edit text-lg"></i>
 				</a>
 				{% if action == null %}
-					<form method="post" action="{{ path('app_admin_files_delete', {'id': file.id}) }}">
-						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ file.id) }}">
-						{% set modalId = 'delete-modal-' ~ file.id %}
+					<form method="post" action="{{ path('app_admin_files_delete', {'id': object.id}) }}">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ object.id) }}">
+						{% set modalId = 'delete-modal-' ~ object.id %}
 						<button type='button' class="btn btn-sm btn-error btn-outliner" data-controller="modal" data-modal-target-modal-value="{{ modalId }}">
 							<i class="i-tabler-trash text-lg"></i>
 						</button>
@@ -19,36 +19,36 @@
 			{% endif %}
 		</div>
 	</td>
-	<td class="px-6 py-3">{{ file.id }}</td>
+	<td class="px-6 py-3">{{ object.id }}</td>
 	<td class="px-6 py-3 flex flex-nowrap gap-3">
-		{{ component('FilePreviewComponent', {file: file}) }}
+		{{ component('FilePreviewComponent', {file: object}) }}
 	</td>
-	<td class="px-6 py-3">{{ file.getFileSize()|format_bytes }}</td>
-	<td class="px-6 py-3">{{ file.getMimeType() }}</td>
-	<td class="px-6 py-3">{{ file.getExtension() }}</td>
+	<td class="px-6 py-3">{{ object.getFileSize()|format_bytes }}</td>
+	<td class="px-6 py-3">{{ object.getMimeType() }}</td>
+	<td class="px-6 py-3">{{ object.getExtension() }}</td>
 	<td class="px-6 py-3">
-		{% if file.status == 'Temporary' %}
+		{% if object.status == 'Temporary' %}
 			<span class="badge badge-outline badge-warning">
-				{{ file.status|trans }}
+				{{ object.status|trans }}
 			</span>
 		{% endif %}
 
-		{% if file.status == 'Permanent' %}
+		{% if object.status == 'Permanent' %}
 			<span class="badge badge-outline badge-success">
-				{{ file.status|trans }}
+				{{ object.status|trans }}
 			</span>
 		{% endif %}
 
-		{% if file.status == 'Deleted' %}
+		{% if object.status == 'Deleted' %}
 			<span class="badge badge-outline badge-error">
-				{{ file.status|trans }}
+				{{ object.status|trans }}
 			</span>
 		{% endif %}
 	</td>
 	<td class='px-6 py-3 text-nowrap'>
-		<time>{{ file.createdAt|format_datetime() }}</time>
+		<time>{{ object.createdAt|format_datetime() }}</time>
 	</td>
 	<td class='px-6 py-3 text-nowrap'>
-		<time>{{ file.updatedAt|format_datetime() }}</time>
+		<time>{{ object.updatedAt|format_datetime() }}</time>
 	</td>
 </tr>

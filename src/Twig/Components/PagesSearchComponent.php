@@ -18,13 +18,16 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 
-#[AsLiveComponent()]
+#[AsLiveComponent(template: '@base_theme/partials/_datatable.html.twig')]
 final class PagesSearchComponent extends DatatableComponent
 {
     #[LiveProp(writable: true, url: true)]
     public string $sort = 'p.createdAt';
     #[LiveProp(writable: true, url: true)]
     public string $direction = 'DESC';
+
+    #[LiveProp(writable: false)]
+    public ?string $rowTemplateFile = "admin/page/_row.html.twig";
 
     #[Override]
     public function getQueryBuilder(): QueryBuilder

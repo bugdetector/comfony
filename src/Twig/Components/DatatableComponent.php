@@ -68,7 +68,7 @@ abstract class DatatableComponent extends AbstractController
 
     /**
      * Get query builder to paginate.
-     * @return array
+     * @return QueryBuilder
      */
     abstract public function getQueryBuilder(): QueryBuilder;
 
