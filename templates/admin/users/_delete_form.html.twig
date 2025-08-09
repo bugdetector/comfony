@@ -2,7 +2,7 @@
 	<div class="fixed bottom-10 end-36 z-10">
 		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
 		{% set modalId = 'delete-modal-' ~ user.id %}
-		<button type='button' class='btn btn-error' data-modal-toggle="#{{ modalId }}">
+		<button type='button' class="btn btn-error btn-outliner" data-controller="modal" data-modal-target-modal-value="{{ modalId }}">
 			<span class='i-tabler-trash text-xl'></span>
 		</button>
 	</div>

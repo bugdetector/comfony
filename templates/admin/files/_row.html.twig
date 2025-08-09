@@ -10,7 +10,7 @@
 					<form method="post" action="{{ path('app_admin_files_delete', {'id': file.id}) }}">
 						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ file.id) }}">
 						{% set modalId = 'delete-modal-' ~ file.id %}
-						<button type='button' class="btn btn-sm btn-error btn-outliner" data-modal-toggle="#{{ modalId }}">
+						<button type='button' class="btn btn-sm btn-error btn-outliner" data-controller="modal" data-modal-target-modal-value="{{ modalId }}">
 							<i class="i-tabler-trash text-lg"></i>
 						</button>
 						{% include theme.themeDirectory ~ "/partials/_delete_modal.html.twig" with {modalId: modalId, objectName: "File"|trans} %}

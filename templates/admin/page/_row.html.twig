@@ -13,7 +13,7 @@
 					<form method="post" action="{{ path('app_admin_page_delete', {'id': page.id}) }}">
 						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ page.id) }}">
 						{% set modalId = 'delete-modal-' ~ page.id %}
-						<button type='button' class="btn btn-sm btn-outline btn-error" data-modal-toggle="#{{ modalId }}">
+						<button type='button' class="btn btn-sm btn-error btn-outliner" data-controller="modal" data-modal-target-modal-value="{{ modalId }}">
 							<i class="i-tabler-trash text-lg"></i>
 						</button>
 						{% include theme.themeDirectory ~ "/partials/_delete_modal.html.twig" with {modalId: modalId, objectName: "Page"|trans} %}
