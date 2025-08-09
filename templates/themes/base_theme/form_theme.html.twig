@@ -126,7 +126,7 @@
 {% endblock live_collection_button_add_widget %}
 
 {% block live_collection_button_delete_widget %}
-    {% set attr = attr|merge({'class': attr.class|default('btn btn-danger btn-sm')}) %}
+    {% set attr = attr|merge({'class': attr.class|default('btn btn-error btn-sm')}) %}
     {% set translation_domain = false %}
     {% set label_html = true %}
     {%- set label -%}
@@ -244,7 +244,7 @@
     {% endfor %}
     {% if allow_delete %}
         {% set prototypeHtml = prototypeHtml ~ "<td class='px-2 py-2 align-baseline'>
-            <button type='button' class='btn btn-danger btn-sm' #{ stimulus_action('form-collection', 'removeCollectionItem') }>
+            <button type='button' class='btn btn-error btn-sm' #{ stimulus_action('form-collection', 'removeCollectionItem') }>
                 <i class='ki-filled ki-trash'></i>
             </button>
         </td>" %}
@@ -293,7 +293,7 @@
                                 {% endfor %}
                                 {% if allow_delete %}
                                     <td class="px-2 py-2 align-baseline">
-                                        <button type='button' class='btn btn-danger btn-sm' {{ stimulus_action('form-collection', 'removeCollectionItem') }}>
+                                        <button type='button' class='btn btn-error btn-sm' {{ stimulus_action('form-collection', 'removeCollectionItem') }}>
                                             <i class='ki-filled ki-trash'></i>
                                         </button>
                                     </td>
@@ -340,7 +340,7 @@
 					</div>" ~ (
                         allow_delete ?
                         "<div class='card-footer'>
-							<button type='button' class='btn btn-danger btn-sm' " ~ stimulus_action('form-collection', 'removeCollectionItem') ~ ">
+							<button type='button' class='btn btn-error btn-sm' " ~ stimulus_action('form-collection', 'removeCollectionItem') ~ ">
 								<i class='ki-filled ki-trash'></i>
                                 " ~ "Delete"|trans ~ "
 							</button>
@@ -384,7 +384,7 @@
                         </div>
                         {% if allow_delete %}
                             <div class="card-footer">
-                                <button type='button' class='btn btn-danger btn-sm' {{ stimulus_action('form-collection', 'removeCollectionItem') }}>
+                                <button type='button' class='btn btn-error btn-sm' {{ stimulus_action('form-collection', 'removeCollectionItem') }}>
                                     <i class='ki-filled ki-trash'></i>
                                     <span>{% trans %}Delete{% endtrans %}</span>
                                 </button>
