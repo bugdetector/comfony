@@ -12,7 +12,6 @@ export default class extends Controller {
     }
 
     connect() {
-        console.log(this);
         this.element.addEventListener('click', () => {
             const modal = document.getElementById(this.targetModalValue);
             modal.showModal();

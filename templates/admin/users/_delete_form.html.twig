@@ -1,5 +1,5 @@
 <form method="post" action="{{ path('app_admin_users_delete', {'id': user.id}) }}">
-	<div class="fixed bottom-10 end-36 z-10">
+	<div class="fixed bottom-10 end-40 z-10">
 		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
 		{% set modalId = 'delete-modal-' ~ user.id %}
 		<button type='button' class="btn btn-error btn-outliner" data-controller="modal" data-modal-target-modal-value="{{ modalId }}">
