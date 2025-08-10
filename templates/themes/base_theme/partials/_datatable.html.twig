@@ -19,7 +19,7 @@
 							</div>
 						{% endfor %}
 						<div class="sticky bottom-0">
-							<button type="reset" class="btn btn-error btn-sm w-full rounded-t-none justify-center" data-action="live#action" data-live-action-param="resetFilters">
+							<button type="reset" class="btn btn-error btn-outline btn-sm w-full rounded-t-none justify-center" data-action="live#action" data-live-action-param="resetFilters">
 								{{ 'Clear'|trans }}
 							</button>
 						</div>
@@ -90,78 +90,80 @@
 
 
 {% macro placeholder(props) %}
-	{% block loadingFilters %}
-		<div class="flex justify-between gap-2 p-3">
-			<label class="input w-full sm:w-64 flex items-center gap-2">
-				<i class="i-tabler-search"></i>
-				<input type="search" data-model="debounce(300)|query" autocomplete='off' value="{{ props.query }}" placeholder="{{'Search'|trans}}" class="grow">
-			</label>
-			{% if props.filterForm %}
-				<div class="dropdown end-0 top-0 dropdown-end">
-					<button class="btn btn-secondary btn-outline bg-base-100 text-accent" tabindex="0" role="button">
-						<i class="i-tabler-filter"></i>
-						<i class="i-tabler-chevron-down"></i>
-					</button>
-					<ul class="dropdown-content w-64 max-h-96 overflow-y-auto bg-base-100 shadow pt-4">
-						{{ form_start(props.filterForm) }}
-						{% for field in props.filterForm %}
-							<div class='px-4'>
-								{{ form_row(field) }}
+	<div class="grid mt-4 rounded-xl border-2 border-base-300">
+		{% block loadingFilters %}
+			<div class="flex justify-between gap-2 p-3">
+				<label class="input w-full sm:w-64 flex items-center gap-2">
+					<i class="i-tabler-search"></i>
+					<input type="search" data-model="debounce(300)|query" autocomplete='off' value="{{ props.query }}" placeholder="{{'Search'|trans}}" class="grow">
+				</label>
+				{% if props.filterForm %}
+					<div class="dropdown end-0 top-0 dropdown-end">
+						<button class="btn btn-secondary btn-outline bg-base-100 text-accent" tabindex="0" role="button">
+							<i class="i-tabler-filter"></i>
+							<i class="i-tabler-chevron-down"></i>
+						</button>
+						<ul class="dropdown-content w-64 max-h-96 overflow-y-auto bg-base-100 shadow pt-4">
+							{{ form_start(props.filterForm) }}
+							{% for field in props.filterForm %}
+								<div class='px-4'>
+									{{ form_row(field) }}
+								</div>
+							{% endfor %}
+							<div class="sticky bottom-0">
+								<button type="reset" class="btn btn-error btn-outline btn-sm w-full rounded-t-none justify-center" data-action="live#action" data-live-action-param="resetFilters">
+									{{ 'Clear'|trans }}
+								</button>
 							</div>
-						{% endfor %}
-						<div class="sticky bottom-0">
-							<button type="reset" class="btn btn-error btn-sm w-full rounded-t-none justify-center" data-action="live#action" data-live-action-param="resetFilters">
-								{{ 'Clear'|trans }}
-							</button>
-						</div>
-						{{ form_end(props.filterForm) }}
-					</ul>
-				</div>
-			{% endif %}
-		</div>
-		<div class="divider"></div>
-	{% endblock %}
-	<div class="overflow-x-auto p-3" data-loading="addClass(opacity-50 blur-sm)">
-		<table class="table table-zebra">
-			<caption class="text-start font-bold my-3 ms-3"></caption>
-			<thead>
-				<tr>
-					{% block loadingHeaders %}
-						{% for column, data in props.headers %}
-							{% if data.sortable is defined and data.sortable %}
-								<th>
-									<button class="btn btn-ghost" data-action="live#action" data-live-action-param="setSort" data-live-sort-param="{{ column }}" data-live-direction-param="{{ props.direction == 'DESC' ? 'ASC' : 'DESC' }}" role='button'>
-										<span class="me-4">{{ data.label }}</span>
-										{% set sorted = props.sort == column %}
-										{% if sorted %}
-											{% if props.direction == 'ASC' %}
-												<i class="i-tabler-chevron-up"></i>
-											{% else %}
-												<i class="i-tabler-chevron-down"></i>
-											{% endif %}
-										{% else %}
-											<i class="i-tabler-arrows-sort"></i>
-										{% endif %}
-									</button>
-								</th>
-							{% else %}
-								<th>{{ data.label|trans }}</th>
-							{% endif %}
-						{% endfor %}
-					{% endblock %}
-				</tr>
-			</thead>
-			<tbody>
-				{% for i in range(0, 3) %}
+							{{ form_end(props.filterForm) }}
+						</ul>
+					</div>
+				{% endif %}
+			</div>
+			<div class="divider"></div>
+		{% endblock %}
+		<div class="overflow-x-auto p-3" data-loading="addClass(opacity-50 blur-sm)">
+			<table class="table table-zebra">
+				<caption class="text-start font-bold my-3 ms-3"></caption>
+				<thead>
 					<tr>
-						{% for column, data in props.headers %}
-							<td>
-								<div class="skeleton h-4 w-full"></div>
-							</td>
-						{% endfor %}
+						{% block loadingHeaders %}
+							{% for column, data in props.headers %}
+								{% if data.sortable is defined and data.sortable %}
+									<th>
+										<button class="btn btn-ghost" data-action="live#action" data-live-action-param="setSort" data-live-sort-param="{{ column }}" data-live-direction-param="{{ props.direction == 'DESC' ? 'ASC' : 'DESC' }}" role='button'>
+											<span class="me-4">{{ data.label }}</span>
+											{% set sorted = props.sort == column %}
+											{% if sorted %}
+												{% if props.direction == 'ASC' %}
+													<i class="i-tabler-chevron-up"></i>
+												{% else %}
+													<i class="i-tabler-chevron-down"></i>
+												{% endif %}
+											{% else %}
+												<i class="i-tabler-arrows-sort"></i>
+											{% endif %}
+										</button>
+									</th>
+								{% else %}
+									<th>{{ data.label|trans }}</th>
+								{% endif %}
+							{% endfor %}
+						{% endblock %}
 					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{% for i in range(0, 3) %}
+						<tr>
+							{% for column, data in props.headers %}
+								<td>
+									<div class="skeleton h-4 w-full"></div>
+								</td>
+							{% endfor %}
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 	</div>
 {% endmacro %}
