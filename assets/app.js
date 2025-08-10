@@ -4,7 +4,7 @@ import 'daisyui';
 import GLightbox from 'glightbox';
 import "glightbox/dist/css/glightbox.css"
 
-document.addEventListener('turbo:load', (e) => {  
+document.addEventListener('turbo:load', (e) => {
     console.log(e.type);
     initializeComponents();
 })
@@ -22,7 +22,7 @@ document.addEventListener('turbo:before-stream-render', (event) => {
         fallbackToDefaultActions(streamElement);
         initializeComponents();
     }
-    
+
 })
 
 document.addEventListener('turbo:before-frame-render', (e) => {
@@ -46,19 +46,20 @@ document.addEventListener('app-hide-modal', (e) => {
 })
 
 
-window.initializeComponents = function(){
+window.initializeComponents = function () {
     window.initLightBox();
+    window.initThemeSelector();
     if (!window.sidebarInitialized) {
-        document.querySelectorAll('.sidebar-toggle').forEach(function(toggle) {
-            toggle.addEventListener('click', function() {
+        document.querySelectorAll('.sidebar-toggle').forEach(function (toggle) {
+            toggle.addEventListener('click', function () {
                 const sidebar = document.getElementById('sidebar');
                 if (sidebar) {
                     sidebar.classList.toggle('open');
                 }
             });
         });
-        document.querySelectorAll('.sidebar .menu li').forEach(function(toggle) {
-            toggle.addEventListener('click', function() {
+        document.querySelectorAll('.sidebar .menu li').forEach(function (toggle) {
+            toggle.addEventListener('click', function () {
                 const sidebar = document.getElementById('sidebar');
                 if (sidebar) {
                     sidebar.classList.remove('open');
@@ -69,8 +70,8 @@ window.initializeComponents = function(){
     }
 }
 
-window.addEventListener('popstate', function(event) {
-   
+window.addEventListener('popstate', function (event) {
+
 }, false);
 
 window.GLightbox = GLightbox;
@@ -80,4 +81,30 @@ window.initLightBox = function () {
         glightbox.destroy();
     }
     glightbox = GLightbox();
+}
+
+window.initThemeSelector = function () {
+    const themeInputs = document.querySelectorAll('input[name="theme"]');
+    const themeKey = "theme";
+
+    const activeTheme = localStorage.getItem(themeKey) || 'system';
+    document.documentElement.setAttribute("data-theme", activeTheme);
+
+    const activeInput = document.querySelector(`input[name="theme"][value="${activeTheme}"]`);
+    if (activeInput) activeInput.checked = true;
+
+    themeInputs.forEach(input => {
+        input.addEventListener("click", (e) => {
+            const newTheme = e.target.value;
+
+            if (newTheme === "system") {
+                const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                document.documentElement.setAttribute("data-theme", prefersDark ? "dracula" : "light");
+            } else {
+                document.documentElement.setAttribute("data-theme", newTheme);
+            }
+
+            localStorage.setItem(themeKey, newTheme);
+        });
+    });
 }
