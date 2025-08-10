@@ -2,7 +2,7 @@
 
 {%- block form_row -%}
     {%- set row_class = row_class|default('mb-4') -%}
-    <div class="mb-4">{{ parent() }}</div>
+    {{ parent() }}
 {%- endblock form_row -%}
 
 {%- block widget_attributes -%}
@@ -36,7 +36,7 @@
 {%- endblock form_label -%}
 
 {%- block form_help -%}
-    {%- set help_class = help_class|default('label label-text-alt text-base-content') -%}
+    {%- set help_class = help_class|default('label label-text-alt text-base-content text-wrap') -%}
     {{- parent() -}}
 {%- endblock form_help -%}
 

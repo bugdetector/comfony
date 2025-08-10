@@ -1,47 +1,50 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-	<form class="card-body flex flex-col gap-5 p-10" id="sign_in_form" method="post" data-turbo="false">
+	<form class="card card-body flex flex-col gap-5 p-10 w-full max-w-md mx-auto" id="sign_in_form" method="post" data-turbo="false">
 		{% if error %}
-			<div class="p-4 mb-4 text-md rounded-lg bg-danger text-white">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+			<div role="alert" class="alert alert-error mb-4 text-md rounded-lg">
+				{{ error.messageKey|trans(error.messageData, 'security') }}
+			</div>
 		{% endif %}
 		<div class="text-center mb-2.5">
-			<h3 class="text-lg font-medium text-gray-900 leading-none mb-2.5">
+			<h3 class="text-lg font-medium leading-none mb-2.5">
 				{% trans %}Welcome{% endtrans %}
 			</h3>
 			<div class="flex items-center justify-center my-5">
-				<img src="{{ asset('assets/favicon.png') }}"/>
+				<img src="{{ asset('assets/favicon.png') }}" class="w-16 h-16 mask mask-squircle"/>
 			</div>
 			<div class="flex items-center justify-center font-medium">
-				<a class="text-2sm link" href="{{ path('app_register') }}">
+				<a class="link link-primary text-sm" href="{{ path('app_register') }}">
 					{% trans %}Sign up for an account{% endtrans %}
 				</a>
 			</div>
 		</div>
-		<div class="flex flex-col gap-1">
-			<label class="form-label font-normal text-gray-900">
-				{% trans %}Email{% endtrans %}
+		<div class="form-control">
+			<label class="label">
+				<span class="label-text">{% trans %}Email{% endtrans %}</span>
 			</label>
-			<input id="email" type="text" name="username" class="input"/>
+			<input id="email" type="text" name="username" class="input input-bordered" />
 		</div>
-		<div class="flex flex-col gap-1">
-			<div class="flex items-center justify-between gap-1">
-				<label class="form-label font-normal text-gray-900">
-					{% trans %}Password{% endtrans %}
+		<div class="form-control">
+			<div class="flex items-center justify-between">
+				<label class="label">
+					<span class="label-text">{% trans %}Password{% endtrans %}</span>
 				</label>
-				<a class="text-2sm link shrink-0" href="{{ path('app_forgot_password_request') }}">
+				<a class="link link-primary text-sm" href="{{ path('app_forgot_password_request') }}">
 					{% trans %}Forgot your password?{% endtrans %}
 				</a>
 			</div>
-			<div class="input ps-0 items-stretch" data-toggle-password="true">
-				<input id="password" type="password" name="password" class="input border-s-0 rounded-r-none"/>
-				<div class="btn btn-icon" data-toggle-password-trigger="true">
-					<i class="ki-outline ki-eye toggle-password-active:hidden"></i>
-					<i class="ki-outline ki-eye-slash !hidden toggle-password-active:!block"></i>
-				</div>
+			<div class="input input-primary w-full flex items-center" {{ stimulus_controller('password-input') }}>
+				<input type="password" name="password" {{ stimulus_target('password-input', 'input') }}/>
+				<label class="btn btn-ghost !h-full absolute end-0 swap swap-rotate" {{ stimulus_action('click->password-input', 'toggle') }}>
+					<input id="password-password-toogle" type="checkbox" class="hidden"/>
+					<i class="i-tabler-eye text-lg swap-off"></i>
+					<i class="i-tabler-eye-off text-lg swap-on"></i>
+				</label>
 			</div>
 		</div>
 		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-		<button class="btn btn-primary flex justify-center grow">
+		<button class="btn btn-primary btn-block">
 			{% trans %}Login{% endtrans %}
 		</button>
 	</form>
