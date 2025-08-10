@@ -8,5 +8,5 @@
 {% endblock %}
 
 {% block body %}
-	{{ component('FilesSearchComponent', {listTopic: 'files'}) }}
+	{{ component('FilesSearchComponent', {listTopic: 'files', loading: 'lazy'}) }}
 {% endblock %}

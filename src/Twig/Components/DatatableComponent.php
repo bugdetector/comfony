@@ -54,6 +54,7 @@ abstract class DatatableComponent extends AbstractController
     #[LiveProp(writable: false)]
     public ?string $rowTemplateFile = null;
 
+    #[LiveProp(writable: false, url: false)]
     public array $headers = [];
 
     public $filterForm = null;
@@ -84,6 +85,7 @@ abstract class DatatableComponent extends AbstractController
     {
         $this->dispatchBrowserEvent('live-component:update');
         $buildData = $this->getTableBuildData();
+        $this->headers = $buildData['headers'];
         if (@$buildData['filters']) {
             $builder = $this->formFactory->createNamedBuilder('filters', options: [
                 'method' => 'GET',

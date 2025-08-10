@@ -10,5 +10,5 @@
 {% endblock %}
 
 {% block body %}
-	{{ component('UsersSearchComponent', {listTopic: 'users'}) }}
+	{{ component('UsersSearchComponent', {listTopic: 'users', loading: 'lazy'}) }}
 {% endblock %}

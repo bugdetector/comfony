@@ -18,5 +18,5 @@
 {% endblock %}
 
 {% block body %}
-	{{ component('PagesSearchComponent', {listTopic: 'pages'}) }}
+	{{ component('PagesSearchComponent', {listTopic: 'pages', loading: 'lazy'}) }}
 {% endblock %}
