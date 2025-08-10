@@ -102,4 +102,10 @@ Clear: Clear
 All: All
 'Add New label': 'Add New {label}'
 Add: Add
-Attachments: "Attachments"
+Attachments: Attachments
+Deleted: Deleted
+Details: Details
+Theme: Theme
+Light: Light
+Dark: Dark
+System: System
