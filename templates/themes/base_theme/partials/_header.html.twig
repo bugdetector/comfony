@@ -7,8 +7,8 @@
 			<a href="{{ path('homepage') }}" class="flex items-center gap-2" data-turbo="false">
 				<img class="dark:hidden h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
 				<img class="hidden dark:block h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
-				{% block title %}
-					<h1 class="text-lg font-semibold" id="page-title">{{ title ?? app_name }}</h1>
+				{% block app_name %}
+					<h2 class="text-lg font-semibold">{{ app_name }}</h2>
 				{% endblock %}
 			</a>
 		</div>

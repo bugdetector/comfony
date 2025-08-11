@@ -12,6 +12,11 @@
 			{% block header %}
 				{% include theme.themeDirectory ~ "/partials/_header.html.twig" %}
 			{% endblock %}
+			{% block title %}
+				<div class="bg-base-100 border-b border-base-300 p-4">
+					<h1 class="text-lg font-semibold" id="page-title">{{ title ?? app_name }}</h1>
+				</div>
+			{% endblock %}
 			<!-- Page Content -->
 			<main class="flex-1 overflow-y-auto p-6 bg-base-100">
 				<turbo-frame id='base-content' data-turbo-action="advance">

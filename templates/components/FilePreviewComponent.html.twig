@@ -5,7 +5,7 @@
 {% if file %}
 	{% set isPreviewable = file.isPreviewable() %}
 	<div class='flex items-center gap-3 justify-between w-full mb-3'>
-		<a href='{{ upload_asset(file.filePath) }}' class='text-gray-900 hover:text-primary-active flex items-center gap-2 {{ isPreviewable ? 'glightbox' }}' {{ not isPreviewable ? "target='_blank'" }}>
+		<a href='{{ upload_asset(file.filePath) }}' class='hover:text-primary-active flex items-center gap-2 {{ isPreviewable ? 'glightbox' }}' {{ not isPreviewable ? "target='_blank'" }}>
 			{{ macros.file_icon(file) }}
 			<span class='text-nowrap'>{{ file.fileName }}</span>
 		</a>
