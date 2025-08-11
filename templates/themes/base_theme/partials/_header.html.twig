@@ -78,14 +78,14 @@
 										{% if is_active %}
 											<div class="indicator">
 												<span class="indicator-item status status-success"></span>
-												<div class="badge badge-outline badge-secondary">
+												<div class="badge badge-outline badge-primary">
 													{{ locale.code|upper }}
 													-
 													{{ locale.name }}
 												</div>
 											</div>
 										{% else %}
-											<div class="badge badge-outline badge-secondary">
+											<div class="badge badge-outline badge-primary">
 												{{ locale.code|upper }}
 												-
 												{{ locale.name }}
@@ -109,7 +109,7 @@
 							</a>
 						</li>
 						<li>
-							<a class="text-red-500" href="{{ path('app_register') }}" data-turbo="false">
+							<a class="text-primary" href="{{ path('app_register') }}" data-turbo="false">
 								{% trans %}Register{% endtrans %}
 							</a>
 						</li>
