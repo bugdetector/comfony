@@ -50,7 +50,7 @@
 		{% endif %}
 
 		<span data-loading>{% trans %}Uploading...{% endtrans %}</span>
-		<input type='file' {{ this.vars.attr.multiple|default('') }} accept="{{ this.vars.attr.accept|default('') }}" name='{{ prefixedName }}' onchange='document.getElementById("{{ this.vars.id }}").click()' class='file-input file-input-primary w-full'/>
+		<input type='file' {{ this.vars.attr.multiple|default('') }} accept="{{ this.vars.attr.accept|default('') }}" name='{{ prefixedName }}' onchange='document.getElementById("{{ this.vars.id }}").click()' class='file-input w-full'/>
 		<button type='button' id='{{ this.vars.id }}' data-action="live#action" data-live-action-param="files({{ prefixedName }})|uploadFile" class='hidden'/>
 	</div>
 </div>

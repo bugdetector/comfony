@@ -1,12 +1,10 @@
 {% extends 'admin/files/index.html.twig' %}
 
 {% block backLink %}
-	<div class="flex items-center mx-3 flex-wrap gap-1 lg:gap-5">
-		<a href="{{ path('app_admin_files_index') }}" class="btn btn-primary btn-outline">
-			<i class="i-tabler-chevron-left"></i>
-			{% trans %}Back{% endtrans %}
-		</a>
-	</div>
+	<a href="{{ path('app_admin_files_index') }}" class="btn btn-outline">
+		<i class="i-tabler-chevron-left"></i>
+		{% trans %}Back{% endtrans %}
+	</a>
 {% endblock %}
 
 {% block body %}

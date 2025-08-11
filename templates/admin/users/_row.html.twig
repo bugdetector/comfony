@@ -3,7 +3,7 @@
 	<td class="px-6 py-3">
 		<div class="flex flex-nowrap gap-2">
 			{% if action != 'remove' %}
-				<a class="btn btn-sm btn-primary btn-outline" href="{{ path('app_admin_users_edit', {'id': object.id}) }}">
+				<a class="btn btn-sm btn-outline" href="{{ path('app_admin_users_edit', {'id': object.id}) }}">
 					<i class="i-tabler-edit text-lg"></i>
 				</a>
 				
@@ -20,7 +20,7 @@
 	<td class="px-6 py-3">{{ object.email }}</td>
 	<td class="px-6 py-3">
 		{% if object.status.value == 'Banned' %}
-			<span class="badge badge-danger">
+			<span class="badge badge-error">
 				{{ object.status.value|trans }}
 			</span>
 		{% endif %}
@@ -41,7 +41,7 @@
 		{% set roles = object.roles ?? [] %}
 		<div class="flex flex-wrap items-baseline gap-2">
 			{% if constant('ROLE_SUPER_ADMIN', object) in roles %}
-				<span class="badge badge-outline badge- text-nowrap">
+				<span class="badge badge-outline badge-error text-nowrap">
 					Super Admin
 				</span>
 			{% endif %}

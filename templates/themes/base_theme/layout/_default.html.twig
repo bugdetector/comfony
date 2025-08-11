@@ -12,33 +12,35 @@
 			{% block header %}
 				{% include theme.themeDirectory ~ "/partials/_header.html.twig" %}
 			{% endblock %}
-			{% block title %}
-				<div class="bg-base-100 border-b border-base-300 p-4">
-					<h1 class="text-lg font-semibold" id="page-title">{{ title ?? app_name }}</h1>
-				</div>
-			{% endblock %}
 			<!-- Page Content -->
-			<main class="flex-1 overflow-y-auto p-6 bg-base-100">
+			<main class="flex-1 overflow-y-auto bg-base-100">
 				<turbo-frame id='base-content' data-turbo-action="advance">
+					{% block title %}
+						<div class="bg-base-100 border-b border-base-300 px-4 flex justify-between flex-wrap ">
+							<div class="flex gap-3 gap-x-2 items-center">
+								{% block backLink %}{% endblock %}
+								<h1 class="text-lg font-semibold p-4" id="page-title">{{ title ?? app_name }}</h1>
+							</div>
+							<div class="flex flex-wrap items-center gap-3 mb-3 md:mb-0 md:ml-auto">
+								{% block actions %}{% endblock %}
+							</div>
+						</div>
+					{% endblock %}
 					{% block turboTitle %}
 						{% set newTitle = title ?? app_name %}
 						 <script>
 							document.title = "{{ newTitle }}";
-							document.getElementById('page-title').innerText = "{{ newTitle }}";
 						</script>
 					{% endblock %}
-					<div class="flex justify-between flex-wrap grow">
-						{% block backLink %}{% endblock %}
-						<div class="flex flex-wrap items-center gap-5 ml-auto">
-							{% block actions %}{% endblock %}
-						</div>
-					</div>
+					
 					{% block flashes %}
 						{{ include(theme.themeDirectory ~ '/partials/_flash_messages.html.twig') }}
 					{% endblock %}
-					{% block body %}
-						&nbsp;
-					{% endblock %}
+					<div class="p-6 pt-0">
+						{% block body %}
+							&nbsp;
+						{% endblock %}
+					</div>
 				</turbo-frame>
 			</main>
 			{% block footer %}

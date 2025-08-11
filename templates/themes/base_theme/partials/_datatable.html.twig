@@ -7,7 +7,7 @@
 			</label>
 			{% if filterForm %}
 				<div class="dropdown end-0 top-0 dropdown-end">
-					<button class="btn btn-secondary btn-outline bg-base-100 text-accent" tabindex="0" role="button">
+					<button class="btn btn-soft bg-base-100" tabindex="0" role="button">
 						<i class="i-tabler-filter"></i>
 						<i class="i-tabler-chevron-down"></i>
 					</button>
@@ -19,7 +19,7 @@
 							</div>
 						{% endfor %}
 						<div class="sticky bottom-0">
-							<button type="reset" class="btn btn-error btn-outline btn-sm w-full rounded-t-none justify-center" data-action="live#action" data-live-action-param="resetFilters">
+							<button type="reset" class="btn btn-error btn-soft btn-sm w-full justify-center hover:text-base-100" data-action="live#action" data-live-action-param="resetFilters">
 								{{ 'Clear'|trans }}
 							</button>
 						</div>
@@ -99,7 +99,7 @@
 				</label>
 				{% if props.filterForm %}
 					<div class="dropdown end-0 top-0 dropdown-end">
-						<button class="btn btn-secondary btn-outline bg-base-100 text-accent" tabindex="0" role="button">
+						<button class="btn btn-outline bg-base-100" tabindex="0" role="button">
 							<i class="i-tabler-filter"></i>
 							<i class="i-tabler-chevron-down"></i>
 						</button>
@@ -111,7 +111,7 @@
 								</div>
 							{% endfor %}
 							<div class="sticky bottom-0">
-								<button type="reset" class="btn btn-error btn-outline btn-sm w-full rounded-t-none justify-center" data-action="live#action" data-live-action-param="resetFilters">
+								<button type="reset" class="btn btn-error btn-soft btn-sm w-full justify-center hover:text-base-100" data-action="live#action" data-live-action-param="resetFilters">
 									{{ 'Clear'|trans }}
 								</button>
 							</div>

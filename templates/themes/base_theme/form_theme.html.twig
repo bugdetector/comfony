@@ -7,11 +7,11 @@
 
 {%- block widget_attributes -%}
     {% if type is defined and type == "file" %}
-        {%- set widget_class = widget_class|default('file-input file-input-primary w-full') -%}
+        {%- set widget_class = widget_class|default('file-input w-full') -%}
     {% elseif type is defined and type == "password" %}
         {%- set widget_class = widget_class|default('w-full') -%}
     {% else %}
-        {%- set widget_class = widget_class|default('input input-primary w-full') -%}
+        {%- set widget_class = widget_class|default('input w-full') -%}
     {% endif %}
     {%- set widget_disabled_class = widget_disabled_class|default('input-disabled') -%}
     {%- set widget_errors_class = widget_errors_class|default('text-error') -%}
@@ -59,19 +59,19 @@
 
 
 {%- block radio_widget -%}
-    {%- set widget_class = widget_class|default('radio radio-primary mr-2') -%}
+    {%- set widget_class = widget_class|default('radio mr-2') -%}
     {{- parent() -}}
 {%- endblock radio_widget -%}
 
 {%- block textarea_widget -%}
-    {%- set widget_class = widget_class|default('textarea textarea-primary w-full') -%}
+    {%- set widget_class = widget_class|default('textarea w-full') -%}
     {{- parent() -}}
 {%- endblock textarea_widget -%}
 
 {%- block form_widget_simple -%}
     {%- set type = type|default('text') -%}
     {%- if type == 'password' -%}
-        <div class="input input-primary w-full flex items-center" {{ stimulus_controller('password-input') }}>
+        <div class="input w-full flex items-center" {{ stimulus_controller('password-input') }}>
             <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} {{ stimulus_target('password-input', 'input') }}/>
             <label class="btn btn-ghost !h-full absolute end-0 swap swap-rotate" {{ stimulus_action('click->password-input', 'toggle') }}>
                 <input id="{{ id }}-password-toogle" type="checkbox" class="hidden"/>
@@ -109,7 +109,7 @@
             {{ macros.live_async_file_preview(data, full_name, 0, allow_delete) }}
         {% endif %}
         {% set prefixedName = "live_file_input_" ~ full_name %}
-        <input type='file' {{ isMultiple ? 'multiple' }} accept="{{ form.vars.attr.accept|default('') }}" name='live_file_input_{{ full_name  ~ (isMultiple ? "[]") }}' onchange='document.getElementById("{{ form.vars.id }}").click()' class='file-input file-input-primary w-full'/>
+        <input type='file' {{ isMultiple ? 'multiple' }} accept="{{ form.vars.attr.accept|default('') }}" name='live_file_input_{{ full_name  ~ (isMultiple ? "[]") }}' onchange='document.getElementById("{{ form.vars.id }}").click()' class='file-input w-full'/>
 		<button type='button' id='{{ form.vars.id }}' data-action="live#action" data-live-action-param="files(live_file_input_{{ full_name ~ (isMultiple ? "[]") }})|uploadFile" data-live-name-param="{{ full_name }}" class='hidden'></button>
         {{ form_help(form) }}
     </div>
