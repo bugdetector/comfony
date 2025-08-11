@@ -1,32 +1,28 @@
 {% extends 'security/login.html.twig' %}
 {% block body %}
 	<form class="card card-body gap-5 p-10 w-full max-w-md mx-auto" id="reset_password_form" method="post" data-turbo="false">
-		{{ form_errors(requestForm) }}
-		<div class="text-center mb-4">
-			<h3 class="card-title text-lg font-medium mb-2.5">
+		{{ form_errors(form) }}
+		<div class="text-center mb-2.5">
+			<h3 class="text-lg font-medium leading-none mb-2.5">
 				{% trans %}Reset your password{% endtrans %}
 			</h3>
 			<div class="flex items-center justify-center my-5">
-				<div class="avatar">
-					<div class="w-16 rounded-full">
-						<img src="{{ asset('assets/favicon.png') }}" alt="Logo"/>
-					</div>
-				</div>
+				<img src="{{ asset('assets/favicon.png') }}" class="w-16 h-16 mask mask-squircle"/>
 			</div>
 			<div class="flex items-center justify-center font-medium">
-				<a class="link link-primary text-sm" href="{{ path('app_login') }}">
+				<a class="link text-sm" href="{{ path('app_login') }}">
 					{% trans %}Have an account?{% endtrans %}
 				</a>
 			</div>
 		</div>
-		{{ form_start(requestForm) }}
+		{{ form_start(form) }}
 		<div class="form-control">
-			{{ form_row(requestForm.email) }}
+			{{ form_row(form.email) }}
 		</div>
 		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 		<button class="btn btn-primary btn-block">
 			{% trans %}Send password reset email{% endtrans %}
 		</button>
-		{{ form_end(requestForm) }}
+		{{ form_end(form) }}
 	</form>
 {% endblock %}

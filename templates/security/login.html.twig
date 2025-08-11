@@ -14,7 +14,7 @@
 				<img src="{{ asset('assets/favicon.png') }}" class="w-16 h-16 mask mask-squircle"/>
 			</div>
 			<div class="flex items-center justify-center font-medium">
-				<a class="link link-primary text-sm" href="{{ path('app_register') }}">
+				<a class="link text-sm" href="{{ path('app_register') }}">
 					{% trans %}Sign up for an account{% endtrans %}
 				</a>
 			</div>
@@ -30,11 +30,11 @@
 				<label class="label">
 					<span class="label-text">{% trans %}Password{% endtrans %}</span>
 				</label>
-				<a class="link link-primary text-sm" href="{{ path('app_forgot_password_request') }}">
+				<a class="link text-sm mb-2" href="{{ path('app_forgot_password_request') }}">
 					{% trans %}Forgot your password?{% endtrans %}
 				</a>
 			</div>
-			<div class="input input-primary w-full flex items-center" {{ stimulus_controller('password-input') }}>
+			<div class="input w-full flex items-center" {{ stimulus_controller('password-input') }}>
 				<input type="password" name="password" {{ stimulus_target('password-input', 'input') }}/>
 				<label class="btn btn-ghost !h-full absolute end-0 swap swap-rotate" {{ stimulus_action('click->password-input', 'toggle') }}>
 					<input id="password-password-toogle" type="checkbox" class="hidden"/>

@@ -1,0 +1,11 @@
+<?php
+
+namespace App\Dto\Auth;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+final class RegisterMailDto
+{
+    #[Assert\Email]
+    public $email;
+}

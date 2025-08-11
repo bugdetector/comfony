@@ -50,7 +50,6 @@
         "symfony/web-link": "7.3.*",
         "symfony/webpack-encore-bundle": "^2.2",
         "symfony/yaml": "7.3.*",
-        "symfonycasts/reset-password-bundle": "^1.20",
         "twig/cssinliner-extra": "^3.20",
         "twig/extra-bundle": "^3.20",
         "twig/inky-extra": "^3.20",
