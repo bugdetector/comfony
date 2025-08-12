@@ -106,3 +106,13 @@ Theme: Theme
 Light: Light
 Dark: Dark
 System: System
+'Please enter your email address to receive a verification code to reset your password.': 'Please enter your email address to receive a verification code to reset your password.'
+'Invalid token.': 'Invalid token.'
+'Code expired.': 'Code expired.'
+'Code validated.': 'Code validated.'
+'Verify Email': 'Verify Email'
+'Password reset successfully.': 'Password reset successfully.'
+'Send password reset email': 'Send password reset email'
+'Verify Your Email': 'Verify Your Email'
+'You can use the code below to reset your password.': 'You can use the code below to reset your password.'
+'Verify Code': 'Verify Code'

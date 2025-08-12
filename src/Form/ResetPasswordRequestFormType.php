@@ -22,7 +22,7 @@ class ResetPasswordRequestFormType extends AbstractType
                     ]),
                 ],
                 'help' => new TranslatableMessage(
-                    'Enter your email address, and we will send you a link to reset your password'
+                    'Please enter your email address to receive a verification code to reset your password.'
                 )
             ])
         ;

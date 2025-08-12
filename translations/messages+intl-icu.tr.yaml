@@ -112,3 +112,12 @@ Light: Açık
 Dark: Koyu
 System: Sistem
 'We have sent a verification code to your email address. <br> Please use it to verify your email address.': 'E-postanıza doğrulamanız için bir kod gönderdik. <br> Lütfen e-postanızı doğrulamak için kullanın.'
+'Please enter your email address to receive a verification code to reset your password.': 'Şifre sıfırlama doğrulama kodunu almak için lütfen e-posta adresinizi girin.'
+'Invalid token.': 'Geçersiz anahtar.'
+'Code expired.': 'Kodun süresi doldu.'
+'Code validated.': 'Kod doğrulandı.'
+'Verify Email': 'E-postayı Doğrula'
+'Send password reset email': 'Şifre sıfırlama e-postası gönder'
+'Verify Your Email': 'E-postanızı Doğrulayın'
+'You can use the code below to reset your password.': 'Şifrenizi sıfırlamak için aşağıdaki kodu kullanabilirsiniz.'
+'Verify Code': 'Kodu Doğrula'
