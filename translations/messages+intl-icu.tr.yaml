@@ -29,9 +29,9 @@ Close: Kapat
 Search: Ara
 Previous: Önceki
 Next: Sonraki
-user.created_successfully: 'Kullanıcı başarıyla oluşturuldu.'
-user.updated_successfully: 'Kullanıcı başarıyla güncellendi.'
-user.deleted_successfully: 'Kullanıcı başarıyla silindi.'
+'User created successfully.': 'Kullanıcı başarıyla oluşturuldu.'
+'User updated successfully.': 'Kullanıcı başarıyla güncellendi.'
+'User deleted successfully.': 'Kullanıcı başarıyla silindi.'
 success: Başarılı
 warning: Uyarı
 error: Hata
@@ -64,8 +64,8 @@ updated_at: 'Güncellenme Tarihi'
 Files: Dosyalar
 Temporary: Geçici
 Permanent: Kalıcı
-file.deleted_successfully: 'Dosya başarıyla silindi.'
-file.uploaded_successfully: 'Dosya başarıyla yüklendi.'
+'File deleted successfully.': 'Dosya başarıyla silindi.'
+'File uploaded successfully.': 'Dosya başarıyla yüklendi.'
 'Login As User: { email }': 'Kullanıcı olarak oturum aç: { email }'
 Uploading...: Yükleniyor...
 Pages: Sayfalar
@@ -77,9 +77,9 @@ Page: Sayfa
 'View Page': 'Sayfayı Görüntüle'
 Unpublished: Yayınlanmamış
 Body: Gövde
-page.created_successfully: 'Sayfa başarıyla oluşturuldu.'
-page.updated_successfully: 'Sayfa başarıyla güncellendi.'
-page.deleted_successfully: 'Sayfa başarıyla silindi.'
+'Page created successfully.': 'Sayfa başarıyla oluşturuldu.'
+'Page updated successfully.': 'Sayfa başarıyla güncellendi.'
+'Page deleted successfully.': 'Sayfa başarıyla silindi.'
 'Reset Password': 'Şifre Sıfırla'
 'File upload size exceed. Maximum size: { maxSize }': 'Doya yükleme limiti aşıldı. En büyük boyut { maxSize } olabilir.'
 'You can reset your password using the link below. This link will expire in {expire}': 'Aşağıdaki bağlantıyı kullanarak şifrenizi sıfırlayabilirsiniz. Bu linkin kullanımı {expire} sonra sona erecektir.'

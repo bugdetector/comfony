@@ -63,7 +63,7 @@ final class LiveUserFormComponent extends AbstractController
         $this->entityManager->flush();
 
         $this->addFlash('success', $this->translator->trans(
-            $this->initialFormData ? 'user.updated_successfully' : 'user.created_successfully'
+            $this->initialFormData ? 'User updated successfully.' : 'User created successfully.'
         ));
     }
 }

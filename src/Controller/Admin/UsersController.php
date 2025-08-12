@@ -3,12 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Auth\User;
-use App\Form\Auth\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -59,7 +57,7 @@ class UsersController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
-            $this->addFlash('success', $translator->trans('user.deleted_successfully'));
+            $this->addFlash('success', $translator->trans('User deleted successfully.'));
         }
 
         return $this->redirectToRoute('app_admin_users_index', [], Response::HTTP_SEE_OTHER);

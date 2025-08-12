@@ -56,7 +56,7 @@ final class LivePageFormComponent extends AbstractController
         $this->entityManager->flush();
 
         $this->addFlash('success', $this->translator->trans(
-            $this->initialFormData ? 'page.updated_successfully' : 'page.created_successfully'
+            $this->initialFormData ? 'Page updated successfully.' : 'Page created successfully.'
         ));
     }
 }

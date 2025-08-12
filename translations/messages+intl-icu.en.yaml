@@ -29,9 +29,9 @@ Close: Close
 Search: Search
 Previous: Previous
 Next: Next
-user.created_successfully: 'User created successfully.'
-user.updated_successfully: 'User updated successfully.'
-user.deleted_successfully: 'User deleted successfully.'
+'User created successfully.': 'User created successfully.'
+'User updated successfully.': 'User updated successfully.'
+'User deleted successfully.': 'User deleted successfully.'
 success: Success
 warning: Warning
 error: Error
@@ -63,8 +63,8 @@ updated_at: 'Updated At'
 Files: Files
 Temporary: Temporary
 Permanent: Permanent
-file.deleted_successfully: 'File deleted successfully.'
-file.uploaded_successfully: 'File uploaded successfully.'
+'File deleted successfully.': 'File deleted successfully.'
+'File uploaded successfully.': 'File uploaded successfully.'
 'Login As User: { email }': 'Login As User: { email }'
 Uploading...: Uploading...
 Pages: Pages
@@ -76,9 +76,9 @@ Page: Page
 'View Page': 'View Page'
 Unpublished: Unpublished
 Body: Body
-page.created_successfully: 'Page created successfully.'
-page.updated_successfully: 'Page updated successfully.'
-page.deleted_successfully: 'Page deleted successfully.'
+'Page created successfully.': 'Page created successfully.'
+'Page updated successfully.': 'Page updated successfully.'
+'Page deleted successfully.': 'Page deleted successfully.'
 'Reset Password': 'Reset Password'
 'File upload size exceed. Maximum size: { maxSize }': 'File upload size exceed. Maximum size: { maxSize }'
 'You can reset your password using the link below. This link will expire in {expire}': 'You can reset your password using the link below. This link will expire in {expire}'

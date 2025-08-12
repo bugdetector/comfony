@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Page\Page;
-use App\Form\Page\PageType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,7 +51,7 @@ class PageController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $page->getId(), $request->request->get('_token'))) {
             $entityManager->remove($page);
             $entityManager->flush();
-            $this->addFlash('success', $this->translator->trans('page.deleted_successfully'));
+            $this->addFlash('success', $this->translator->trans('Page deleted successfully.'));
         }
 
         return $this->redirectToRoute('app_admin_page_index', [], Response::HTTP_SEE_OTHER);
