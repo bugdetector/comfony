@@ -1,9 +1,20 @@
+{% set page = initialFormData %}
+{% if page.id %}
+	<div class='mb-3'>
+		<label class='font-bold'>{% trans %}created_at{% endtrans %}</label>
+		<div>{{ page.createdAt|format_datetime('full', 'short') }}</div>
+	</div>
+	<div class='mb-3'>
+		<label class='font-bold'>{% trans %}updated_at{% endtrans %}</label>
+		<div>{{ page.updatedAt|format_datetime('full', 'short') }}</div>
+	</div>
+{% endif %}
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <div class="fixed bottom-10 end-10">
-        <button type="submit" class="btn btn-success btn-soft hover:text-base-100">
-            <i class="i-tabler-check text-xl"></i>
-            {% trans %}Save{% endtrans %}
-        </button>
-    </div>
+{{ form_widget(form) }}
+<div class="fixed bottom-10 end-10">
+	<button type="submit" class="btn btn-success btn-soft hover:text-base-100">
+		<i class="i-tabler-check text-xl"></i>
+		{% trans %}Save{% endtrans %}
+	</button>
+</div>
 {{ form_end(form) }}

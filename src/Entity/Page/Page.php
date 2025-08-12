@@ -59,7 +59,7 @@ class Page
         return $this->title;
     }
 
-    public function setTitle(string $title): static
+    public function setTitle(?string $title): static
     {
         $this->title = $title;
 
@@ -71,7 +71,7 @@ class Page
         return $this->body;
     }
 
-    public function setBody(string $body): static
+    public function setBody(?string $body): static
     {
         $this->body = $body;
 
@@ -83,7 +83,7 @@ class Page
         return $this->slug;
     }
 
-    public function setSlug(string $slug): static
+    public function setSlug(?string $slug): static
     {
         $this->slug = $slug;
 
@@ -119,7 +119,7 @@ class Page
         return $this->published;
     }
 
-    public function setPublished(bool $published): static
+    public function setPublished(?bool $published): static
     {
         $this->published = $published;
 

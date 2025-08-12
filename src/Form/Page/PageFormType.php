@@ -9,7 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PageType extends AbstractType
+class PageFormType extends AbstractType
 {
     public function __construct(
         private PageRepository $pageRepository
