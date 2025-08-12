@@ -3,7 +3,7 @@
 namespace App\Form\Page;
 
 use App\Entity\Page\Page;
-use App\Form\Type\AsyncFileType;
+use App\Form\Type\LiveAsyncFileType;
 use App\Repository\Page\PageRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,7 +25,7 @@ class PageFormType extends AbstractType
                     'data-controller' => 'tinymce'
                 ]
             ])
-            ->add('attachments', AsyncFileType::class, [
+            ->add('attachments', LiveAsyncFileType::class, [
                 'multiple' => true
             ])
             ->add('published', options: [

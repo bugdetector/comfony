@@ -1,9 +1,21 @@
+{% set user = initialFormData %}
+{% if user.id %}
+	<div class='mb-3'>
+		<label class='font-bold'>{% trans %}Registration Date{% endtrans %}</label>
+		<div>{{ user.createdAt|format_datetime('full', 'short') }}</div>
+	</div>
+	<div class='mb-3'>
+		<label class='font-bold'>{% trans %}Last Access{% endtrans %}</label>
+		<div>{{ user.lastAccess ? user.lastAccess|format_datetime('full', 'short') : 'Never'|trans }}</div>
+	</div>
+{% endif %}
+
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <div class="fixed bottom-10 end-10">
-        <button type="submit" class="btn btn-soft btn-success hover:text-base-100" data-turbo="false">
-            <i class="i-tabler-check text-xl"></i>
-            {% trans %}Save{% endtrans %}
-        </button>
-    </div>
+{{ form_widget(form) }}
+<div class="fixed bottom-10 end-10">
+	<button type="submit" class="btn btn-soft btn-success hover:text-base-100" data-turbo="false">
+		<i class="i-tabler-check text-xl"></i>
+		{% trans %}Save{% endtrans %}
+	</button>
+</div>
 {{ form_end(form) }}

@@ -28,70 +28,21 @@ class UsersController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_admin_users_new', methods: ['GET', 'POST'])]
-    public function new(
-        Request $request,
-        EntityManagerInterface $entityManager,
-        TranslatorInterface $translator,
-        UserPasswordHasherInterface $userPasswordHasher
-    ): Response {
+    #[Route('/new', name: 'app_admin_users_new', methods: ['GET'])]
+    public function new(): Response
+    {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($password = @$request->get("user")["password"]) {
-                $user->setPassword(
-                    $userPasswordHasher->hashPassword(
-                        $user,
-                        $password
-                    )
-                );
-            }
-            $entityManager->persist($user);
-            $entityManager->flush();
-            $this->addFlash('success', $translator->trans('user.created_successfully'));
-            return $this->redirectToRoute('app_admin_users_edit', [
-                'id' => $user->getId()
-            ], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('admin/users/new.html.twig', [
+        return $this->render('admin/users/edit.html.twig', [
             'user' => $user,
-            'form' => $form,
             'title' => $this->translator->trans('Add New User')
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_admin_users_edit', methods: ['GET', 'POST'])]
-    public function edit(
-        Request $request,
-        User $user,
-        EntityManagerInterface $entityManager,
-        TranslatorInterface $translator,
-        UserPasswordHasherInterface $userPasswordHasher
-    ): Response {
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($password = $request->get("user")["password"]) {
-                $user->setPassword(
-                    $userPasswordHasher->hashPassword(
-                        $user,
-                        $password
-                    )
-                );
-            }
-            $entityManager->flush();
-            $this->addFlash('success', $translator->trans('user.updated_successfully'));
-            return $this->redirectToRoute('app_admin_users_edit', [
-                'id' => $user->getId()
-            ], Response::HTTP_SEE_OTHER);
-        }
-
+    #[Route('/{id}/edit', name: 'app_admin_users_edit', methods: ['GET'])]
+    public function edit(User $user): Response
+    {
         return $this->render('admin/users/edit.html.twig', [
             'user' => $user,
-            'form' => $form,
             'title' => $this->translator->trans('Edit User :name', [
                 "name" => $user->getName()
             ])

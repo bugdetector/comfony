@@ -4,7 +4,7 @@ namespace App\Form\Auth;
 
 use App\Entity\Auth\User;
 use App\Entity\Auth\UserStatus;
-use App\Form\Type\AsyncFileType;
+use App\Form\Type\LiveAsyncFileType;
 use App\Repository\Auth\UserRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
@@ -19,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 
-class UserType extends AbstractType
+class UserFormType extends AbstractType
 {
     public function __construct(
         private Security $security,
@@ -38,7 +38,7 @@ class UserType extends AbstractType
                 'constraints' => [
                     new Email()
                 ]
-            ])->add("profile_photo", AsyncFileType::class, [
+            ])->add("profile_photo", LiveAsyncFileType::class, [
                 "help" => 'Upload a PNG/JPG file.',
                 'attr' => [
                     'accept' => implode(',', [
@@ -65,6 +65,7 @@ class UserType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
+                'always_empty' => false,
             ])->add('status', EnumType::class, [
                 'class' => UserStatus::class,
                 'expanded' => true

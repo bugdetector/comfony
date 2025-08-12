@@ -2,12 +2,13 @@
 
 namespace App\Twig\Components\LiveForms;
 
-use App\Entity\Page\Page;
-use App\Form\Page\PageFormType;
+use App\Entity\Auth\User;
+use App\Form\Auth\UserFormType;
 use App\Twig\Components\FormType\LiveAsyncFileInputTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -16,14 +17,14 @@ use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
 #[AsLiveComponent]
-final class LivePageFormComponent extends AbstractController
+final class LiveUserFormComponent extends AbstractController
 {
     use DefaultActionTrait;
     use ComponentWithFormTrait;
     use LiveAsyncFileInputTrait;
 
     #[LiveProp()]
-    public ?Page $initialFormData = null;
+    public ?User $initialFormData = null;
 
     public function __construct(
         protected EntityManagerInterface $entityManager,
@@ -34,9 +35,9 @@ final class LivePageFormComponent extends AbstractController
     protected function instantiateForm(): FormInterface
     {
         if (!$this->initialFormData) {
-            $this->initialFormData = new Page();
+            $this->initialFormData = new User();
         }
-        $form = $this->createForm(PageFormType::class, $this->initialFormData, [
+        $form = $this->createForm(UserFormType::class, $this->initialFormData, [
             'attr' => [
                 'data-action' => 'live#action:prevent',
                 'data-live-action-param' => 'save',
@@ -47,16 +48,22 @@ final class LivePageFormComponent extends AbstractController
     }
 
     #[LiveAction]
-    public function save()
+    public function save(UserPasswordHasherInterface $userPasswordHasher)
     {
         $this->submitForm();
-        /** @var Page */
+        /** @var User */
         $object = $this->getForm()->getData();
+        $password = $this->getForm()->get('password')->getData();
+        if ($password) {
+            $object->setPassword(
+                $userPasswordHasher->hashPassword($object, $password)
+            );
+        }
         $this->entityManager->persist($object);
         $this->entityManager->flush();
 
         $this->addFlash('success', $this->translator->trans(
-            $this->initialFormData ? 'page.updated_successfully' : 'page.created_successfully'
+            $this->initialFormData ? 'user.updated_successfully' : 'user.created_successfully'
         ));
     }
 }

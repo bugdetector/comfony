@@ -82,7 +82,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(?string $name): static
     {
         $this->name = $name;
         return $this;
@@ -93,7 +93,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(?string $email): static
     {
         $this->email = $email;
 
@@ -122,7 +122,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): static
+    public function setRoles(?array $roles): static
     {
         $this->roles = $roles;
 
@@ -137,7 +137,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(?string $password): static
     {
         $this->password = $password;
 
@@ -170,7 +170,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->status;
     }
 
-    public function setStatus(UserStatus $status): static
+    public function setStatus(?UserStatus $status): static
     {
         $this->status = $status;
 
