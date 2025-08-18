@@ -23,3 +23,15 @@
 .menu li > *:not(.menu-active, .dropdown-content):active {
    background-color: color-mix(in oklab,var(--color-base-content)40%,transparent) !important; 
 }
+
+.action-remove{
+   @apply bg-red-300;
+}
+
+.action-create{
+   @apply bg-accent;
+}
+
+.action-update{
+   @apply bg-primary-content;
+}
