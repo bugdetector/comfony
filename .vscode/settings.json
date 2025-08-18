@@ -1,7 +1,3 @@
 {
-  "github.copilot.chat.codeGeneration.instructions": [
-    {
-      "file": "./.vscode/daisyui.md"
-    }
-  ]
+  "github.copilot.chat.codeGeneration.useInstructionFiles":true,
 }
