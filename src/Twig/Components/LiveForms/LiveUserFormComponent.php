@@ -53,6 +53,7 @@ final class LiveUserFormComponent extends AbstractController
         $this->submitForm();
         /** @var User */
         $object = $this->getForm()->getData();
+        $isCreate = !boolval($object->getId());
         $password = $this->getForm()->get('password')->getData();
         if ($password) {
             $object->setPassword(
@@ -63,7 +64,10 @@ final class LiveUserFormComponent extends AbstractController
         $this->entityManager->flush();
 
         $this->addFlash('success', $this->translator->trans(
-            $this->initialFormData ? 'User updated successfully.' : 'User created successfully.'
+            $isCreate ? 'User created successfully.' : 'User updated successfully.'
         ));
+        if ($isCreate) {
+            return $this->redirectToRoute('app_admin_users_edit', ['id' => $object->getId()]);
+        }
     }
 }

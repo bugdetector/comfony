@@ -52,11 +52,15 @@ final class LivePageFormComponent extends AbstractController
         $this->submitForm();
         /** @var Page */
         $object = $this->getForm()->getData();
+        $isCreate = !boolval($object->getId());
         $this->entityManager->persist($object);
         $this->entityManager->flush();
 
         $this->addFlash('success', $this->translator->trans(
-            $this->initialFormData ? 'Page updated successfully.' : 'Page created successfully.'
+            $isCreate ? 'Page created successfully.' : 'Page updated successfully.'
         ));
+        if ($isCreate) {
+            return $this->redirectToRoute('app_admin_page_edit', ['id' => $object->getId()]);
+        }
     }
 }

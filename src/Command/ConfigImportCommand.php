@@ -33,9 +33,15 @@ class ConfigImportCommand extends Command
 
         $process = new PhpSubprocess(['bin/console', 'make:migration']);
         $process->run();
+        echo $process->getOutput();
 
         $process = new PhpSubprocess(['bin/console', 'doctrine:migration:migrate']);
         $process->run();
+        echo $process->getOutput();
+
+        $process = new PhpSubprocess(['bin/console', 'config:dump-import']);
+        $process->run();
+        echo $process->getOutput();
 
         $this->clearMigrationsDirectory($output);
 

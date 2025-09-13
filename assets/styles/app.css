@@ -25,13 +25,13 @@
 }
 
 .action-remove{
-   @apply bg-red-300;
+   @apply bg-red-300 dark:bg-red-700;
 }
 
 .action-create{
-   @apply bg-accent;
+   @apply bg-green-300 dark:bg-green-700;
 }
 
 .action-update{
-   @apply bg-primary-content;
+   @apply bg-blue-300 dark:bg-blue-700;
 }

@@ -50,9 +50,13 @@ final class LiveConfigurationFormComponent extends AbstractController
         $this->submitForm();
         /** @var Configuration */
         $object = $this->getForm()->getData();
+        $isCreate = !boolval($object->getId());
         $this->entityManager->persist($object);
         $this->entityManager->flush();
 
         $this->addFlash('success', $this->translator->trans('Configuration saved successfully.'));
+        if ($isCreate) {
+            return $this->redirectToRoute('app_admin_configuration_edit', ['id' => $object->getId()]);
+        }
     }
 }
