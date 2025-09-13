@@ -118,3 +118,11 @@ System: System
 'Verify Code': 'Verify Code'
 'Profile photo': 'Profile photo'
 'Upload a PNG/JPG file.': 'Upload a PNG/JPG file.'
+Configurations: Configurations
+'Add New Configuration': 'Add New Configuration'
+'Edit Configuration {congigKey}': 'Edit Configuration {congigKey}'
+'Configuration deleted successfully.': 'Configuration deleted successfully.'
+'Configuration saved successfully.': 'Configuration saved successfully.'
+'Config Key': 'Config Key'
+Value: Value
+Configuration: Configuration

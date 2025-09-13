@@ -1,0 +1,17 @@
+{% extends 'admin/configuration/index.html.twig' %}
+{% block backLink %}
+    <a href="{{ path('app_admin_configuration_index') }}" class="btn btn-outline">
+        <i class="i-tabler-chevron-left"></i>
+        {% trans %}Back{% endtrans %}
+    </a>
+{% endblock %}
+{% block body %}
+    <div class="flex flex-wrap p-3">
+        <div class="md:w-9/12 w-full">
+            {{ component('LiveForms:LiveConfigurationFormComponent', { initialFormData: configuration }) }}
+        </div>
+    </div>
+    {% if configuration.id %}
+        {{ include('admin/configuration/_delete_form.html.twig') }}
+    {% endif %}
+{% endblock %}

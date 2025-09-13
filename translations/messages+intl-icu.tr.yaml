@@ -123,3 +123,11 @@ System: Sistem
 'Verify Code': 'Kodu Doğrula'
 'Profile photo': 'Profil resmi'
 'Upload a PNG/JPG file.': 'Bir PNG/JPG dosyası yükleyin.'
+Configurations: Yapılandırmalar
+'Add New Configuration': 'Yeni Yapılandırma Ekle'
+'Edit Configuration {congigKey}': 'Yapılandırmayı Düzenle {congigKey}'
+'Configuration deleted successfully.': 'Yapılandırma başarıyla silindi.'
+'Configuration saved successfully.': 'Yapılandırma başarıyla kaydedildi.'
+'Config Key': 'Yapılandırma Anahtarı'
+Value: Değer
+Configuration: Yapılandırma
