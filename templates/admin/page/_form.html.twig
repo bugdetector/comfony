@@ -1,5 +1,14 @@
 {% set page = initialFormData %}
 {% if page.id %}
+	{% if page.id %}
+		<div class="tabs tabs-box tabs-lg">
+			{% for localeObj in locales() %}
+				{% set is_active = (this.locale ?: this.defaultLocale) == localeObj.code %}
+				{% set is_rtl = localeObj.code in ['ar', 'fa', 'he'] %}
+				<input type="radio" data-model="locale" class="tab {{ is_active ? 'tab-active' : '' }}" value="{{ localeObj.code }}" aria-label="{{ localeObj.name|default(localeObj.code) }}" />
+			{% endfor %}
+		</div>
+	{% endif %}
 	<div class='mb-3'>
 		<label class='font-bold'>{% trans %}created_at{% endtrans %}</label>
 		<div>{{ page.createdAt|format_datetime('full', 'short') }}</div>
@@ -7,6 +16,13 @@
 	<div class='mb-3'>
 		<label class='font-bold'>{% trans %}updated_at{% endtrans %}</label>
 		<div>{{ page.updatedAt|format_datetime('full', 'short') }}</div>
+	</div>
+{% else %}
+	<div class="tabs tabs-box tabs-lg">
+		{% set localeObj = locales()[this.defaultLocale] %}
+		{% set is_active = (this.locale ?: this.defaultLocale) == localeObj.code %}
+		{% set is_rtl = localeObj.code in ['ar', 'fa', 'he'] %}
+		<input type="radio" data-model="locale" class="tab {{ is_active ? 'tab-active' : '' }}" value="{{ localeObj.code }}" aria-label="{{ localeObj.name|default(localeObj.code) }}" />
 	</div>
 {% endif %}
 {{ form_start(form) }}
