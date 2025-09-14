@@ -1,50 +1,82 @@
-# Comfony - Comfortable Symfony boilerplate - developed with tailwindcss, turbo, ux live components
+# Comfony - Comfortable Symfony boilerplate - developed with daisyui, tailwindcss, turbo, ux live components
 
-## Submodules
-Because of some theme modules has licence restrictions they are not shared as public. To get it please contact me directly for access.
-
-Init submodule
-```
-git submodule init
-```
-
-Update submodule
-```
-git submodule update --remote
-```
 
 ## Start development enviroment
-```
-symfony serve
+```sh
+docker compose up
 ```
 
 ## Watch assets
-```
+```sh
 yarn watch
 ```
 OR
-```
+```sh
 npm run watch
 ```
 
 ## Translations
 - Dump English translations:
-  - ```
+  - ```sh
     symfony console translation:extract --force --format=yaml en
     ```
 - Dump Turkish translations:
-  - ```
+  - ```sh
     symfony console translation:extract --force --format=yaml tr
     ```
 
 ## List Schedule Commands
-```
+```sh
 symfony console schedule:list
 ```
 ## Run Schedule
-```
+```sh
 symfony console schedule:run
 ```
+## Staging HTTP Authentication
+
+To secure your staging environment with HTTP Basic Auth, follow these steps:
+
+### 1. Generate `.htpasswd` file
+
+Run the following command in your project's public directory, replacing `<username>` with your desired username:
+
+```sh
+htpasswd -c .htpasswd <username>
+# Enter your password when prompted
+```
+
+### 2. Configure Apache
+
+Add the following to your `.htaccess` file to enable authentication only in the staging environment:
+
+```apache
+<If "%{ENV:APP_ENV} == 'staging'">
+  AuthType Basic
+  AuthName "Restricted"
+  AuthUserFile <absolute path to .htpasswd>
+  Require valid-user
+</If>
+```
+
+### 3. Configure Nginx
+
+Add these lines to your Nginx server block to enable authentication:
+
+```nginx
+server {
+  # ... other config ...
+
+  location / {
+    # ... other config ...
+    auth_basic "Restricted";
+    auth_basic_user_file <absolute path to .htpasswd>;
+  }
+}
+```
+
+Replace `<absolute path to .htpasswd>` with the full path to your `.htpasswd` file.
+
 
 ## Code Quality check
 Please run ``` phpcbf ``` then ``` phpcs ``` commands to ensure code visible quality.
@@ -53,40 +85,12 @@ Please run ``` phpcbf ``` then ``` phpcs ``` commands to ensure code visible qua
 All migration files will automaticaly generated and applied with this command.
 It is not suggested to generate mogration files while using comfony.
 
-```
+```sh
 symfony console config:import
 ```
 
 
 # Symfony Docker
-
-A [Docker](https://www.docker.com/)-based installer and runtime for the [Symfony](https://symfony.com) web framework,
-with [FrankenPHP](https://frankenphp.dev) and [Caddy](https://caddyserver.com/) inside!
-
-![CI](https://github.com/dunglas/symfony-docker/workflows/CI/badge.svg)
-
-## Getting Started
-
-1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/) (v2.10+)
-2. Run `docker compose build --no-cache` to build fresh images
-3. Run `docker compose up --pull always -d --wait` to set up and start a fresh Symfony project
-4. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
-5. Run `docker compose down --remove-orphans` to stop the Docker containers.
-
-## Features
-
-* Production, development and CI ready
-* Just 1 service by default
-* Blazing-fast performance thanks to [the worker mode of FrankenPHP](https://github.com/dunglas/frankenphp/blob/main/docs/worker.md) (automatically enabled in prod mode)
-* [Installation of extra Docker Compose services](docs/extra-services.md) with Symfony Flex
-* Automatic HTTPS (in dev and prod)
-* HTTP/3 and [Early Hints](https://symfony.com/blog/new-in-symfony-6-3-early-hints) support
-* Real-time messaging thanks to a built-in [Mercure hub](https://symfony.com/doc/current/mercure.html)
-* [Vulcain](https://vulcain.rocks) support
-* Native [XDebug](docs/xdebug.md) integration
-* Super-readable configuration
-
-**Enjoy!**
 
 ## Docs
 

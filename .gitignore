@@ -31,4 +31,5 @@ yarn.lock
 ###> Comfony ###
 /public/uploads
 .DS_Store
+.htpasswd
 ###< Comfony ###
