@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\SortableGroup;
-use Gedmo\Mapping\Annotation\SortablePosition;
 
 trait TreeEntity
 {
@@ -16,10 +15,6 @@ trait TreeEntity
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class, cascade: ['persist'])]
     private Collection $children;
-
-    #[SortablePosition]
-    #[ORM\Column(nullable: true)]
-    private ?int $position = null;
 
     public function __construct()
     {
@@ -64,30 +59,6 @@ trait TreeEntity
                 $child->setParent(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getDepth(): ?int
-    {
-        return $this->depth;
-    }
-
-    public function setDepth(?int $depth): static
-    {
-        $this->depth = $depth;
-
-        return $this;
-    }
-
-    public function getPosition(): ?int
-    {
-        return $this->position;
-    }
-
-    public function setPosition(?int $position): static
-    {
-        $this->position = $position;
 
         return $this;
     }

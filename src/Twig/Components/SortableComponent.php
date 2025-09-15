@@ -39,22 +39,34 @@ class SortableComponent extends AbstractController
     #[PostHydrate()]
     public function postHydrate()
     {
+        if (!in_array('App\Entity\Trait\SortableEntity', class_uses($this->class))) {
+            throw new \LogicException(sprintf('Class %s must use App\Trait\SortableEntity trait.', $this->class));
+        }
         $this->entityRepository = $this->entityManager->getRepository($this->class);
     }
 
     public function getItems()
     {
+        if ($this->isTreeEntity()) {
+            // Return only root nodes, sorted by position
+            return $this->entityRepository->findBy(['parent' => null], ['position' => 'ASC']);
+        }
         return $this->entityRepository->findBy([], ['position' => 'ASC']);
     }
 
     #[LiveAction]
     public function saveOrder(
         #[LiveArg()] $itemId,
-        #[LiveArg()] int $newPosition
+        #[LiveArg()] int $newPosition,
+        #[LiveArg()] $parentId = null
     ) {
         $item = $this->entityRepository->find($itemId);
         if (!$item) {
             throw $this->createNotFoundException();
+        }
+        if ($this->isTreeEntity()) {
+            $parent = $parentId ? $this->entityRepository->find($parentId) : null;
+            $item->setParent($parent);
         }
         $item->setPosition($newPosition);
         $this->entityManager->persist($item);
@@ -77,5 +89,10 @@ class SortableComponent extends AbstractController
     #[LiveListener('reloadSortableForm')]
     public function onReloadSortableForm()
     {
+    }
+
+    public function isTreeEntity()
+    {
+        return in_array('App\Entity\Trait\TreeEntity', class_uses($this->class));
     }
 }

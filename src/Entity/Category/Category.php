@@ -2,6 +2,7 @@
 
 namespace App\Entity\Category;
 
+use App\Entity\Trait\SortableEntity;
 use App\Entity\Trait\TreeEntity;
 use App\Repository\Category\CategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,6 +11,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
 {
+    use SortableEntity;
     use TreeEntity;
     use TimestampableEntity;
 

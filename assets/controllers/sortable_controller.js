@@ -5,24 +5,50 @@ import Sortable from 'sortablejs';
 export default class extends Controller {
 
     component = null;
-    sortable = null;
+    sortables = [];
 
     connect() {
         getComponent(this.element.parentElement).then(component => this.component = component);
-        this.sortable = Sortable.create(this.element, {
-            filter: 'sortable-item',
-            onEnd: (event) => {
-                this.component.action(
-                    'saveOrder', {
-                        itemId: event.item.dataset.objectId,
-                        newPosition: event.newIndex
-                    }
-                );
-            },
-        });
+        const sortableElements = [
+            this.element,
+            ...this.element.querySelectorAll('.sortable-group').values(),
+        ];
+        for(let element of sortableElements){
+            this.sortables.push(
+                Sortable.create(element, {
+                    filter: '.sortable-disabled',
+                    draggable: '.sortable-item',
+                    group: { name: 'sortable-group', pull: true, put: true },
+                    handle: '.cursor-move',
+                    swapThreshold: 0.65,
+                    animation: false,
+                    forceFallback: true,
+                    fallbackOnBody: true,
+                    onEnd: (event) => {
+                        // Find parentId for tree structure
+                        let parentId = null;
+                        const parentLi = event.to.closest('li[data-object-id]');
+                        if (parentLi) {
+                            parentId = parentLi.dataset.objectId;
+                        }
+                        this.component.action(
+                            'saveOrder', {
+                                itemId: event.item.dataset.objectId,
+                                newPosition: event.newIndex,
+                                parentId,
+                            }
+                        );
+                    },
+                })
+            );
+        }
+        
+        console.log(this);
     }
 
     disconnect() {
-        this.sortable.destroy();
+        for(let sortable of this.sortables){
+            sortable.destroy();
+        }
     }
 }

@@ -62,6 +62,7 @@ final class LiveCategoryFormComponent extends AbstractController
             $isCreate ? 'Category created successfully.' : 'Category updated successfully.'
         ));
         $this->dispatchBrowserEvent('app-hide-modal');
+        $this->emit('reloadSortableForm');
     }
 
     private function getEntityClass(): string
