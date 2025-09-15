@@ -5,8 +5,8 @@ namespace App\Twig\Components\LiveForms;
 use App\Entity\Page\Page;
 use App\Form\Page\PageFormType;
 use App\Twig\Components\FormType\LiveAsyncFileInputTrait;
+use App\Twig\Components\FormType\TranslatableFormTrait;
 use Doctrine\ORM\EntityManagerInterface;
-use Gedmo\Translatable\TranslatableListener;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -22,14 +22,10 @@ final class LivePageFormComponent extends AbstractController
     use DefaultActionTrait;
     use ComponentWithFormTrait;
     use LiveAsyncFileInputTrait;
+    use TranslatableFormTrait;
 
     #[LiveProp()]
     public ?Page $initialFormData = null;
-
-    #[LiveProp(url: true, writable: true, onUpdated: 'onLocaleUpdated')]
-    public ?string $locale = null;
-
-    public string $defaultLocale;
 
     public function __construct(
         protected EntityManagerInterface $entityManager,
@@ -75,22 +71,5 @@ final class LivePageFormComponent extends AbstractController
         if ($isCreate) {
             return $this->redirectToRoute('app_admin_page_edit', ['id' => $object->getId()]);
         }
-    }
-
-    private function getTranslatableListener(): ?TranslatableListener
-    {
-        foreach ($this->entityManager->getEventManager()->getAllListeners() as $listeners) {
-            foreach ($listeners as $listener) {
-                if ($listener instanceof TranslatableListener) {
-                    return $listener;
-                }
-            }
-        }
-        return null;
-    }
-
-    public function onLocaleUpdated()
-    {
-        $this->resetForm();
     }
 }
