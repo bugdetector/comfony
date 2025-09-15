@@ -43,6 +43,7 @@ document.addEventListener('live-component:update', (e) => {
 })
 
 document.addEventListener('app-hide-modal', (e) => {
+    document.querySelectorAll('dialog[open]').forEach((dialog) => dialog.close())
 })
 
 

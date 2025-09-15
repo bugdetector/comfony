@@ -131,3 +131,7 @@ Configurations: Yapılandırmalar
 'Config Key': 'Yapılandırma Anahtarı'
 Value: Değer
 Configuration: Yapılandırma
+Categories: Kategoriler
+'Add New Category': 'Yeni Kategori Ekle'
+'Edit Category: {name}': 'Kategoriyi Düzenle: {name}'
+Edit: Düzenle

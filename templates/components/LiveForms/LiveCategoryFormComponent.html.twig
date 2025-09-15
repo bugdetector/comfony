@@ -1,0 +1,20 @@
+<div {{ attributes }}>
+    {{ include(theme.themeDirectory ~ '/partials/_flash_messages.html.twig') }}
+    <h3 class="text-lg font-bold">
+        {% if not this.initialFormData or not this.initialFormData.id  %}
+            {% trans %}Add New Category{% endtrans %}
+        {% elseif this.initialFormData %}
+            {% trans with {'{name}': this.initialFormData.name } %}Edit Category: {name}{% endtrans %}
+        {% endif %}
+    </h3>
+    {{ form_start(form, {'attr': {'class': 'py-4'}}) }}
+    {{ form_widget(form) }}
+    <div class="modal-action">
+        <button type="submit" class="btn btn-success btn-soft hover:text-base-100">
+            <i class="i-tabler-check text-xl"></i>
+            {% trans %}Save{% endtrans %}
+        </button>
+    </div>
+    {{ form_end(form) }}
+
+</div>

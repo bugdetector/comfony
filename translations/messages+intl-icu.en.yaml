@@ -126,3 +126,7 @@ Configurations: Configurations
 'Config Key': 'Config Key'
 Value: Value
 Configuration: Configuration
+Categories: Categories
+'Add New Category': 'Add New Category'
+'Edit Category: {name}': 'Edit Category: {name}'
+Edit: Edit

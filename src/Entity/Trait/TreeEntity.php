@@ -5,31 +5,21 @@ namespace App\Entity\Trait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation\TreeLeft;
-use Gedmo\Mapping\Annotation\TreeLevel;
-use Gedmo\Mapping\Annotation\TreeParent;
-use Gedmo\Mapping\Annotation\TreeRight;
+use Gedmo\Mapping\Annotation\SortableGroup;
+use Gedmo\Mapping\Annotation\SortablePosition;
 
 trait TreeEntity
 {
-    #[TreeParent]
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
+    #[SortableGroup]
     private ?self $parent = null;
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class, cascade: ['persist'])]
     private Collection $children;
 
-    #[TreeLevel]
+    #[SortablePosition]
     #[ORM\Column(nullable: true)]
-    private ?int $depth = null;
-
-    #[TreeLeft]
-    #[ORM\Column(nullable: true)]
-    private ?int $lft = null;
-
-    #[TreeRight]
-    #[ORM\Column(nullable: true)]
-    private ?int $rgt = null;
+    private ?int $position = null;
 
     public function __construct()
     {
@@ -90,26 +80,14 @@ trait TreeEntity
         return $this;
     }
 
-    public function getLft(): ?int
+    public function getPosition(): ?int
     {
-        return $this->lft;
+        return $this->position;
     }
 
-    public function setLft(?int $lft): static
+    public function setPosition(?int $position): static
     {
-        $this->lft = $lft;
-
-        return $this;
-    }
-
-    public function getRgt(): ?int
-    {
-        return $this->rgt;
-    }
-
-    public function setRgt(?int $rgt): static
-    {
-        $this->rgt = $rgt;
+        $this->position = $position;
 
         return $this;
     }

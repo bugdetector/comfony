@@ -8,6 +8,7 @@ use App\Repository\Auth\UserRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Blameable\BlameableListener;
+use Gedmo\Sortable\SortableListener;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -95,7 +96,10 @@ class UserActivityListener
             $blameableListener = new BlameableListener();
             $blameableListener->setUserValue($user->getId());
 
+            $sortableListener = new SortableListener();
+
             $this->entityManager->getEventManager()->addEventSubscriber($blameableListener);
+            $this->entityManager->getEventManager()->addEventSubscriber($sortableListener);
         }
     }
 }

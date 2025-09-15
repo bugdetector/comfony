@@ -50,6 +50,12 @@
 							<span>{% trans %}Pages{% endtrans %}</span>
 						</a>
 					</li>
+					<li>
+						<a href="{{ path('app_admin_category_index') }}" data-turbo-frame="base-content">
+							<i class="i-tabler-list-tree"></i>
+							<span>{% trans %}Categories{% endtrans %}</span>
+						</a>
+					</li>
 				{% endif %}
 			{% endif %}
 		</ul>

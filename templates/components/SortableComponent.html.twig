@@ -1,0 +1,42 @@
+<div{{ attributes }}>
+	{{ include(theme.themeDirectory ~ '/partials/_flash_messages.html.twig') }}
+	<ul class="space-y-3" {{ stimulus_controller('sortable') }}>
+		{% set items = this.getItems() %}
+		{% for index, object in items %}
+			<li data-object-id="{{ object.id }}" class="flex items-center justify-between bg-base-100 border border-base-300 rounded-box px-4 py-2 my-2 sortable-item">
+				<div class="flex items-center gap-3">
+					<span class="cursor-move text-2xl">
+						<i class="i-tabler-arrows-move"></i>
+					</span>
+					<span>{{ object.name }}</span>
+				</div>
+				<div class="flex items-center gap-2">
+					{% if this.formComponent %}
+						<button type="button" class="btn btn-sm btn-primary btn-outline" data-controller="modal" data-modal-target-modal-value="object-modal-form" data-action="live#emit" data-live-event-param="setFormData" data-live-object-id-param="{{ object.id }}">
+							<i class="i-tabler-edit"></i>
+							<span>{% trans %}Edit{% endtrans %}</span>
+						</button>
+					{% endif %}
+					{% set modalId = 'delete-modal-' ~ object.id %}
+					<form data-action="live#action" data-live-action-param="removeItem" data-live-item-id-param="{{ object.id }}">
+						<button type="button" class="btn btn-sm btn-error btn-outline" data-controller="modal" data-modal-target-modal-value="{{ modalId }}">
+							<i class="i-tabler-trash text-lg"></i>
+							<span>{% trans %}Delete{% endtrans %}</span>
+						</button>
+						{% include theme.themeDirectory ~ "/partials/_delete_modal.html.twig" with {modalId: modalId, objectName: (this.objectName ?: 'Object')|trans} %}
+					</form>
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
+	{% if this.formComponent %}
+		<dialog class="modal modal-bottom sm:modal-middle" id="object-modal-form">
+			<div class="modal-box">
+				<button type="button" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 modal-close">
+					<i class="i-tabler-x"></i>
+				</button>
+				{{ component(this.formComponent) }}
+			</div>
+		</dialog>
+	{% endif %}
+</div>
