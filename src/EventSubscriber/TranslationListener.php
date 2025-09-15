@@ -32,6 +32,7 @@ class TranslationListener
                 $session->set('_locale', $locale);
             }
             $this->localeSwitcher->setLocale($locale);
+            $request->setLocale($locale);
             return;
         }
 
@@ -40,6 +41,7 @@ class TranslationListener
             $sessionLocale = $session->get('_locale');
             if ($sessionLocale) {
                 $this->localeSwitcher->setLocale($sessionLocale);
+                $request->setLocale($sessionLocale);
                 return;
             }
         }
@@ -48,6 +50,7 @@ class TranslationListener
         $preferredLanguage = $request->getPreferredLanguage(explode('|', $this->locales));
         if ($preferredLanguage) {
             $this->localeSwitcher->setLocale($preferredLanguage);
+            $request->setLocale($preferredLanguage);
         }
     }
 }
