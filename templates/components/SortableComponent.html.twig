@@ -37,6 +37,10 @@
 						<i class="i-tabler-edit"></i>
 						<span>{% trans %}Edit{% endtrans %}</span>
 					</button>
+					<button type="button" class="btn btn-sm btn-primary" data-controller="modal" data-modal-target-modal-value="object-modal-form" data-action="live#emit" data-live-event-param="setFormData" data-live-object-id-param="null" data-live-parent-id-param="{{ object.id }}">
+						<i class="i-tabler-plus"></i>
+						<span>{{ ("Add New " ~ objectName)|trans }}</span>
+					</button>
 				{% endif %}
 				{% set modalId = 'delete-modal-' ~ object.id %}
 				<form data-action="live#action" data-live-action-param="removeItem" data-live-item-id-param="{{ object.id }}">
