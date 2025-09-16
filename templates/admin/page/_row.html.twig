@@ -25,6 +25,11 @@
 	<td class="px-6 py-3">{{ object.id }}</td>
 	<td class="px-6 py-3">{{ object.title }}</td>
 	<td class="px-6 py-3">
+		<span class="badge badge-primary">
+			{{ object.category.name }}
+		</span>
+	</td>
+	<td class="px-6 py-3">
 		{% if object.published %}
 			<span class="badge badge-success">
 				{% trans %}Published{% endtrans %}

@@ -2,6 +2,7 @@
 
 namespace App\Entity\Page;
 
+use App\Entity\Category\Category;
 use App\Entity\File\File;
 use App\Repository\Page\PageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -54,6 +55,10 @@ class Page implements Translatable
     #[ORM\OneToMany(mappedBy: 'object', targetEntity: PageTranslation::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Collection $translations = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
 
     public function __construct()
     {
@@ -146,5 +151,17 @@ class Page implements Translatable
     public function getLocale()
     {
         return $this->locale;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
+
+        return $this;
     }
 }

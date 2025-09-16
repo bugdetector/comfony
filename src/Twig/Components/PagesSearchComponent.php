@@ -11,9 +11,11 @@
 
 namespace App\Twig\Components;
 
+use App\Entity\Category\Category;
 use App\Entity\Page\Page;
 use Doctrine\ORM\QueryBuilder;
 use Override;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
@@ -52,6 +54,9 @@ final class PagesSearchComponent extends DatatableComponent
                     'sortable' => true,
                 ],
                 [
+                    'label' => $this->translator->trans('Category'),
+                ],
+                [
                     'label' => $this->translator->trans('Published'),
                 ],
                 'p.createdAt' => [
@@ -70,6 +75,15 @@ final class PagesSearchComponent extends DatatableComponent
                 'p.title' => [
                     'options' => [
                         'label' => 'Title',
+                    ],
+                ],
+                'p.category' => [
+                    'type' => EntityType::class,
+                    'comparison' => '=',
+                    'options' => [
+                        'label' => 'Category',
+                        'class' => Category::class,
+                        'choice_label' => 'name',
                     ],
                 ],
                 'p.published' => [
