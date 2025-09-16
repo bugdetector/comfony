@@ -61,3 +61,10 @@
 		{% endif %}
 	</li>
 {% endmacro %}
+
+{% macro placeholder(props) %}
+	{{ include(theme.themeDirectory ~ '/partials/_flash_messages.html.twig') }}
+	{% for i in range(0, 3) %}
+		<div class="skeleton h-12 w-full my-2"></div>
+	{% endfor %}
+{% endmacro %}
