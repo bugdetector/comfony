@@ -1,5 +1,12 @@
 {% set action = action is defined ? action : null %}
 <tr id="page_{{ object.id }}" class='{{ action ? ' action-' ~ action }}'>
+	{% if bulkRemoveAllowed is defined and bulkRemoveAllowed %}
+		<td>
+			<input type="checkbox" data-model="bulkSelectIds[]" value="{{ object.id }}" {{ object.id in this.bulkSelectIds ? 'checked' }} class="toggle toggle-primary mr-2 select-all"/>
+		</td>
+	{% else %}
+		<td></td>
+	{% endif %}
 	<td class="px-6 py-3">
 		<div class="flex gap-2">
 			{% if action != 'remove' %}
@@ -10,8 +17,7 @@
 					<i class="i-tabler-eye text-lg"></i>
 				</a>
 				{% if action == null %}
-					<form method="post" action="{{ path('app_admin_page_delete', {'id': object.id}) }}">
-						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ object.id) }}">
+					<form data-action="live#action" data-live-action-param="remove" data-live-entity-ids-param="[{{ object.id }}]" data-live-object-name-param="Page">
 						{% set modalId = 'delete-modal-' ~ object.id %}
 						<button type='button' class="btn btn-sm btn-error btn-outline" data-controller="modal" data-modal-target-modal-value="{{ modalId }}">
 							<i class="i-tabler-trash text-lg"></i>

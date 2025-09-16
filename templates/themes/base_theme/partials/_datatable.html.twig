@@ -1,4 +1,5 @@
 <div {{ attributes }} class="grid mt-4 rounded-xl border-2 border-base-300">
+	{{ include(theme.themeDirectory ~ '/partials/_flash_messages.html.twig') }}
 	{% block filters %}
 		<div class="flex justify-between gap-2 p-3">
 			<label class="input w-full sm:w-64 flex items-center gap-2">
@@ -31,19 +32,52 @@
 		<div class="divider"></div>
 	{% endblock %}
 	{% set pagination = this.getPagination() %}
+	{% set bulkRemoveAllowed = this.options.allow_bulk_remove|default(false) %}
 	<div class="overflow-x-auto p-3" data-loading="addClass(opacity-50 blur-sm)">
+		{% if bulkSelectIds|length > 0 %}
+			<div class="dropdown mb-4">
+				<button class="btn btn-primary btn-soft dropdown-toggle" tabindex="0" role="button">
+					<i class="i-tabler-list-check"></i>
+					{% trans %}Bulk Actions{% endtrans %}
+					<i class="i-tabler-chevron-down"></i>
+				</button>
+				<ul class="dropdown-content bg-base-100 shadow p-2 rounded-box w-52">
+					{% if bulkRemoveAllowed %}
+						<li>
+							<button type='button' class="btn btn-sm btn-error btn-outline" data-controller="modal" data-modal-target-modal-value="bulk-remove-modal">
+								<i class="i-tabler-trash text-lg"></i>
+								{% trans %}Remove Selected{% endtrans %}
+							</button>
+						</li>
+					{% endif %}
+				</ul>
+			</div>
+			{% if bulkRemoveAllowed %}
+				<form data-action="live#action" data-live-action-param="remove" data-live-entity-ids-param="{{ this.bulkSelectIds|json_encode }}" data-live-object-name-param="Selected items">
+					{% include theme.themeDirectory ~ "/partials/_delete_modal.html.twig" with {modalId: 'bulk-remove-modal', message: "Are you sure want to remove selected items?"|trans} %}
+				</form>
+			{% endif %}
+			
+		{% endif %}
+		
 		<table class="table table-zebra">
 			<caption class="text-start font-bold my-3 ms-3">
 				{% set end = ((pagination.getCurrentPageNumber()) * pagination.getItemNumberPerPage()) %}
 				{% trans with {
-				'total': pagination.getTotalItemCount(), 
-				'start': ((pagination.getCurrentPageNumber() - 1) * pagination.getItemNumberPerPage()), 
-				'end': end > pagination.getTotalItemCount() ? pagination.getTotalItemCount() : end
-			} %}Out of :total records :start - :end is monitoring{% endtrans %}
+					'total': pagination.getTotalItemCount(), 
+					'start': ((pagination.getCurrentPageNumber() - 1) * pagination.getItemNumberPerPage()), 
+					'end': end > pagination.getTotalItemCount() ? pagination.getTotalItemCount() : end
+				} %}Out of :total records :start - :end is monitoring{% endtrans %}
 			</caption>
 			<thead>
 				<tr>
 					{% block headers %}
+						{% if bulkRemoveAllowed %}
+							<th>
+								<input type="checkbox" data-model='selectAll' class="toggle toggle-primary mr-2 select-all" data-action="live#action" data-live-action-param="bulkselect"/>
+							</th>
+						{% endif %}
+						
 						{% for column, data in this.headers %}
 							{% if data.sortable is defined and data.sortable %}
 								<th>
@@ -90,6 +124,7 @@
 
 
 {% macro placeholder(props) %}
+	{{ include(theme.themeDirectory ~ '/partials/_flash_messages.html.twig') }}
 	<div class="grid mt-4 rounded-xl border-2 border-base-300">
 		{% block loadingFilters %}
 			<div class="flex justify-between gap-2 p-3">

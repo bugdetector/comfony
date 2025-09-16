@@ -4,7 +4,14 @@
 			<i class="i-tabler-x"></i>
 		</button>
 		<span class="i-tabler-info-circle-filled text-primary mx-auto mb-4 text-8xl"></span>
-		<h3 class="text-lg font-bold">{% trans with {'object': objectName} %}Are you sure you want to delete this :objectName?{% endtrans %}</h3>
+		<h3 class="text-lg font-bold">
+			{% if message is defined %}
+				{{ message }}
+			{% else %}
+				{% trans with {'object': objectName} %}Are you sure you want to delete this :objectName?{% endtrans %}
+			{% endif %}
+			
+		</h3>
 		<div class="modal-action">
 			<button type="submit" class="btn btn-error">
 				{% trans %}Yes{% endtrans %}

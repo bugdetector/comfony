@@ -1,5 +1,12 @@
 {% set action = action is defined ? action : null %}
 <tr id="configuration_{{ object.id }}" class='{{ action ? ' action-' ~ action }}'>
+    {% if bulkRemoveAllowed is defined and bulkRemoveAllowed %}
+		<td>
+			<input type="checkbox" data-model="bulkSelectIds[]" value="{{ object.id }}" {{ object.id in this.bulkSelectIds ? 'checked' }} class="toggle toggle-primary mr-2 select-all"/>
+		</td>
+	{% else %}
+		<td></td>
+	{% endif %}
     <td class="px-6 py-3">
         <div class="flex gap-2">
             {% if action != 'remove' %}

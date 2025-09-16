@@ -8,5 +8,5 @@
 {% endblock %}
 
 {% block body %}
-	{{ component('FilesSearchComponent', {listTopic: 'files', loading: 'lazy'}) }}
+	{{ component('FilesSearchComponent', {listTopic: 'files', loading: 'lazy', entityClass: 'App\\Entity\\File\\File', options: {'allow_remove': true, 'allow_bulk_remove': true}}) }}
 {% endblock %}

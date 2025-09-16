@@ -14,5 +14,5 @@
 {% endblock %}
 
 {% block body %}
-	{{ component('PagesSearchComponent', {listTopic: 'pages', loading: 'lazy'}) }}
+	{{ component('PagesSearchComponent', {listTopic: 'pages', loading: 'lazy', entityClass: 'App\\Entity\\Page\\Page', options: {'allow_remove': true, 'allow_bulk_remove': true}}) }}
 {% endblock %}

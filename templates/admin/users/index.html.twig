@@ -8,5 +8,5 @@
 {% endblock %}
 
 {% block body %}
-	{{ component('UsersSearchComponent', {listTopic: 'users', loading: 'lazy'}) }}
+	{{ component('UsersSearchComponent', {listTopic: 'users', loading: 'lazy',  options: {'allow_remove': false}}) }}
 {% endblock %}

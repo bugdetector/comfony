@@ -136,3 +136,7 @@ Categories: Kategoriler
 'Edit Category: {name}': 'Kategoriyi Düzenle: {name}'
 Edit: Düzenle
 Category: Kategori
+'Operation not permitted.': 'İşleme izin verilmiyor.'
+'Bulk Actions': 'Toplu İşlemler'
+'Remove Selected': 'Seçilenleri Sil'
+'Are you sure want to remove selected items?': 'Seçili öğeleri silmek istediğinize emin misiniz?'
