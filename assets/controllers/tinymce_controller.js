@@ -46,10 +46,10 @@ export default class TinyMceController extends Controller {
       }
     };
     tinymce.init(config);
-    document.querySelectorAll('[data-theme-toggle]').forEach((element) => {
+    document.querySelectorAll('input[name="theme"]').forEach((element) => {
       element.addEventListener('click', () => {
         setTimeout(() => {
-          useDarkMode = localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+          useDarkMode = localStorage.getItem('theme')  === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
           config.skin = useDarkMode ? 'oxide-dark' : 'oxide';
           config.content_css = useDarkMode ? 'dark' : 'default';
           tinymce.remove();

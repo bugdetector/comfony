@@ -1,17 +1,12 @@
-<footer
-	class="py-3">
-	<!-- Container -->
-	<div class="container-fluid">
-		<div class="flex flex-col md:flex-row justify-center md:justify-between items-center gap-3 py-2">
-			<div class="flex order-2 md:order-1 gap-2 font-normal text-2sm">
-				<span class="text-gray-500">
-					{{ 'now'|date('Y') }}©
-				</span>
-				<a class="text-gray-600 hover:text-primary" href="#">
-					{{ app_name }}
-				</a>
-			</div>
+<footer class="footer py-3 bg-base-200">
+	<div class="w-full flex flex-col md:flex-row justify-center md:justify-between items-center gap-3 py-2">
+		<div class="flex order-2 md:order-1 gap-2 font-normal text-sm">
+			<span class="text-base-content/60">
+				{{ 'now'|date('Y') }}©
+			</span>
+			<a class="link link-hover" href="#">
+				{{ app_name }}
+			</a>
 		</div>
 	</div>
-	<!-- End of Container -->
 </footer>

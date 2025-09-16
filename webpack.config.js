@@ -32,6 +32,18 @@ Encore
     // but, you probably want this, unless you're building a single-page app
     .enableSingleRuntimeChunk()
 
+    .configureWatchOptions((watchOptions) => {
+        watchOptions.poll = 250;
+        watchOptions.ignored = [
+            "**/*.php",
+            "**/node_modules",
+            "**/public",
+            "**/var",
+            "**/vendor",
+            "**/*.log",
+        ];
+    })
+
     /*
      * FEATURE CONFIG
      *
@@ -88,10 +100,6 @@ Encore
     .copyFiles({
         from: 'node_modules/tinymce/plugins',
         to: 'plugins/[path]/[name].[ext]'
-    })
-    .copyFiles({
-        from: 'assets/theme/vendors',
-        to: 'theme/vendors/[path]/[name].[ext]'
     })
 ;
 

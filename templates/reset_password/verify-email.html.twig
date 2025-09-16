@@ -1,0 +1,16 @@
+{% extends "@emails/_email.html.twig" %}
+{% block content %}
+	<row>
+		<columns>
+			<center class="text-center">
+                <spacer size="16"></spacer>
+				<h1>{% trans %}Verify Your Email{% endtrans %}</h1>
+
+				<h3>{% trans %}You can use the code below to reset your password.{% endtrans %}</h3>
+                <spacer size="16"></spacer>
+                <h2 class="text-center">{{ code }}</h2>
+			</center>
+		</columns>
+	</row>
+
+{% endblock %}

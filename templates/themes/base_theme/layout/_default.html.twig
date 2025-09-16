@@ -1,55 +1,51 @@
 {% extends theme.themeDirectory ~ '/layout/master.html.twig' %}
 
 {% block layout %}
-	<body class="antialiased flex h-full text-base text-gray-700 [--tw-page-bg:#f6f6f6] [--tw-page-bg-dark:var(--tw-coal-200)] [--tw-content-bg:var(--tw-light)] [--tw-content-bg-dark:var(--tw-coal-500)] [--tw-content-scrollbar-color:#e8e8e8] [--tw-header-height:58px] [--tw-sidebar-width:58px] [--tw-navbar-height:56px] bg-[--tw-page-bg] dark:bg-[--tw-page-bg-dark] lg:overflow-hidden sidebar-fixed">
-		<div class="flex grow">
-			{% block sidebar %}
-				{% include theme.themeDirectory ~ "/partials/_sidebar.html.twig" %}
-			{% endblock %}
+	<body class="min-h-screen bg-base-100 text-base-content flex">
+		{% block sidebar %}
+			{% include theme.themeDirectory ~ "/partials/_sidebar.html.twig" %}
+		{% endblock %}
+		<!-- Main Content -->
+		<div
+			class="flex-1 flex flex-col">
+			<!-- Navbar -->
 			{% block header %}
 				{% include theme.themeDirectory ~ "/partials/_header.html.twig" %}
 			{% endblock %}
-			<div class="flex flex-col lg:flex-row grow pt-[--tw-header-height]">
-				<turbo-frame id='base-content' data-turbo-action="advance" class="flex flex-col lg:flex-row grow">
+			<!-- Page Content -->
+			<main class="flex-1 overflow-y-auto bg-base-100">
+				<turbo-frame id='base-content' data-turbo-action="advance">
+					{% block title %}
+						<div class="bg-base-100 border-b border-base-300 px-4 flex justify-between flex-wrap ">
+							<div class="flex gap-3 gap-x-2 items-center">
+								{% block backLink %}{% endblock %}
+								<h1 class="text-lg font-semibold p-4" id="page-title">{{ title ?? app_name }}</h1>
+							</div>
+							<div class="flex flex-wrap items-center gap-3 mb-3 md:mb-0 md:ml-auto">
+								{% block actions %}{% endblock %}
+							</div>
+						</div>
+					{% endblock %}
 					{% block turboTitle %}
 						{% set newTitle = title ?? app_name %}
-						<script>
+						 <script>
 							document.title = "{{ newTitle }}";
-							document.getElementById('page-title').innerText = "{{ newTitle }}";
 						</script>
 					{% endblock %}
-					<div class="flex items-stretch lg:fixed z-5 top-[--tw-header-height] start-[--tw-sidebar-width] end-5 min-h-[--tw-navbar-height] mx-0 lg:mx-0 bg-[--tw-page-bg] dark:bg-[--tw-page-bg-dark]" id="navbar">
-						<div class="rounded-t-xl border border-gray-400 dark:border-gray-200 border-b-gray-300 dark:border-b-gray-200 bg-[--tw-content-bg] dark:bg-[--tw-content-bg-dark] flex items-stretch grow flex-wrap md:flex-nowrap gap-y-2 pt-3 md:pt-0">
-							{% block backLink %}{% endblock %}
-							{% block actions %}
-								<div class="container-fluid flex md:justify-end items-center my-3 gap-5"></div>
-							{% endblock %}
-						</div>
-					</div>
-					<div class="flex grow rounded-b-xl bg-[--tw-content-bg] dark:bg-[--tw-content-bg-dark] border-x border-b border-gray-400 dark:border-gray-200 lg:mt-[--tw-navbar-height] mx-0 lg:mx-5 lg:ms-[--tw-sidebar-width] mb-5">
-						<div class="flex flex-col grow lg:scrollable-y lg:[scrollbar-width:auto] lg:light:[--tw-scrollbar-thumb-color:var(--tw-content-scrollbar-color)] pt-7 lg:[&_.container-fluid]:pe-4" id="scrollable_content">
-							<main class="grow" role="content">
-								<div class="pb-6">
-									<div class="container-fluid flex items-center justify-between flex-wrap gap-3">
-										
-									</div>
-								</div>
-								<div class="container-fluid">
-									{% block flashes %}
-										{{ include(theme.themeDirectory ~ '/partials/_flash_messages.html.twig') }}
-									{% endblock %}
-									{% block body %}
-										&nbsp;
-									{% endblock %}
-								</div>
-							</main>
-							{% block footer %}
-								{% include theme.themeDirectory ~ "/partials/_footer.html.twig" %}
-							{% endblock %}
-						</div>
+					
+					{% block flashes %}
+						{{ include(theme.themeDirectory ~ '/partials/_flash_messages.html.twig') }}
+					{% endblock %}
+					<div class="p-6 pt-0">
+						{% block body %}
+							&nbsp;
+						{% endblock %}
 					</div>
 				</turbo-frame>
-			</div>
+			</main>
+			{% block footer %}
+				{% include theme.themeDirectory ~ "/partials/_footer.html.twig" %}
+			{% endblock %}
 		</div>
 	</body>
 {% endblock %}

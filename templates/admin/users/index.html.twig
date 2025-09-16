@@ -1,16 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block actions %}
-	<div class="container-fluid flex md:justify-end items-center my-3 gap-5">
-		<a href='{{ path('app_admin_users_new') }}' class="btn btn-primary btn-sm">
-			<span class="flex justify-center items-center">
-				<span class="ki-solid ki-plus-circle text-md me-2"></span>
-				{% trans %}Add New User{% endtrans %}
-			</span>
-		</a>
-	</div>
+	<a href='{{ path('app_admin_users_new') }}' class="btn btn-outline">
+		<i class="i-tabler-plus text-lg"></i>
+		{% trans %}Add New User{% endtrans %}
+	</a>
 {% endblock %}
 
 {% block body %}
-	{{ component('UsersSearchComponent', {listTopic: 'users'}) }}
+	{{ component('UsersSearchComponent', {listTopic: 'users', loading: 'lazy',  options: {'allow_remove': false}}) }}
 {% endblock %}

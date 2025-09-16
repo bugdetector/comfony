@@ -1,0 +1,32 @@
+{% block create %}
+	<turbo-stream action="prepend" target="configurations">
+		<template>
+			{% include "admin/configuration/_row.html.twig" with {
+				object: entity,
+				action: "create"
+			} %}
+		</template>
+	</turbo-stream>
+{% endblock %}
+
+{% block update %}
+	<turbo-stream action="replace" target="configuration_{{ id }}">
+		<template>
+			{% include "admin/configuration/_row.html.twig" with {
+				object: entity,
+				action: "update"
+			} %}
+		</template>
+	</turbo-stream>
+{% endblock %}
+
+{% block remove %}
+	<turbo-stream action="replace" target="configuration_{{ id }}">
+		<template>
+			{% include "admin/configuration/_row.html.twig" with {
+				object: entity,
+				action: "remove"
+            } %}
+		</template>
+	</turbo-stream>
+{% endblock %}

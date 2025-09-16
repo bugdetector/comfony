@@ -12,10 +12,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
+use Symfony\UX\LiveComponent\ComponentToolsTrait;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 
 trait LiveAsyncFileInputTrait
 {
+    use ComponentToolsTrait;
     use ComponentWithFormTrait;
 
     #[LiveAction]

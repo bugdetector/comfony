@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -51,7 +50,7 @@ class FilesController extends AbstractController
                         $uploadedFile,
                         FileStatus::Permanent
                     );
-                    $this->addFlash('success', $this->translator->trans('file.uploaded_successfully'));
+                    $this->addFlash('success', $this->translator->trans('File uploaded successfully.'));
                     return $this->redirectToRoute('app_admin_files_index', [], Response::HTTP_SEE_OTHER);
                 } catch (FileException $e) {
                     $this->addFlash('error', $e->getMessage());
@@ -69,7 +68,6 @@ class FilesController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_admin_files_edit', methods: ['GET', 'POST'])]
     public function edit(
-        KernelInterface $kernel,
         Request $request,
         File $file,
         FileManager $fileManager,
@@ -87,7 +85,7 @@ class FilesController extends AbstractController
                         $uploadedFile,
                         FileStatus::Permanent
                     );
-                    $this->addFlash('success', $this->translator->trans('file.uploaded_successfully'));
+                    $this->addFlash('success', $this->translator->trans('File uploaded successfully.'));
                     return $this->redirectToRoute('app_admin_files_index', [], Response::HTTP_SEE_OTHER);
                 } catch (FileException $e) {
                     $this->addFlash('error', $e->getMessage());
@@ -112,15 +110,7 @@ class FilesController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $file->getId(), $request->request->get('_token'))) {
             $entityManager->remove($file);
             $entityManager->flush();
-
-            $filePath = $file->getFilePath();
-            try {
-                if ($file->getFilePath() && is_file($filePath)) {
-                    unlink("uploads" . $filePath);
-                }
-            } catch (\Exception $ex) {
-            }
-            $this->addFlash('success', $this->translator->trans('file.deleted_successfully'));
+            $this->addFlash('success', $this->translator->trans('File deleted successfully.'));
         }
 
         return $this->redirectToRoute('app_admin_files_index', [], Response::HTTP_SEE_OTHER);

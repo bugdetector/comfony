@@ -18,7 +18,7 @@ webpack_encore:
     # crossorigin: 'anonymous'
 
     # Preload all rendered script and link tags automatically via the HTTP/2 Link header
-    # preload: true
+    preload: true
 
     # Throw an exception if the entrypoints.json file is missing or an entry is missing from the data
     # strict_mode: false
@@ -34,11 +34,11 @@ framework:
     assets:
         json_manifest_path: '%kernel.project_dir%/public/build/manifest.json'
 
-#when@prod:
-#    webpack_encore:
-#        # Cache the entrypoints.json (rebuild Symfony's cache when entrypoints.json changes)
-#        # Available in version 1.2
-#        cache: true
+when@prod:
+   webpack_encore:
+       # Cache the entrypoints.json (rebuild Symfony's cache when entrypoints.json changes)
+       # Available in version 1.2
+       cache: true
 
 #when@test:
 #    webpack_encore:

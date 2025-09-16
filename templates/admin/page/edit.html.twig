@@ -2,27 +2,19 @@
 
 
 {% block backLink %}
-	<div class="flex items-center mx-3 flex-wrap gap-1 lg:gap-5">
-		<a href="{{ path('app_admin_page_index') }}" class="btn btn-light">
-			<i class="ki-filled ki-left"></i>
-			{% trans %}Back{% endtrans %}
-		</a>
-	</div>
+	<a href="{{ path('app_admin_page_index') }}" class="btn btn-outline">
+		<i class="i-tabler-chevron-left"></i>
+		{% trans %}Back{% endtrans %}
+	</a>
 {% endblock %}
 
 {% block body %}
 	<div class="flex flex-wrap p-3">
-		<div class="md:w-9/12 w-full">
-			<div class='mb-3'>
-				<label class='font-bold'>{% trans %}created_at{% endtrans %}</label>
-				<div>{{ page.createdAt|format_datetime('full', 'short') }}</div>
-			</div>
-			<div class='mb-3'>
-				<label class='font-bold'>{% trans %}updated_at{% endtrans %}</label>
-				<div>{{ page.updatedAt|format_datetime('full', 'short') }}</div>
-			</div>				
-			{{ include('admin/page/_form.html.twig') }}
+		<div class="md:w-9/12 w-full">				
+			{{ component('LiveForms:LivePageFormComponent', { initialFormData: page }) }}
 		</div>
 	</div>
-	{{ include('admin/page/_delete_form.html.twig') }}
+	{% if page.id %}
+		{{ include('admin/page/_delete_form.html.twig') }}
+	{% endif %}
 {% endblock %}

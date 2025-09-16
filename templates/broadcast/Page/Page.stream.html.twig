@@ -3,7 +3,7 @@
 	<turbo-stream action="prepend" target="pages">
 		<template>
 			{% include "admin/page/_row.html.twig" with {
-				page: entity,
+				object: entity,
 				action: "create"
 			} %}
 		</template>
@@ -14,7 +14,7 @@
 	<turbo-stream action="replace" target="page_{{ id }}">
 		<template>
 			{% include "admin/page/_row.html.twig" with {
-				page: entity,
+				object: entity,
 				action: "update"
 			} %}
 		</template>
@@ -25,7 +25,7 @@
 	<turbo-stream action="replace" target="page_{{ id }}">
 		<template>
 			{% include "admin/page/_row.html.twig" with {
-				page: entity,
+				object: entity,
 				action: "remove"
             } %}
 		</template>

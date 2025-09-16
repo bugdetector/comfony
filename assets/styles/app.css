@@ -1,77 +1,37 @@
 /* Tailwind core */
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import './sidebar.css';
+@import "tailwindcss";
+@source "../../templates/**/*.html.twig";
+@source "../**/*.js";
+@source "../../vendor/**/*.html.twig";
+@source "../../vendor/**/*.js";
 
-.sidebar{
-    @apply [.open&]:lg:w-64 [.open&]:border-r-2 [.open&]:border-gray-300 hover:lg:w-64 hover:border-r-2 hover:border-gray-300 duration-300 bg-[--tw-page-bg] dark:bg-[--tw-page-bg-dark];
-    transition-property: width;
-    overflow: auto;
-}
-.sidebar:hover .tooltip, .sidebar.open .tooltip{
-    @apply block !bg-inherit text-black dark:text-white hover:text-black dark:hover:text-white shadow-none !transform-none;
-    position: initial !important;
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
 }
 
-.sidebar-item{
-    @apply flex items-center w-full p-0.5 rounded-lg;
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@plugin "daisyui/theme";
+
+@plugin '@egoist/tailwindcss-icons';
+
+.menu li > *:not(.menu-active, .dropdown-content):hover {
+   background-color: color-mix(in oklab,var(--color-base-content)10%,transparent) !important; 
 }
 
-.sidebar-icon{
-    @apply btn btn-icon btn-icon-lg rounded-full size-10 border border-transparent text-gray-600 [.active&]:bg-light [.active&]:text-primary [.active&]:border-gray-300
+.menu li > *:not(.menu-active, .dropdown-content):active {
+   background-color: color-mix(in oklab,var(--color-base-content)40%,transparent) !important; 
 }
 
-.sidebar-item:hover, .sidebar-item:hover .sidebar-icon{
-    @apply bg-light text-primary border-gray-300;
+.action-remove{
+   @apply bg-red-300 dark:bg-red-700;
 }
 
-@layer components {
-    .action-create {
-        @apply !bg-green-300 dark:!bg-green-600;
-    }
-    .action-update {
-        @apply !bg-yellow-300 dark:text-slate-600;
-    }
-    .action-remove {
-        @apply !bg-red-300 dark:!bg-red-600;
-    }
+.action-create{
+   @apply bg-green-300 dark:bg-green-700;
+}
 
-    /* Tom Select Styles */
-    .ts-wrapper{
-        @apply p-0;
-    }
-    .ts-wrapper.single .ts-control{
-            @apply flex flex-row flex-nowrap text-nowrap;
-            background-image: none;
-    }
-    .ts-control{
-        @apply dark:bg-secondary dark:text-dark-inverse border-inherit;
-    }
-    .ts-control .clear-button{
-        @apply text-4xl mt-[-0.4rem]
-    }
-    .ts-control input{
-        @apply placeholder-dark dark:placeholder-white dark:text-dark-inverse;
-    }
-    .ts-wrapper.single .ts-control{
-        @apply dark:bg-secondary dark:text-dark-inverse shadow-none;
-    }
-    .ts-wrapper.multi .ts-control > div{
-        @apply dark:bg-secondary dark:text-dark-inverse;
-    }
-    .ts-wrapper.plugin-remove_button:not(.rtl) .item .remove{
-        @apply dark:border-dark;
-    }
-    .ts-dropdown{
-        @apply dark:bg-secondary dark:text-dark-inverse;
-    }
-
-    .ts-dropdown .active{
-        @apply bg-blue-300 dark:bg-primary-active dark:text-dark-inverse;
-    }
-
-    .ts-dropdown .create{
-        @apply  dark:text-dark-inverse;
-    }
-    /* Tom Select Styles */
+.action-update{
+   @apply bg-blue-300 dark:bg-blue-700;
 }

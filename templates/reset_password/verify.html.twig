@@ -1,0 +1,40 @@
+{% extends 'security/login.html.twig' %}
+{% block body %}
+	<form class="card card-body gap-5 p-10 w-full max-w-md mx-auto" id="reset_password_form" method="post" data-turbo="false">
+		{{ form_errors(form) }}
+		{% if not error %}
+			<div {{ stimulus_controller('flashmessage') }} 
+				data-icon='info' 
+				data-title="Email Sent" 
+				data-html='We have sent a verification code to your email address. <br> Please use it to verify your email address.' 
+				data-show-confirm-button="true"></div>
+		{% endif %}
+
+		<div class="text-center mb-2.5">
+			<h3 class="text-lg font-medium leading-none mb-2.5">
+				{% trans %}Verify Email{% endtrans %}
+			</h3>
+			<div class="flex items-center justify-center my-5">
+				<img src="{{ asset('assets/favicon.png') }}" class="w-16 h-16 mask mask-squircle"/>
+			</div>
+			<div class="flex items-center justify-center font-medium">
+				<a class="link" href="{{ path('app_forgot_password_request') }}">
+					<i class="i-tabler-chevron-left"></i>
+					{% trans %}Back{% endtrans %}
+				</a>
+			</div>
+		</div>
+		{{ form_start(form) }}
+			<div class="form-control">
+				{{ form_row(form.email) }}
+			</div>
+			<div class="form-control">
+				{{ form_row(form.code) }}
+			</div>
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('verify') }}">
+			<button class="btn btn-primary flex justify-center">
+				{% trans %}Verify Code{% endtrans %}
+			</button>
+		{{ form_end(form) }}
+	</form>
+{% endblock %}

@@ -29,9 +29,9 @@ Close: Close
 Search: Search
 Previous: Previous
 Next: Next
-user.created_successfully: 'User created successfully.'
-user.updated_successfully: 'User updated successfully.'
-user.deleted_successfully: 'User deleted successfully.'
+'User created successfully.': 'User created successfully.'
+'User updated successfully.': 'User updated successfully.'
+'User deleted successfully.': 'User deleted successfully.'
 success: Success
 warning: Warning
 error: Error
@@ -49,9 +49,6 @@ Banned: Banned
 'Your account has been blocked. Please login after reset password.': 'Your account has been blocked. Please login after reset password.'
 'This account has been banned. You are not able to login with this account.': 'This account has been banned. You are not able to login with this account.'
 Save: Save
-'Enter your email address, and we will send you a link to reset your password': 'Enter your email address, and we will send you a link to reset your password'
-'Send password reset email': 'Send password reset email'
-reset_password.check_mail: '<p>If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password. This link will expire in { expire }.</p><p> If you don''t receive an email please check your spam folder or <a href="{ forgot_password_path }" class="text-blue-500">try again</a>. </p>'
 'New password': 'New password'
 'Repeat Password': 'Repeat Password'
 file_name: 'File Name'
@@ -66,8 +63,8 @@ updated_at: 'Updated At'
 Files: Files
 Temporary: Temporary
 Permanent: Permanent
-file.deleted_successfully: 'File deleted successfully.'
-file.uploaded_successfully: 'File uploaded successfully.'
+'File deleted successfully.': 'File deleted successfully.'
+'File uploaded successfully.': 'File uploaded successfully.'
 'Login As User: { email }': 'Login As User: { email }'
 Uploading...: Uploading...
 Pages: Pages
@@ -79,9 +76,9 @@ Page: Page
 'View Page': 'View Page'
 Unpublished: Unpublished
 Body: Body
-page.created_successfully: 'Page created successfully.'
-page.updated_successfully: 'Page updated successfully.'
-page.deleted_successfully: 'Page deleted successfully.'
+'Page created successfully.': 'Page created successfully.'
+'Page updated successfully.': 'Page updated successfully.'
+'Page deleted successfully.': 'Page deleted successfully.'
 'Reset Password': 'Reset Password'
 'File upload size exceed. Maximum size: { maxSize }': 'File upload size exceed. Maximum size: { maxSize }'
 'You can reset your password using the link below. This link will expire in {expire}': 'You can reset your password using the link below. This link will expire in {expire}'
@@ -102,3 +99,39 @@ Clear: Clear
 All: All
 'Add New label': 'Add New {label}'
 Add: Add
+Attachments: Attachments
+Deleted: Deleted
+Details: Details
+Theme: Theme
+Light: Light
+Dark: Dark
+System: System
+'Please enter your email address to receive a verification code to reset your password.': 'Please enter your email address to receive a verification code to reset your password.'
+'Invalid token.': 'Invalid token.'
+'Code expired.': 'Code expired.'
+'Code validated.': 'Code validated.'
+'Verify Email': 'Verify Email'
+'Password reset successfully.': 'Password reset successfully.'
+'Send password reset email': 'Send password reset email'
+'Verify Your Email': 'Verify Your Email'
+'You can use the code below to reset your password.': 'You can use the code below to reset your password.'
+'Verify Code': 'Verify Code'
+'Profile photo': 'Profile photo'
+'Upload a PNG/JPG file.': 'Upload a PNG/JPG file.'
+Configurations: Configurations
+'Add New Configuration': 'Add New Configuration'
+'Edit Configuration {congigKey}': 'Edit Configuration {congigKey}'
+'Configuration deleted successfully.': 'Configuration deleted successfully.'
+'Configuration saved successfully.': 'Configuration saved successfully.'
+'Config Key': 'Config Key'
+Value: Value
+Configuration: Configuration
+Categories: Categories
+'Add New Category': 'Add New Category'
+'Edit Category: {name}': 'Edit Category: {name}'
+Edit: Edit
+Category: Category
+'Operation not permitted.': 'Operation not permitted.'
+'Bulk Actions': 'Bulk Actions'
+'Remove Selected': 'Remove Selected'
+'Are you sure want to remove selected items?': 'Are you sure want to remove selected items?'

@@ -1,99 +1,204 @@
-<div {{ attributes }} class="grid gap-5 lg:gap-7.5">
-	<div class="card card-grid min-w-full">
-		<div class="card-header py-5 flex-wrap justify-end gap-2">
-			{% block filters %}
-				<div class="relative max-w-full">
-					<div class="input input-md w-full sm:w-64">
-						<i class="ki-outline ki-magnifier"></i>
-						<input type="search" data-model="debounce(300)|query" autocomplete='off' value="{{ this.query }}" placeholder="{{'Search'|trans}}" class="{{filterForm ? 'pe-16'}}">
-					</div>
-					{% if filterForm %}
-						<div class="dropdown absolute end-0 top-0" data-dropdown="true" data-dropdown-trigger="click" data-dropdown-placement="bottom-end">
-							<button class="dropdown-toggle btn">
-								<i class="ki-solid ki-filter"></i>
-								<i class="ki-outline ki-down dropdown-open:!hidden"></i>
-								<i class="ki-outline ki-up !hidden dropdown-open:!block"></i>
-							</button>
-							<div class="dropdown-content ">
-								{{ form_start(filterForm) }}
-								<div class="p-4 w-64 max-h-96 scrollable-y">
-									{% for field in filterForm %}
-										<div class="form-group">
-											{{ form_row(field) }}
-										</div>
-									{% endfor %}
-								</div>
-								<div class="sticky bottom-0 bg-[--tw-page-bg]">
-									<button type="reset" class="btn btn-danger btn-outline btn-sm w-full rounded-t-none justify-center" data-action="live#action" data-live-action-param="resetFilters">
-										{{ 'Clear'|trans }}
-									</button>
-								</div>
-								{{ form_end(filterForm) }}
+<div {{ attributes }} class="grid mt-4 rounded-xl border-2 border-base-300">
+	{{ include(theme.themeDirectory ~ '/partials/_flash_messages.html.twig') }}
+	{% block filters %}
+		<div class="flex justify-between gap-2 p-3">
+			<label class="input w-full sm:w-64 flex items-center gap-2">
+				<i class="i-tabler-search"></i>
+				<input type="search" data-model="debounce(300)|query" autocomplete='off' value="{{ this.query }}" placeholder="{{'Search'|trans}}" class="grow">
+			</label>
+			{% if filterForm %}
+				<div class="dropdown end-0 top-0 dropdown-end">
+					<button class="btn btn-soft bg-base-100" tabindex="0" role="button">
+						<i class="i-tabler-filter"></i>
+						<i class="i-tabler-chevron-down"></i>
+					</button>
+					<ul class="dropdown-content w-64 max-h-96 overflow-y-auto bg-base-100 shadow pt-4">
+						{{ form_start(filterForm) }}
+						{% for field in filterForm %}
+							<div class='px-4'>
+								{{ form_row(field) }}
 							</div>
+						{% endfor %}
+						<div class="sticky bottom-0">
+							<button type="reset" class="btn btn-error btn-soft btn-sm w-full justify-center hover:text-base-100" data-action="live#action" data-live-action-param="resetFilters">
+								{{ 'Clear'|trans }}
+							</button>
 						</div>
-					{% endif %}
+						{{ form_end(filterForm) }}
+					</ul>
 				</div>
-			{% endblock %}
+			{% endif %}
 		</div>
-		<div class="card-body">
-			<div class="overflow-x-auto">
-				{% set pagination = this.getPagination() %}
-				<table class="table table-border caption-top" data-loading="addClass(opacity-50 blur-sm)">
-					<caption class="text-start font-bold my-3 ms-3">
-						{% set end = ((pagination.getCurrentPageNumber()) * pagination.getItemNumberPerPage()) %}
-						{% trans with {
-                    'total': pagination.getTotalItemCount(), 
-                    'start': ((pagination.getCurrentPageNumber() - 1) * pagination.getItemNumberPerPage()), 
-                    'end': end > pagination.getTotalItemCount() ? pagination.getTotalItemCount() : end
-                } %}Out of :total records :start - :end is monitoring{% endtrans %}
-					</caption>
-					<thead>
-						<tr>
-							{% block headers %}
-								{% for column, data in this.getTableBuildData()["headers"] %}
-									{% if data.sortable is defined and data.sortable %}
-										<th class="min-w-10 text-gray-700 font-normal text-start text-nowrap">
-											<button class="flex w-full justify-between align-baseline" data-action="live#action" data-live-action-param="setSort" data-live-sort-param="{{ column }}" data-live-direction-param="{{ this.direction == 'DESC' ? 'ASC' : 'DESC' }}" role='button'>
-												{% set sorted = this.sort == column %}
-												<span class="text-current me-4">{{ data.label }}</span>
-												{% if sorted %}
-													{% if direction == 'ASC' %}
-														<span class='ki-solid ki-up'></span>
-													{% else %}
-														<span class='ki-solid ki-down'></span>
-													{% endif %}
-												{% else %}
-													<span class='ki-solid ki-sort'></span>
-												{% endif %}
-											</button>
-										</th>
-									{% else %}
-										<th>{{ data.label|trans }}</th>
-									{% endif %}
-								{% endfor %}
-							{% endblock %}
-						</tr>
-					</thead>
-					<tbody class="text-gray-900 font-medium" {{ listTopic ? ('id="' ~ listTopic ~ '"')|raw }} {{ listTopic ? turbo_stream_listen(listTopic, options: {withCredentials: true}) }}>
-						{% block rows %}
-							{% if this.rowTemplateFile %}
-								{% for object in pagination %}
-									{% include this.rowTemplateFile with {object} %}
-								{% else %}
-									<tr>
-										<td colspan="{{ this.getTableBuildData()["headers"]|length ?: 6 }}" class="px-6 py-3">{{ 'No Result Found'|trans }}</td>
-									</tr>
-								{% endfor %}
-							{% endif %}
-						{% endblock %}
-					</tbody>
-				</table>
+		<div class="divider"></div>
+	{% endblock %}
+	{% set pagination = this.getPagination() %}
+	{% set bulkRemoveAllowed = this.options.allow_bulk_remove|default(false) %}
+	<div class="overflow-x-auto p-3" data-loading="addClass(opacity-50 blur-sm)">
+		{% if bulkSelectIds|length > 0 %}
+			<div class="dropdown mb-4">
+				<button class="btn btn-primary btn-soft dropdown-toggle" tabindex="0" role="button">
+					<i class="i-tabler-list-check"></i>
+					{% trans %}Bulk Actions{% endtrans %}
+					<i class="i-tabler-chevron-down"></i>
+				</button>
+				<ul class="dropdown-content bg-base-100 shadow p-2 rounded-box w-52">
+					{% if bulkRemoveAllowed %}
+						<li>
+							<button type='button' class="btn btn-sm btn-error btn-outline" data-controller="modal" data-modal-target-modal-value="bulk-remove-modal">
+								<i class="i-tabler-trash text-lg"></i>
+								{% trans %}Remove Selected{% endtrans %}
+							</button>
+						</li>
+					{% endif %}
+				</ul>
 			</div>
-		</div>
-		<div class="card-footer">
-			{% block pagination %}
-				{{ knp_pagination_render(pagination, theme.themeDirectory ~ '/partials/_pagination.html.twig') }}
-			{% endblock %}
+			{% if bulkRemoveAllowed %}
+				<form data-action="live#action" data-live-action-param="remove" data-live-entity-ids-param="{{ this.bulkSelectIds|json_encode }}" data-live-object-name-param="Selected items">
+					{% include theme.themeDirectory ~ "/partials/_delete_modal.html.twig" with {modalId: 'bulk-remove-modal', message: "Are you sure want to remove selected items?"|trans} %}
+				</form>
+			{% endif %}
+			
+		{% endif %}
+		
+		<table class="table table-zebra">
+			<caption class="text-start font-bold my-3 ms-3">
+				{% set end = ((pagination.getCurrentPageNumber()) * pagination.getItemNumberPerPage()) %}
+				{% trans with {
+					'total': pagination.getTotalItemCount(), 
+					'start': ((pagination.getCurrentPageNumber() - 1) * pagination.getItemNumberPerPage()), 
+					'end': end > pagination.getTotalItemCount() ? pagination.getTotalItemCount() : end
+				} %}Out of :total records :start - :end is monitoring{% endtrans %}
+			</caption>
+			<thead>
+				<tr>
+					{% block headers %}
+						{% if bulkRemoveAllowed %}
+							<th>
+								<input type="checkbox" data-model='selectAll' class="toggle toggle-primary mr-2 select-all" data-action="live#action" data-live-action-param="bulkselect"/>
+							</th>
+						{% endif %}
+						
+						{% for column, data in this.headers %}
+							{% if data.sortable is defined and data.sortable %}
+								<th>
+									<button class="btn btn-ghost" data-action="live#action" data-live-action-param="setSort" data-live-sort-param="{{ column }}" data-live-direction-param="{{ this.direction == 'DESC' ? 'ASC' : 'DESC' }}" role='button'>
+										<span class="me-4">{{ data.label }}</span>
+										{% set sorted = this.sort == column %}
+										{% if sorted %}
+											{% if direction == 'ASC' %}
+												<i class="i-tabler-chevron-up"></i>
+											{% else %}
+												<i class="i-tabler-chevron-down"></i>
+											{% endif %}
+										{% else %}
+											<i class="i-tabler-arrows-sort"></i>
+										{% endif %}
+									</button>
+								</th>
+							{% else %}
+								<th>{{ data.label|trans }}</th>
+							{% endif %}
+						{% endfor %}
+					{% endblock %}
+				</tr>
+			</thead>
+			<tbody {{ listTopic ? ('id="' ~ listTopic ~ '"')|raw }} {{ listTopic ? turbo_stream_listen(listTopic, options: {withCredentials: true} ) }}>
+				{% block rows %}
+					{% if this.rowTemplateFile %}
+						{% for object in pagination %}
+							{% include this.rowTemplateFile with {object} %}
+						{% else %}
+							<tr>
+								<td colspan="{{ this.getTableBuildData()['headers']|length ?: 6 }}" class="px-6 py-3">{{ 'No Result Found'|trans }}</td>
+							</tr>
+						{% endfor %}
+					{% endif %}
+				{% endblock %}
+			</tbody>
+		</table>
+	</div>
+	{% block pagination %}
+		{{ knp_pagination_render(pagination, theme.themeDirectory ~ '/partials/_pagination.html.twig') }}
+	{% endblock %}
+</div>
+
+
+{% macro placeholder(props) %}
+	{{ include(theme.themeDirectory ~ '/partials/_flash_messages.html.twig') }}
+	<div class="grid mt-4 rounded-xl border-2 border-base-300">
+		{% block loadingFilters %}
+			<div class="flex justify-between gap-2 p-3">
+				<label class="input w-full sm:w-64 flex items-center gap-2">
+					<i class="i-tabler-search"></i>
+					<input type="search" data-model="debounce(300)|query" autocomplete='off' value="{{ props.query }}" placeholder="{{'Search'|trans}}" class="grow">
+				</label>
+				{% if props.filterForm %}
+					<div class="dropdown end-0 top-0 dropdown-end">
+						<button class="btn btn-outline bg-base-100" tabindex="0" role="button">
+							<i class="i-tabler-filter"></i>
+							<i class="i-tabler-chevron-down"></i>
+						</button>
+						<ul class="dropdown-content w-64 max-h-96 overflow-y-auto bg-base-100 shadow pt-4">
+							{{ form_start(props.filterForm) }}
+							{% for field in props.filterForm %}
+								<div class='px-4'>
+									{{ form_row(field) }}
+								</div>
+							{% endfor %}
+							<div class="sticky bottom-0">
+								<button type="reset" class="btn btn-error btn-soft btn-sm w-full justify-center hover:text-base-100" data-action="live#action" data-live-action-param="resetFilters">
+									{{ 'Clear'|trans }}
+								</button>
+							</div>
+							{{ form_end(props.filterForm) }}
+						</ul>
+					</div>
+				{% endif %}
+			</div>
+			<div class="divider"></div>
+		{% endblock %}
+		<div class="overflow-x-auto p-3" data-loading="addClass(opacity-50 blur-sm)">
+			<table class="table table-zebra">
+				<caption class="text-start font-bold my-3 ms-3"></caption>
+				<thead>
+					<tr>
+						{% block loadingHeaders %}
+							{% for column, data in props.headers %}
+								{% if data.sortable is defined and data.sortable %}
+									<th>
+										<button class="btn btn-ghost" data-action="live#action" data-live-action-param="setSort" data-live-sort-param="{{ column }}" data-live-direction-param="{{ props.direction == 'DESC' ? 'ASC' : 'DESC' }}" role='button'>
+											<span class="me-4">{{ data.label }}</span>
+											{% set sorted = props.sort == column %}
+											{% if sorted %}
+												{% if props.direction == 'ASC' %}
+													<i class="i-tabler-chevron-up"></i>
+												{% else %}
+													<i class="i-tabler-chevron-down"></i>
+												{% endif %}
+											{% else %}
+												<i class="i-tabler-arrows-sort"></i>
+											{% endif %}
+										</button>
+									</th>
+								{% else %}
+									<th>{{ data.label|trans }}</th>
+								{% endif %}
+							{% endfor %}
+						{% endblock %}
+					</tr>
+				</thead>
+				<tbody>
+					{% for i in range(0, 3) %}
+						<tr>
+							{% for column, data in props.headers %}
+								<td>
+									<div class="skeleton h-4 w-full"></div>
+								</td>
+							{% endfor %}
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
 		</div>
 	</div>
-</div>
+{% endmacro %}

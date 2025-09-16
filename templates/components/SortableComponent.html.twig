@@ -1,0 +1,70 @@
+
+
+{% import _self as macros %}
+<div{{ attributes }}>
+	{{ include(theme.themeDirectory ~ '/partials/_flash_messages.html.twig') }}
+	{% set items = this.getItems() %}
+	{% set isTreeEntity = this.isTreeEntity() %}
+	<ul class="space-y-3 sortable-group" {{ stimulus_controller('sortable') }}>
+		{% for index, object in items %}
+			{{ macros.objectCard(object, this.formComponent, this.objectName, isTreeEntity) }}
+		{% endfor %}
+	</ul>
+	{% if this.formComponent %}
+		<dialog class="modal modal-bottom sm:modal-middle" id="object-modal-form">
+			<div class="modal-box">
+				<button type="button" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 modal-close" data-action="live#emit" data-live-event-param="closeModal">
+					<i class="i-tabler-x"></i>
+				</button>
+				{{ component(this.formComponent) }}
+			</div>
+		</dialog>
+	{% endif %}
+</div>
+
+{% macro objectCard(object, formComponent, objectName, isTreeEntity) %}
+	<li data-object-id="{{ object.id }}" class="flex flex-col gap-2 bg-base-100 border border-base-300 rounded-box p-3 my-2 sortable-item" draggale="true">
+		<div class="flex items-center justify-between">
+			<div class="flex items-center gap-3">
+				<span class="cursor-move text-2xl">
+					<i class="i-tabler-arrows-move"></i>
+				</span>
+				<span>{{ object.name }}</span>
+			</div>
+			<div class="flex items-center gap-2">
+				{% if formComponent %}
+					<button type="button" class="btn btn-sm btn-primary btn-outline" data-controller="modal" data-modal-target-modal-value="object-modal-form" data-action="live#emit" data-live-event-param="setFormData" data-live-object-id-param="{{ object.id }}">
+						<i class="i-tabler-edit"></i>
+						<span>{% trans %}Edit{% endtrans %}</span>
+					</button>
+					<button type="button" class="btn btn-sm btn-primary" data-controller="modal" data-modal-target-modal-value="object-modal-form" data-action="live#emit" data-live-event-param="setFormData" data-live-object-id-param="null" data-live-parent-id-param="{{ object.id }}">
+						<i class="i-tabler-plus"></i>
+						<span>{{ ("Add New " ~ objectName)|trans }}</span>
+					</button>
+				{% endif %}
+				{% set modalId = 'delete-modal-' ~ object.id %}
+				<form data-action="live#action" data-live-action-param="removeItem" data-live-item-id-param="{{ object.id }}">
+					<button type="button" class="btn btn-sm btn-error btn-outline" data-controller="modal" data-modal-target-modal-value="{{ modalId }}">
+						<i class="i-tabler-trash text-lg"></i>
+						<span>{% trans %}Delete{% endtrans %}</span>
+					</button>
+					{% include theme.themeDirectory ~ "/partials/_delete_modal.html.twig" with {modalId: modalId, objectName: (objectName ?: 'Object')|trans} %}
+				</form>
+			</div>
+		</div>
+		{% if isTreeEntity %}
+			<ul class="ml-4 border-l border-base-300 pl-2 space-y-2 min-h-6 sortable-group" data-group-id="{{ object.id }}">
+				{% for child in object.children|sort((a, b) => a.position <=> b.position) %}
+					{{ macros.objectCard(child, formComponent, objectName, isTreeEntity) }}
+				{% endfor %}
+			</ul>
+		{% endif %}
+	</li>
+{% endmacro %}
+
+{% macro placeholder(props) %}
+	{{ include(theme.themeDirectory ~ '/partials/_flash_messages.html.twig') }}
+	{% for i in range(0, 3) %}
+		<div class="skeleton h-12 w-full my-2"></div>
+	{% endfor %}
+{% endmacro %}

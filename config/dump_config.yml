@@ -1,0 +1,7 @@
+configuration:
+  entity: App\Entity\Configuration\Configuration
+  importFields:
+    - configKey
+    - value
+  filterFields:
+    - configKey

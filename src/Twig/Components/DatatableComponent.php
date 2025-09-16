@@ -52,8 +52,20 @@ abstract class DatatableComponent extends AbstractController
     public ?string $listTopic = null;
 
     #[LiveProp(writable: false)]
+    public ?string $entityClass = null;
+    #[LiveProp(writable: false)]
+    public array $options = ['allow_remove' => true, 'allow_bulk_remove' => false];
+
+    #[LiveProp(writable: true)]
+    public array $bulkSelectIds = [];
+    #[LiveProp(writable: true)]
+    public bool $selectAll = false;
+
+
+    #[LiveProp(writable: false)]
     public ?string $rowTemplateFile = null;
 
+    #[LiveProp(writable: false, url: false)]
     public array $headers = [];
 
     public $filterForm = null;
@@ -68,7 +80,7 @@ abstract class DatatableComponent extends AbstractController
 
     /**
      * Get query builder to paginate.
-     * @return array
+     * @return QueryBuilder
      */
     abstract public function getQueryBuilder(): QueryBuilder;
 
@@ -84,6 +96,7 @@ abstract class DatatableComponent extends AbstractController
     {
         $this->dispatchBrowserEvent('live-component:update');
         $buildData = $this->getTableBuildData();
+        $this->headers = $buildData['headers'];
         if (@$buildData['filters']) {
             $builder = $this->formFactory->createNamedBuilder('filters', options: [
                 'method' => 'GET',
@@ -167,6 +180,7 @@ abstract class DatatableComponent extends AbstractController
     {
         $this->sort = $sort;
         $this->direction = $direction;
+        $this->bulkSelectIds = [];
     }
 
     public function onQueryUpdated($previousValue): void
@@ -185,5 +199,45 @@ abstract class DatatableComponent extends AbstractController
     {
         $this->dispatchBrowserEvent('live-component:update');
         $this->filters = [];
+        $this->bulkSelectIds = [];
+    }
+
+    #[LiveAction]
+    public function remove(#[LiveArg()] array $entityIds, #[LiveArg()] string $objectName)
+    {
+        if (!$entityIds) {
+            return;
+        }
+        if (
+            (count($entityIds) == 1 && !@$this->options['allow_remove']) ||
+            (count($entityIds) > 1 && !@$this->options['allow_bulk_remove'])
+        ) {
+            throw $this->createAccessDeniedException($this->translator->trans('Operation not permitted.'));
+        }
+        if (!$this->entityClass || !$objectName) {
+            throw new \LogicException('You should provice entityClass and objectName to run this operation.');
+        }
+        $repository = $this->entityManager->getRepository($this->entityClass);
+        $objects = $repository->findBy(['id' => $entityIds]);
+        foreach ($objects as $object) {
+            $this->entityManager->remove($object);
+        }
+        $this->entityManager->flush();
+        $this->addFlash('success', $this->translator->trans($objectName . ' deleted successfully.'));
+        $this->dispatchBrowserEvent('live-component:update');
+        $this->bulkSelectIds = [];
+    }
+
+    #[LiveAction]
+    public function bulkselect()
+    {
+        if ($this->selectAll) {
+            $entities = $this->getPagination()->getItems();
+            $this->bulkSelectIds = array_map(function ($entity) {
+                return $entity->getId();
+            }, $entities);
+        } else {
+            $this->bulkSelectIds = [];
+        }
     }
 }

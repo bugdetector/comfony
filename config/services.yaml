@@ -12,6 +12,7 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         bind:
+            string $locale: '%locale%'
             string $locales: '%app_locales%'
 
     gedmo.listener.timestampable:
@@ -20,6 +21,13 @@ services:
             - { name: doctrine.event_listener, event: 'prePersist' }
             - { name: doctrine.event_listener, event: 'onFlush' }
             - { name: doctrine.event_listener, event: 'loadClassMetadata' }
+    gedmo.listener.translatable:
+        class: Gedmo\Translatable\TranslatableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setDefaultLocale, [ '%env(APP_LOCALE)%' ] ]
+            - [ setTranslationFallback, [ true ] ]
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:

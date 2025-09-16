@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block actions %}
+    <div data-controller="live">
+        <button class="btn btn-outline" data-controller="modal" data-modal-target-modal-value="object-modal-form" data-action="live#emit" data-live-event-param="setFormData" data-live-object-id-param="null">
+            <i class="i-tabler-plus text-lg"></i>
+            {% trans %}Add New Category{% endtrans %}
+        </button>
+    </div>
+{% endblock %}
+
+{% block body %}
+    {{ component('SortableComponent', {loading: 'lazy', class: 'App\\Entity\\Category\\Category', formComponent: 'LiveForms:LiveCategoryFormComponent', objectName: 'Category'}) }}
+{% endblock %}

@@ -1,25 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block actions %}
-	<div class="container-fluid flex md:justify-end items-center my-3 gap-5">
-		<a href='{{ path('app_admin_page_new') }}' class="btn btn-primary btn-sm">
-			<span class="flex justify-center items-center">
-				<span class="ki-solid ki-plus-circle text-md me-2"></span>
-				{% trans %}Add New Page{% endtrans %}
-			</span>
+	<a href='{{ path('app_admin_page_new') }}' class="btn btn-outline">
+		<i class="i-tabler-plus text-lg"></i>
+		{% trans %}Add New Page{% endtrans %}
+	</a>
+	{% if page is defined and page.id %}
+		<a href='{{ path('app_page_view', {'slug': page.slug}) }}' data-turbo="false" class="btn btn-info btn-outline">
+			<i class="i-tabler-eye text-lg"></i>
+			{% trans %}View Page{% endtrans %}
 		</a>
-		{% if page is defined and page.id %}
-			<a href='{{ path('app_page_view', {'slug': page.slug}) }}' data-turbo="false" target="_blank" class="btn btn-info btn-sm">
-				<span class="flex justify-center items-center">
-					<span class="ki-solid ki-eye text-md me-2"></span>
-					{% trans %}View Page{% endtrans %}
-				</span>
-			</a>
-		{% endif %}
-		
-	</div>
+	{% endif %}
 {% endblock %}
 
 {% block body %}
-	{{ component('PagesSearchComponent', {listTopic: 'pages'}) }}
+	{{ component('PagesSearchComponent', {listTopic: 'pages', loading: 'lazy', entityClass: 'App\\Entity\\Page\\Page', options: {'allow_remove': true, 'allow_bulk_remove': true}}) }}
 {% endblock %}

@@ -1,16 +1,10 @@
 import './bootstrap.js';
 import './styles/app.css';
-import './theme/core/index.ts';
+import 'daisyui';
 import GLightbox from 'glightbox';
 import "glightbox/dist/css/glightbox.css"
 
-// Keen Icons
-import './theme/vendors/keenicons/duotone/style.css';
-import './theme/vendors/keenicons/filled/style.css';
-import './theme/vendors/keenicons/outline/style.css';
-import './theme/vendors/keenicons/solid/style.css';
-
-document.addEventListener('turbo:load', (e) => {  
+document.addEventListener('turbo:load', (e) => {
     console.log(e.type);
     initializeComponents();
 })
@@ -28,12 +22,11 @@ document.addEventListener('turbo:before-stream-render', (event) => {
         fallbackToDefaultActions(streamElement);
         initializeComponents();
     }
-    
+
 })
 
 document.addEventListener('turbo:before-frame-render', (e) => {
     console.log(e.type);
-    KTModal.hide();
     setTimeout(() => {
         initializeComponents();
     }, 200);
@@ -50,24 +43,36 @@ document.addEventListener('live-component:update', (e) => {
 })
 
 document.addEventListener('app-hide-modal', (e) => {
-    KTModal.hide();
+    document.querySelectorAll('dialog[open]').forEach((dialog) => dialog.close())
 })
 
 
-window.initializeComponents = function(){
-    KTComponents.init();
+window.initializeComponents = function () {
     window.initLightBox();
+    window.initThemeSelector();
+    if (!window.sidebarInitialized) {
+        document.querySelectorAll('.sidebar-toggle').forEach(function (toggle) {
+            toggle.addEventListener('click', function () {
+                const sidebar = document.getElementById('sidebar');
+                if (sidebar) {
+                    sidebar.classList.toggle('open');
+                }
+            });
+        });
+        document.querySelectorAll('.sidebar .menu li').forEach(function (toggle) {
+            toggle.addEventListener('click', function () {
+                const sidebar = document.getElementById('sidebar');
+                if (sidebar) {
+                    sidebar.classList.remove('open');
+                }
+            });
+        });
+        window.sidebarInitialized = true;
+    }
 }
 
-window.addEventListener('popstate', function(event) {
-    window.KT_DRAWER_INITIALIZED = false;
-    window.KT_DROPDOWN_INITIALIZED = false;
-    window.KT_MENU_INITIALIZED = false;
-    window.KT_MODAL_INITIALIZED = false;
-    window.KT_REPARENT_INITIALIZED = false;
-    window.KT_SCROLL_INITIALIZED = false;
-    window.KT_TABS_INITIALIZED = false;
-    window.KT_TOOLTIP_INITIALIZED = false;
+window.addEventListener('popstate', function (event) {
+
 }, false);
 
 window.GLightbox = GLightbox;
@@ -77,4 +82,30 @@ window.initLightBox = function () {
         glightbox.destroy();
     }
     glightbox = GLightbox();
+}
+
+window.initThemeSelector = function () {
+    const themeInputs = document.querySelectorAll('input[name="theme"]');
+    const themeKey = "theme";
+
+    const activeTheme = localStorage.getItem(themeKey) || 'system';
+    document.documentElement.setAttribute("data-theme", activeTheme);
+
+    const activeInput = document.querySelector(`input[name="theme"][value="${activeTheme}"]`);
+    if (activeInput) activeInput.checked = true;
+
+    themeInputs.forEach(input => {
+        input.addEventListener("click", (e) => {
+            const newTheme = e.target.value;
+
+            if (newTheme === "system") {
+                const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                document.documentElement.setAttribute("data-theme", prefersDark ? "dracula" : "light");
+            } else {
+                document.documentElement.setAttribute("data-theme", newTheme);
+            }
+
+            localStorage.setItem(themeKey, newTheme);
+        });
+    });
 }

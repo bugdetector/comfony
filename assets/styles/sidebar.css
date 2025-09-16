@@ -1,0 +1,59 @@
+@layer components {
+    .sidebar {
+        transition: all 0.3s ease-in-out;
+        width: calc(var(--spacing) * 15);
+        position: fixed;
+        z-index: 1000;
+    }
+
+    .sidebar img {
+        object-fit: contain;
+    }
+
+    .sidebar:not(.open, :hover) .menu a span {
+        display: none;
+    }
+
+    .sidebar .menu a span {
+        white-space: nowrap;
+    }
+
+    .sidebar:not(.open, :hover) .menu a i {
+        @apply text-2xl;
+    }
+
+    .sidebar .menu.menu-vertical {
+        @apply gap-2;
+    }
+
+    .sidebar .menu.menu-vertical li a {
+        @apply py-2;
+    }
+
+    @media screen and (min-width: 768px) {
+        .sidebar:not(.open, :hover) .sidebar-mark {
+            display: none;
+        }
+
+        .sidebar.open,
+        .sidebar:hover {
+            transform: translateX(0);
+            width: calc(var(--spacing) * 64);
+        }
+    }
+
+
+
+    @media screen and (max-width: 768px) {
+
+        .sidebar {
+            transform: translateX(-100%);
+            position: fixed;
+        }
+
+        .sidebar.open {
+            transform: translateX(0);
+            width: 100vw;
+        }
+    }
+}

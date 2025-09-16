@@ -1,20 +1,20 @@
 {% use 'tailwind_2_layout.html.twig' %}
 
 {%- block form_row -%}
-    {%- set row_class = row_class|default('mb-3') -%}
-    {{- parent() -}}
+    {%- set row_class = row_class|default('mb-4') -%}
+    {{ parent() }}
 {%- endblock form_row -%}
 
 {%- block widget_attributes -%}
     {% if type is defined and type == "file" %}
-        {%- set widget_class = widget_class|default('file-input') -%}
+        {%- set widget_class = widget_class|default('file-input w-full') -%}
     {% elseif type is defined and type == "password" %}
-        {%- set widget_class = widget_class|default('input border-s-0 rounded-r-none') -%}
+        {%- set widget_class = widget_class|default('w-full') -%}
     {% else %}
-        {%- set widget_class = widget_class|default('input') -%}
+        {%- set widget_class = widget_class|default('input w-full') -%}
     {% endif %}
-    {%- set widget_disabled_class = widget_disabled_class|default('cursor-not-allowed') -%}
-    {%- set widget_errors_class = widget_errors_class|default('text-danger') -%}
+    {%- set widget_disabled_class = widget_disabled_class|default('input-disabled') -%}
+    {%- set widget_errors_class = widget_errors_class|default('text-error') -%}
     {{- parent() -}}
 {%- endblock widget_attributes -%}
 
@@ -22,7 +22,7 @@
     {%- set attr = attr|merge({ class: attr.class|default('mt-2') }) -%}
     <div {{ block('widget_container_attributes') }}>
         {%- for child in form %}
-            <div class="flex items-center mt-2">
+            <div class="flex items-center gap-2 mt-2">
                 {{- form_widget(child) -}}
                 {{- form_label(child, null, { translation_domain: choice_translation_domain }) -}}
             </div>
@@ -31,17 +31,17 @@
 {%- endblock choice_widget_expanded -%}
 
 {%- block form_label -%}
-    {%- set label_class = label_class|default('form-label') -%}
+    {%- set label_class = label_class|default('label label-text font-bold') -%}
     {{- parent() -}}
 {%- endblock form_label -%}
 
 {%- block form_help -%}
-    {%- set help_class = help_class|default('form-info text-gray-800 text-2sm font-normal') -%}
+    {%- set help_class = help_class|default('label label-text-alt text-base-content text-wrap') -%}
     {{- parent() -}}
 {%- endblock form_help -%}
 
 {%- block form_errors -%}
-    {%- set error_item_class = error_item_class|default('text-danger') -%}
+    {%- set error_item_class = error_item_class|default('text-error') -%}
     {{- parent() -}}
 {%- endblock form_errors -%}
 
@@ -53,7 +53,7 @@
 {%- endblock button_widget -%}
 
 {%- block checkbox_widget -%}
-    {%- set widget_class = widget_class|default('checkbox mr-2') -%}
+    {%- set widget_class = widget_class|default('toggle toggle-primary mr-2') -%}
     {{- parent() -}}
 {%- endblock checkbox_widget -%}
 
@@ -64,19 +64,20 @@
 {%- endblock radio_widget -%}
 
 {%- block textarea_widget -%}
-    {%- set widget_class = widget_class|default('textarea') -%}
+    {%- set widget_class = widget_class|default('textarea w-full') -%}
     {{- parent() -}}
 {%- endblock textarea_widget -%}
 
 {%- block form_widget_simple -%}
     {%- set type = type|default('text') -%}
     {%- if type == 'password' -%}
-        <div class="input ps-0 items-stretch" data-toggle-password="true">
-            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
-            <div class="btn btn-icon" data-toggle-password-trigger="true">
-                <i class="ki-outline ki-eye toggle-password-active:hidden"></i>
-                <i class="ki-outline ki-eye-slash !hidden toggle-password-active:!block"></i>
-            </div>
+        <div class="input w-full flex items-center" {{ stimulus_controller('password-input') }}>
+            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} {{ stimulus_target('password-input', 'input') }}/>
+            <label class="btn btn-ghost !h-full absolute end-0 swap swap-rotate" {{ stimulus_action('click->password-input', 'toggle') }}>
+                <input id="{{ id }}-password-toogle" type="checkbox" class="hidden"/>
+                <i class="i-tabler-eye text-lg swap-off"></i>
+                <i class="i-tabler-eye-off text-lg swap-on"></i>
+            </label>
         </div>
     {% else %}
         {{ parent() }}
@@ -84,7 +85,7 @@
 {%- endblock form_widget_simple -%}
 
 {% block async_file_row %}
-    <div class='mb-3'>
+    <div class='mb-4'>
         {{ form_label(form) }}
         {{ form_errors(form) }}
         {{ component('FormType:AsyncFileInput', {
@@ -96,7 +97,7 @@
 
 {% block live_async_file_row %}
     {% import theme.themeDirectory ~ "/partials/macros.html.twig" as macros %}
-    <div class='mb-3'>
+    <div class='mb-4'>
         {{ form_label(form) }}
         {{ form_errors(form) }}
         {% set isMultiple = form.vars.attr.multiple|default(false) %}
@@ -108,7 +109,7 @@
             {{ macros.live_async_file_preview(data, full_name, 0, allow_delete) }}
         {% endif %}
         {% set prefixedName = "live_file_input_" ~ full_name %}
-        <input type='file' {{ isMultiple ? 'multiple' }} accept="{{ form.vars.attr.accept|default('') }}" name='live_file_input_{{ full_name  ~ (isMultiple ? "[]") }}' onchange='document.getElementById("{{ form.vars.id }}").click()' class='file-input'/>
+        <input type='file' {{ isMultiple ? 'multiple' }} accept="{{ form.vars.attr.accept|default('') }}" name='live_file_input_{{ full_name  ~ (isMultiple ? "[]") }}' onchange='document.getElementById("{{ form.vars.id }}").click()' class='file-input w-full'/>
 		<button type='button' id='{{ form.vars.id }}' data-action="live#action" data-live-action-param="files(live_file_input_{{ full_name ~ (isMultiple ? "[]") }})|uploadFile" data-live-name-param="{{ full_name }}" class='hidden'></button>
         {{ form_help(form) }}
     </div>
@@ -126,7 +127,7 @@
 {% endblock live_collection_button_add_widget %}
 
 {% block live_collection_button_delete_widget %}
-    {% set attr = attr|merge({'class': attr.class|default('btn btn-danger btn-sm')}) %}
+    {% set attr = attr|merge({'class': attr.class|default('btn btn-error btn-sm')}) %}
     {% set translation_domain = false %}
     {% set label_html = true %}
     {%- set label -%}
@@ -137,12 +138,12 @@
 {% endblock live_collection_button_delete_widget %}
 
 {%- block live_collection_widget -%}
-    <div class='card'>
+    <div class='card card-bordered'>
         <button class='card-header active' role="button" data-collapse='#{{ id }}_wrapper_content'>
             <h3 class='card-title'>{{ block('form_label_content') }}</h3>
             <div>
                 <i class="ki-outline ki-arrow-down collapse-active:hidden"></i>
-                <i class="ki-outline ki-arrow-up !hidden collapse-active:!block"></i>
+                <i class="ki-outline ki-arrow-up hidden collapse-active:block"></i>
             </div>
         </button>
         <div class='card-body transition-all duration-300 active' id="{{ id }}_wrapper_content">
@@ -157,12 +158,12 @@
 {%- endblock -%}
 
 {%- block live_collection_entry_row -%}
-    <div class='card mb-3'>
+    <div class='card card-bordered mb-4'>
         <button class='card-header active' data-collapse='#{{ id }}_content'>
             <h3 class='card-title'>{{ (form.parent.vars.label ? form.parent.vars.label|trans ~ ' - ' : '') ~  (name + 1) }}</h3>
             <div>
                 <i class="ki-outline ki-arrow-down collapse-active:hidden"></i>
-                <i class="ki-outline ki-arrow-up !hidden collapse-active:!block"></i>
+                <i class="ki-outline ki-arrow-up hidden collapse-active:block"></i>
             </div>
         </button>
         <div class='card-body transition-all duration-300 active' id="{{ id }}_content">
@@ -244,7 +245,7 @@
     {% endfor %}
     {% if allow_delete %}
         {% set prototypeHtml = prototypeHtml ~ "<td class='px-2 py-2 align-baseline'>
-            <button type='button' class='btn btn-danger btn-sm' #{ stimulus_action('form-collection', 'removeCollectionItem') }>
+            <button type='button' class='btn btn-error btn-sm' #{ stimulus_action('form-collection', 'removeCollectionItem') }>
                 <i class='ki-filled ki-trash'></i>
             </button>
         </td>" %}
@@ -293,7 +294,7 @@
                                 {% endfor %}
                                 {% if allow_delete %}
                                     <td class="px-2 py-2 align-baseline">
-                                        <button type='button' class='btn btn-danger btn-sm' {{ stimulus_action('form-collection', 'removeCollectionItem') }}>
+                                        <button type='button' class='btn btn-error btn-sm' {{ stimulus_action('form-collection', 'removeCollectionItem') }}>
                                             <i class='ki-filled ki-trash'></i>
                                         </button>
                                     </td>
@@ -340,7 +341,7 @@
 					</div>" ~ (
                         allow_delete ?
                         "<div class='card-footer'>
-							<button type='button' class='btn btn-danger btn-sm' " ~ stimulus_action('form-collection', 'removeCollectionItem') ~ ">
+							<button type='button' class='btn btn-error btn-sm' " ~ stimulus_action('form-collection', 'removeCollectionItem') ~ ">
 								<i class='ki-filled ki-trash'></i>
                                 " ~ "Delete"|trans ~ "
 							</button>
@@ -384,7 +385,7 @@
                         </div>
                         {% if allow_delete %}
                             <div class="card-footer">
-                                <button type='button' class='btn btn-danger btn-sm' {{ stimulus_action('form-collection', 'removeCollectionItem') }}>
+                                <button type='button' class='btn btn-error btn-sm' {{ stimulus_action('form-collection', 'removeCollectionItem') }}>
                                     <i class='ki-filled ki-trash'></i>
                                     <span>{% trans %}Delete{% endtrans %}</span>
                                 </button>

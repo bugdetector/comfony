@@ -1,0 +1,10 @@
+<form method="post" action="{{ path('app_admin_configuration_delete', {'id': configuration.id}) }}">
+    <div class="fixed bottom-10 end-40 z-10">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ configuration.id) }}">
+        {% set modalId = 'delete-modal-' ~ configuration.id %}
+        <button type='button' class="btn btn-error btn-soft hover:text-base-100" data-controller="modal" data-modal-target-modal-value="{{ modalId }}">
+            <span class='i-tabler-trash text-xl'></span>
+        </button>
+    </div>
+    {% include theme.themeDirectory ~ "/partials/_delete_modal.html.twig" with {modalId: modalId, objectName: "Configuration"|trans} %}
+</form>

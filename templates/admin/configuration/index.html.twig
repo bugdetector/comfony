@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block actions %}
+    <a href='{{ path('app_admin_configuration_new') }}' class="btn btn-outline">
+        <i class="i-tabler-plus text-lg"></i>
+        {% trans %}Add New Configuration{% endtrans %}
+    </a>
+{% endblock %}
+
+{% block body %}
+    {{ component('ConfigurationsSearchComponent', {listTopic: 'configurations', loading: 'lazy', entityClass: 'App\\Entity\\Configuration\\Configuration', options: {'allow_remove': true, 'allow_bulk_remove': true}}) }}
+{% endblock %}
