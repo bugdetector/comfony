@@ -165,7 +165,7 @@ class Page
         {% endblock %}
 
         {% block body %}
-            {{ component('PagesSearchComponent', {listTopic: 'pages', loading: 'lazy'}) }}
+            {{ component('PagesSearchComponent', {listTopic: 'pages', loading: 'lazy', entityClass: 'App\\Entity\\Page\\Page', options: {'allow_remove': true, 'allow_bulk_remove': true}}) }}
         {% endblock %}
         ```
 - Define an edit page
@@ -369,6 +369,13 @@ Row file should something like this:
 ```html
     {% set action = action is defined ? action : null %}
     <tr id="page_{{ object.id }}" class='{{ action ? ' action-' ~ action }}'>
+        {% if bulkRemoveAllowed is defined and bulkRemoveAllowed %}
+            <td>
+                <input type="checkbox" data-model="bulkSelectIds[]" value="{{ object.id }}" {{ object.id in this.bulkSelectIds ? 'checked' }} class="toggle toggle-primary mr-2 select-all"/>
+            </td>
+        {% else %}
+            <td></td>
+        {% endif %}
         <td class="px-6 py-3">
             <div class="flex gap-2">
                 {% if action != 'remove' %}
