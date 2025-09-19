@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\SortableGroup;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 trait TreeEntity
 {
@@ -26,10 +28,20 @@ trait TreeEntity
         return $this->parent;
     }
 
+    #[Assert\Callback]
+    public function validateChildNotEqualToParent(ExecutionContextInterface $context): void
+    {
+        if ($this->parent && $this->getId() == $this->parent->getId()) {
+            $context->buildViolation('An entity cannot be its own parent.')
+                ->setTranslationDomain('validators')
+                ->atPath('parent')
+                ->addViolation();
+        }
+    }
+
     public function setParent(?self $parent): static
     {
         $this->parent = $parent;
-
         return $this;
     }
 

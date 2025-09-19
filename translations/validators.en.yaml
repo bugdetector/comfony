@@ -153,3 +153,4 @@ Error: Error
 'Please enter your email': 'Please enter your email'
 'You should agree to our terms.': 'You should agree to our terms.'
 'There is already an account with this email': 'There is already an account with this email'
+'An entity cannot be its own parent.': 'An entity cannot be its own parent.'

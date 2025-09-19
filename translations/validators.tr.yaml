@@ -153,3 +153,4 @@ Error: Hata
 'Please enter your email': 'Lütfen e-postanızı girin'
 'You should agree to our terms.': 'Kullanım koşullarını kabul etmelisiniz.'
 'There is already an account with this email': 'Bu e-posta ile oluşturulmuş bir hesap bulunmaktadır.'
+'An entity cannot be its own parent.': 'Bir varlık kendi üstü olamaz.'
