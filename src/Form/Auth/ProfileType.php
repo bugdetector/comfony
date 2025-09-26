@@ -48,6 +48,7 @@ class ProfileType extends AbstractType
                     'attr' => [
                         'autocomplete' => 'new-password',
                     ],
+                    'always_empty' => false,
                 ],
                 'first_options' => [
                     'constraints' => [

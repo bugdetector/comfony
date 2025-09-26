@@ -1,7 +1,11 @@
 {{ form_start(form) }}
+    <div class='mb-3'>
+        <label class='font-bold'>{% trans %}Registration Date{% endtrans %}</label>
+        <div>{{ initialFormData.createdAt|format_datetime('full', 'short') }}</div>
+    </div>
     {{ form_widget(form) }}
     <div class="fixed bottom-10 end-10">
-        <button type="submit" class="btn btn-success">
+        <button type="submit" class="btn btn-success" data-loading="addAttribute(disabled)">
             <i class="i-tabler-check text-xl"></i>
             {% trans %}Save{% endtrans %}
         </button>
