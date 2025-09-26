@@ -8,7 +8,7 @@
 				</a>
 				
 				{% if is_granted('ROLE_ALLOWED_TO_SWITCH') and object.id != app.user.id %}
-					<a class="btn btn-sm btn-info btn-outline" data-turbo="false" href="?_switch_user={{ object.email }}" data-tooltip="true">
+					<a class="btn btn-sm btn-info btn-outline" data-turbo="false" href="?_switch_user={{ object.email }}">
 						<i class="i-tabler-login-2 text-lg"></i>
 					</a>
 				{% endif %}
