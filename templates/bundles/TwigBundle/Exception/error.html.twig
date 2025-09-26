@@ -8,7 +8,7 @@
                 <h1 class="text-8xl font-extrabold text-primary mb-4">{{ status_code }}</h1>
                 <p class="text-3xl font-bold mb-2">{{ status_text|trans }}</p>
                 <p class="mb-6 text-lg text-base-content/70">{% trans %}Sorry, an unknown error occured.{% endtrans %}</p>
-                <a href="{{ path('homepage') }}" class="btn btn-primary btn-wide">{% trans %}Back to Homepage{% endtrans %}</a>
+                <a href="{{ path('homepage') }}" class="btn btn-primary btn-wide" data-turbo="false">{% trans %}Back to Homepage{% endtrans %}</a>
             </div>
         </div>
     </div>
