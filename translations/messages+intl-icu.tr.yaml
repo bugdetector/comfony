@@ -141,3 +141,6 @@ Category: Kategori
 'Remove Selected': 'Seçilenleri Sil'
 'Are you sure want to remove selected items?': 'Seçili öğeleri silmek istediğinize emin misiniz?'
 Parent: Üst
+'Category created successfully.': 'Kategori başarıyla oluşturuldu.'
+'Category updated successfully.': 'Kategori başarıyla güncellendi.'
+'Category deleted successfully.': 'Kategori başarıyla silindi.'

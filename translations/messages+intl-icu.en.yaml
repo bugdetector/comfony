@@ -136,3 +136,6 @@ Category: Category
 'Remove Selected': 'Remove Selected'
 'Are you sure want to remove selected items?': 'Are you sure want to remove selected items?'
 Parent: Parent
+'Category created successfully.': 'Category created successfully.'
+'Category updated successfully.': 'Category updated successfully.'
+'Category deleted successfully.': 'Category deleted successfully.'

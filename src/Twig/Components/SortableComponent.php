@@ -5,6 +5,7 @@ namespace App\Twig\Components;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
@@ -32,6 +33,7 @@ class SortableComponent extends AbstractController
 
     public function __construct(
         protected EntityManagerInterface $entityManager,
+        private TranslatorInterface $translator,
     ) {
     }
 
@@ -83,7 +85,7 @@ class SortableComponent extends AbstractController
         }
         $this->entityManager->remove($item);
         $this->entityManager->flush();
-        $this->addFlash('success', 'Object removed.');
+        $this->addFlash('success', $this->translator->trans($this->objectName . ' deleted successfully.'));
     }
 
     #[LiveListener('reloadSortableForm')]

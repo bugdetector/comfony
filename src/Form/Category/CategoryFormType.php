@@ -21,6 +21,7 @@ class CategoryFormType extends AbstractType
             ->add('parent', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
+                'placeholder' => 'Parent',
             ]);
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,40 +24,51 @@ class ConfigImportCommand extends Command
 
     public function __construct(
         private KernelInterface $appKernel,
-        private Filesystem $filesystem
+        private Filesystem $filesystem,
+        private EntityManagerInterface $entityManager,
     ) {
         parent::__construct();
     }
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        ini_set('max_execution_time', 0);
         $this->io = new SymfonyStyle($input, $output);
 
-        $process = new PhpSubprocess(['bin/console', 'make:migration']);
+        $process = new PhpSubprocess([
+            'bin/console',
+            'doctrine:migrations:migrate',
+            '--no-interaction',
+            '--allow-no-migration'
+        ]);
         $process->run();
-        echo $process->getOutput();
+        if ($process->isSuccessful()) {
+            $this->io->success($process->getOutput());
+        } else {
+            $this->io->error($process->getOutput());
+        }
 
-        $process = new PhpSubprocess(['bin/console', 'doctrine:migration:migrate']);
+        $process = new PhpSubprocess(['bin/console', 'doctrine:schema:update', '--complete', '--dump-sql']);
         $process->run();
-        echo $process->getOutput();
+        $sqlToUpdateDb = $process->getOutput();
+
+        if ($sqlToUpdateDb) {
+            $this->entityManager->getConnection()->executeQuery($sqlToUpdateDb);
+        } else {
+            $this->io->success(
+                'Nothing to update - your database is already in sync with the current entity metadata.'
+            );
+        }
 
         $process = new PhpSubprocess(['bin/console', 'config:dump-import']);
         $process->run();
-        echo $process->getOutput();
-
-        $this->clearMigrationsDirectory($output);
+        if ($process->isSuccessful()) {
+            $this->io->success($process->getOutput());
+        } else {
+            $this->io->error($process->getOutput());
+        }
 
         $this->io->success('Table structure imported successfully.');
 
         return Command::SUCCESS;
-    }
-
-    private function clearMigrationsDirectory(OutputInterface $output)
-    {
-        $directory = $this->appKernel->getProjectDir() . "/migrations/";
-        $finder = new Finder();
-        $finder->files()->name('Version*');
-        foreach ($finder->in($directory) as $file) {
-            $this->filesystem->remove($file->getPathname());
-        }
     }
 }
