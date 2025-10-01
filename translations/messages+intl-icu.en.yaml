@@ -139,3 +139,7 @@ Parent: Parent
 'Category created successfully.': 'Category created successfully.'
 'Category updated successfully.': 'Category updated successfully.'
 'Category deleted successfully.': 'Category deleted successfully.'
+View: View
+'Email Sent': 'Email Sent'
+'We have sent a verification code to your email address. <br> Please use it to verify your email address.': 'We have sent a verification code to your email address. <br> Please use it to verify your email address.'
+'Code': 'Code'

@@ -82,7 +82,8 @@ class ResetPasswordController extends AuthLayoutController
                         ->htmlTemplate('reset_password/verify-email.html.twig')
                         ->context([
                             'code' => $token->getCode()
-                        ]);
+                        ])
+                        ->locale($this->translator->getLocale());
 
                     $mailer->send($email);
 

@@ -5,8 +5,8 @@
 		{% if not error %}
 			<div {{ stimulus_controller('flashmessage') }} 
 				data-icon='info' 
-				data-title="Email Sent" 
-				data-html='We have sent a verification code to your email address. <br> Please use it to verify your email address.' 
+				data-title='{% trans %}Email Sent{% endtrans %}'
+				data-html='{% trans %}We have sent a verification code to your email address. <br> Please use it to verify your email address.{% endtrans %}'
 				data-show-confirm-button="true"></div>
 		{% endif %}
 

@@ -111,7 +111,6 @@ Theme: Tema
 Light: Açık
 Dark: Koyu
 System: Sistem
-'We have sent a verification code to your email address. <br> Please use it to verify your email address.': 'E-postanıza doğrulamanız için bir kod gönderdik. <br> Lütfen e-postanızı doğrulamak için kullanın.'
 'Please enter your email address to receive a verification code to reset your password.': 'Şifre sıfırlama doğrulama kodunu almak için lütfen e-posta adresinizi girin.'
 'Invalid token.': 'Geçersiz anahtar.'
 'Code expired.': 'Kodun süresi doldu.'
@@ -144,3 +143,7 @@ Parent: Üst
 'Category created successfully.': 'Kategori başarıyla oluşturuldu.'
 'Category updated successfully.': 'Kategori başarıyla güncellendi.'
 'Category deleted successfully.': 'Kategori başarıyla silindi.'
+View: Görüntüle
+'Email Sent': 'E-posta gönderildi'
+'We have sent a verification code to your email address. <br> Please use it to verify your email address.': 'E-postanıza doğrulamanız için bir kod gönderdik. <br> Lütfen e-postanızı doğrulamak için kullanın.'
+'Code': 'Kod'

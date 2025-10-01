@@ -1,25 +1,41 @@
 {% apply inky_to_html|inline_css(source('@emails/foundation-emails.css')) %}
     <container>
-        <row class="header">
+        <row>
             <columns>
-                <spacer size="16"></spacer>
+                <spacer size="20"></spacer>
                 <center>
                     <a href="{{ url('homepage') }}">
-                        <img src="{{ email.image('@assets/logo.png') }}" class="thumbnail" height=250 class="logo" alt="{{ app_name }} Logo">
+                        <img src="{{ email.image('@assets/logo.png') }}" width="150" alt="{{ app_name }}">
                     </a>
                 </center>
-                <spacer size="16"></spacer>
+                <spacer size="20"></spacer>
             </columns>
         </row>
 
         {% block content %}
+            <row>
+                <columns>
+                    <center>
+                        <h1>{{ subject|default('')|trans|raw }}</h1>
+                        <p>{{ message|default('')|trans|raw }}</p>
+                        {% if buttonUrl is defined %}
+                            <spacer size="16"></spacer>
+                            <button class="primary" href="{{ buttonUrl }}">
+                                {{ buttonText|default('View')|trans }}
+                            </button>
+                        {% endif %}
+                    </center>
+                </columns>
+            </row>
         {% endblock %}
 
         <row class="footer">
             <columns>
-                <p>{{ app_name }}</p>
+                <center>
+                    <spacer size="20"></spacer>
+                    <small>{{ app_name }}</small>
+                </center>
             </columns>
         </row>
-        <spacer size="16"></spacer>
     </container>
 {% endapply %}
