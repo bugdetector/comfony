@@ -4,6 +4,18 @@ Comfony is a comfortable, production-ready Symfony 7.3 boilerplate featuring [da
 
 ---
 
+## 💡 Try with Copilot
+
+Want to see Comfony in action? Try this prompt with GitHub Copilot:
+
+```
+Create a Note entity and its CRUD.
+```
+
+Copilot will generate a fully integrated Note entity, including real-time updates, LiveComponent forms, search, and daisyUI-powered templates—following all Comfony conventions.
+
+---
+
 ## 🚀 Getting Started
 
 ### Start the Development Environment
