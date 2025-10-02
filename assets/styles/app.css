@@ -16,11 +16,11 @@
 
 @plugin '@egoist/tailwindcss-icons';
 
-.menu li > *:not(.menu-active, .dropdown-content):hover {
+.menu li > *:not(.menu-active, .dropdown-content, details):hover {
    background-color: color-mix(in oklab,var(--color-base-content)10%,transparent) !important; 
 }
 
-.menu li > *:not(.menu-active, .dropdown-content):active {
+.menu li > *:not(details, .menu-active, .dropdown-content):active {
    background-color: color-mix(in oklab,var(--color-base-content)40%,transparent) !important; 
 }
 

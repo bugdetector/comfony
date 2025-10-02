@@ -10,7 +10,8 @@
         object-fit: contain;
     }
 
-    .sidebar:not(.open, :hover) .menu a span {
+    .sidebar:not(.open, :hover) .menu a span,
+    .sidebar:not(.open, :hover) .menu details summary span {
         display: none;
     }
 

@@ -20,19 +20,19 @@
 	<td class="px-6 py-3">{{ object.email }}</td>
 	<td class="px-6 py-3">
 		{% if object.status.value == 'Banned' %}
-			<span class="badge badge-error">
+			<span class="badge badge-error !text-base-100">
 				{{ object.status.value|trans }}
 			</span>
 		{% endif %}
 
 		{% if object.status.value == 'Blocked' %}
-			<span class="badge badge-warning">
+			<span class="badge badge-warning !text-base-100">
 				{{ object.status.value|trans }}
 			</span>
 		{% endif %}
 
 		{% if object.status.value == 'Active' %}
-			<span class="badge badge-success">
+			<span class="badge badge-success !text-base-100">
 				{{ object.status.value|trans }}
 			</span>
 		{% endif %}

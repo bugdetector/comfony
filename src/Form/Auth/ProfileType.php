@@ -4,6 +4,7 @@ namespace App\Form\Auth;
 
 use App\Entity\Auth\User;
 use App\Form\Type\AsyncFileType;
+use App\Form\Type\LiveAsyncFileType;
 use App\Repository\Auth\UserRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
@@ -30,7 +31,7 @@ class ProfileType extends AbstractType
                 'constraints' => [
                     new Email()
                 ]
-            ])->add("profile_photo", AsyncFileType::class, [
+            ])->add("profile_photo", LiveAsyncFileType::class, [
                 "help" => 'Upload a PNG/JPG file.',
                 'attr' => [
                     'accept' => implode(',', [
