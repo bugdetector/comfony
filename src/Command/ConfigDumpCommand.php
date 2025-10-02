@@ -30,6 +30,7 @@ class ConfigDumpCommand extends Command
         foreach ($config as $key => $conf) {
             $entityClass = $conf['entity'] ?? null;
             $fields = $conf['importFields'] ?? [];
+            $relations = $conf['relations'] ?? [];
             if (!$entityClass || empty($fields)) {
                 $output->writeln("<error>Invalid configuration for '$key' in dump_config.yml</error>");
                 continue;
@@ -42,6 +43,38 @@ class ConfigDumpCommand extends Command
                 foreach ($fields as $field) {
                     $getter = 'get' . ucfirst($field);
                     $row[$field] = method_exists($item, $getter) ? $item->$getter() : null;
+                }
+                if ($relations) {
+                    foreach ($relations as $referenceField => $referenceEntityConf) {
+                        $getter = 'get' . ucfirst($referenceField);
+                        $referenceEntities = method_exists($item, $getter) ? $item->$getter() : null;
+                        $row[$referenceField] = [];
+                        if ($referenceEntities) {
+                            // Handle both single and multiple relations
+                            if ($referenceEntities instanceof \Traversable || is_array($referenceEntities)) {
+                                foreach ($referenceEntities as $referenceEntity) {
+                                    $referenceEntityData = [];
+                                    foreach ($referenceEntityConf['fields'] ?? [] as $referenceEntityField) {
+                                        $fieldGetter = 'get' . ucfirst($referenceEntityField);
+                                        $referenceEntityData[$referenceEntityField] =
+                                            method_exists($referenceEntity, $fieldGetter) ?
+                                            $referenceEntity->$fieldGetter() : null;
+                                    }
+                                    $row[$referenceField][] = $referenceEntityData;
+                                }
+                            } else {
+                                // Single relation (not a collection)
+                                $referenceEntityData = [];
+                                foreach ($referenceEntityConf['fields'] ?? [] as $referenceEntityField) {
+                                    $fieldGetter = 'get' . ucfirst($referenceEntityField);
+                                    $referenceEntityData[$referenceEntityField] =
+                                        method_exists($referenceEntities, $fieldGetter) ?
+                                        $referenceEntities->$fieldGetter() : null;
+                                }
+                                $row[$referenceField][] = $referenceEntityData;
+                            }
+                        }
+                    }
                 }
                 $data[] = $row;
             }

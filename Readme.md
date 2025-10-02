@@ -1,45 +1,60 @@
-# Comfony - Comfortable Symfony boilerplate - developed with daisyui, tailwindcss, turbo, ux live components
+# Comfony - Modern Symfony Boilerplate
 
+Comfony is a comfortable, production-ready Symfony 7.3 boilerplate featuring [daisyUI](https://daisyui.com/) (Tailwind CSS 4), Hotwire Turbo, Stimulus, and UX Live Components for real-time reactive UIs.
 
-## Start development enviroment
+---
+
+## 🚀 Getting Started
+
+### Start the Development Environment
+
 ```sh
 docker compose up
 ```
 
-## Watch assets
+### Watch Assets
+
 ```sh
 yarn watch
-```
-OR
-```sh
+# or
 npm run watch
 ```
 
-## Translations
-- Dump English translations:
-  - ```sh
-    symfony console translation:extract --force --format=yaml en
-    ```
-- Dump Turkish translations:
-  - ```sh
-    symfony console translation:extract --force --format=yaml tr
-    ```
+---
 
-## List Schedule Commands
-```sh
-symfony console schedule:list
-```
-## Run Schedule
-```sh
-symfony console schedule:run
-```
-## Staging HTTP Authentication
+## 🌐 Translations
 
-To secure your staging environment with HTTP Basic Auth, follow these steps:
+- Extract English translations:
+  ```sh
+  symfony console translation:extract --force --format=yaml en
+  ```
+- Extract Turkish translations:
+  ```sh
+  symfony console translation:extract --force --format=yaml tr
+  ```
 
-### 1. Generate `.htpasswd` file
+---
 
-Run the following command in your project's public directory, replacing `<username>` with your desired username:
+## ⏰ Scheduling
+
+- **List scheduled commands:**
+  ```sh
+  symfony console schedule:list
+  ```
+- **Run scheduler:**
+  ```sh
+  symfony console schedule:run
+  ```
+
+---
+
+## 🔒 Staging HTTP Authentication
+
+To secure your staging environment with HTTP Basic Auth:
+
+### 1. Generate `.htpasswd`
+
+In your `public` directory:
 
 ```sh
 htpasswd -c .htpasswd <username>
@@ -48,7 +63,7 @@ htpasswd -c .htpasswd <username>
 
 ### 2. Configure Apache
 
-Add the following to your `.htaccess` file to enable authentication only in the staging environment:
+Add to your `.htaccess`:
 
 ```apache
 <If "%{ENV:APP_ENV} == 'staging'">
@@ -61,55 +76,87 @@ Add the following to your `.htaccess` file to enable authentication only in the 
 
 ### 3. Configure Nginx
 
-Add these lines to your Nginx server block to enable authentication:
+Add to your server block:
 
 ```nginx
-server {
-  # ... other config ...
-
-  location / {
-    # ... other config ...
-    auth_basic "Restricted";
-    auth_basic_user_file <absolute path to .htpasswd>;
-  }
+location / {
+  auth_basic "Restricted";
+  auth_basic_user_file <absolute path to .htpasswd>;
 }
 ```
 
 Replace `<absolute path to .htpasswd>` with the full path to your `.htpasswd` file.
 
+---
 
-## Code Quality check
-Please run ``` phpcbf ``` then ``` phpcs ``` commands to ensure code visible quality.
+## 🧹 Code Quality
 
-## Migrations
-All migration files will automaticaly generated and applied with this command.
-It is not suggested to generate mogration files while using comfony.
+Run the following to fix and check code standards:
+
+```sh
+phpcbf && phpcs
+```
+
+---
+
+## 🗄️ Database & Migrations
+
+Comfony manages your database schema automatically. **Do not create migration files manually** for structure changes.
+
+Apply all schema changes with:
 
 ```sh
 symfony console config:import
 ```
 
+This command wraps `doctrine:migrations:migrate`, `doctrine:schema:update`, and `config:dump-import`. Use migration files only for custom operations.
 
-# Symfony Docker
+---
 
-## Docs
+## 📦 Configuration Dump Structure
 
-1. [Options available](docs/options.md)
-2. [Using Symfony Docker with an existing project](docs/existing-project.md)
-3. [Support for extra services](docs/extra-services.md)
-4. [Deploying in production](docs/production.md)
-5. [Debugging with Xdebug](docs/xdebug.md)
-6. [TLS Certificates](docs/tls.md)
-7. [Using MySQL instead of PostgreSQL](docs/mysql.md)
-8. [Using Alpine Linux instead of Debian](docs/alpine.md)
-9. [Using a Makefile](docs/makefile.md)
-10. [Updating the template](docs/updating.md)
-11. [Troubleshooting](docs/troubleshooting.md)
+When using Comfony's configuration dump system, you define your data export/import structure in YAML. Each section describes an entity, which fields to import, filter, and how to handle relations. Here’s how the structure works:
 
-## License
+- **configuration**:  
+  - `entity`: The fully qualified class name of the entity (e.g., `App\Entity\Main\Configuration\Configuration`).
+  - `importFields`: List of fields to import/export (e.g., `configKey`, `value`).
+  - `filterFields`: Fields used for filtering during import (e.g., `configKey`).
 
-Symfony Docker is available under the MIT License.
+- **permissions**:  
+  - `entity`: The entity class for permissions.
+  - `importFields`: Fields to import/export (e.g., `name`, `description`).
+  - `filterFields`: Fields used for filtering (e.g., `name`).
+  - `relations`: Nested relations, such as translations.
+    - `{relation_name}`: (e.g, `translations`)  
+      - `entity`: Related entity class (e.g., `App\Entity\Main\PermissionTranslation`).
+      - `fields`: Fields to import/export for the relation (e.g., `locale`, `field`, `content`).
 
-## Credits
+This structure allows you to precisely control which data is exported or imported, and how related entities (like translations) are handled. You can extend this pattern for other entities as needed.
 
-Created by [Kévin Dunglas](https://dunglas.dev), co-maintained by [Maxime Helias](https://twitter.com/maxhelias) and sponsored by [Les-Tilleuls.coop](https://les-tilleuls.coop).
+---
+
+## 🐳 Symfony Docker
+
+- [Options available](docs/options.md)
+- [Using Symfony Docker with an existing project](docs/existing-project.md)
+- [Support for extra services](docs/extra-services.md)
+- [Deploying in production](docs/production.md)
+- [Debugging with Xdebug](docs/xdebug.md)
+- [TLS Certificates](docs/tls.md)
+- [Using MySQL instead of PostgreSQL](docs/mysql.md)
+- [Using Alpine Linux instead of Debian](docs/alpine.md)
+- [Using a Makefile](docs/makefile.md)
+- [Updating the template](docs/updating.md)
+- [Troubleshooting](docs/troubleshooting.md)
+
+---
+
+## 📄 License
+
+Comfony is available under the MIT License.
+
+---
+
+## 🙏 Credits
+
+Created by [Murat Baki Yücel](https://github.com/bugdetector).
