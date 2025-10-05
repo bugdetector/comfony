@@ -85,9 +85,9 @@ class FileReferenceListener extends AbstractController implements EventSubscribe
         }
     }
 
-    private function updateFileStatus($object, $newStatus)
+    private function updateFileStatus($object, FileStatus $newStatus)
     {
-        if ($object instanceof File) {
+        if ($object instanceof File && $object->getStatus() != $newStatus?->value) {
             $object->setStatus($newStatus);
             $this->entityManager->persist($object);
             $this->entityManager->flush();
