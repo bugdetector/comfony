@@ -555,7 +555,7 @@ Setup default form like this in `templates/{entityPath}/_form.html.twig`
 {{ form_start(form) }}
 {{ form_widget(form) }}
 <div class="fixed bottom-10 end-10">
-	<button type="submit" class="btn btn-success btn-soft hover:text-base-100" data-loading="addAttribute(disabled)">
+	<button type="submit" class="btn btn-success btn-soft hover:text-base-100" data-loading="action(save)|addAttribute(disabled)">
 		<i class="i-tabler-check text-xl"></i>
 		{% trans %}Save{% endtrans %}
 	</button>
