@@ -1,0 +1,61 @@
+.ts-wrapper{
+   display: block;
+   max-height: 36px;
+   white-space: nowrap;
+   mask-image: unset;
+   background: transparent;
+
+   .clear-button {
+      font-size: 40px;
+      top: calc(50% - 7px);
+   }
+
+   .ts-control {
+      display: flex;
+      flex-direction: row;
+      overflow-x: hidden;
+      background-image: none !important;
+      @apply bg-base-100! border-base-300 text-base-content;
+
+      .item {
+         max-width: calc(100% - 10px);
+         overflow-x: hidden;
+         @apply bg-base-200 text-base-content;
+      }
+
+      input {
+         min-width: 1px;
+         @apply text-base-content placeholder-base-content/60;
+      }
+   }
+
+   .ts-dropdown {
+      @apply bg-base-100 border-base-300 text-base-content shadow-lg;
+
+      .option {
+         @apply text-base-content hover:bg-base-200;
+
+         &.active {
+            @apply bg-primary text-primary-content;
+         }
+
+         &.selected {
+            @apply bg-primary/80 text-primary-content;
+         }
+      }
+
+      .optgroup-header {
+         @apply text-base-content/80 bg-base-200;
+      }
+   }
+
+   &.focus .ts-control {
+      @apply border-primary ring-2 ring-primary/20;
+   }
+
+   &.disabled .ts-control {
+      @apply bg-base-200 text-base-content/50 cursor-not-allowed;
+   }
+}
+
+

@@ -30,6 +30,22 @@
     </div>
 {%- endblock choice_widget_expanded -%}
 
+{%- block choice_widget_collapsed -%}
+    {%- set attr_class = attr.class|default('select w-full') -%}
+    {%- set attr = attr|merge({'class': (attr_class ~ ' ' ~ attr.class|default(''))|trim}) -%}
+    {{- parent() -}}
+{%- endblock choice_widget_collapsed -%}
+
+{% block ux_entity_autocomplete_widget %}
+    {% if form.autocomplete is defined %}
+        {{ form_widget(form.autocomplete, {attr: form.autocomplete.vars.attr|merge({required: required})}) }}
+    {% else %}
+        {%- set attr_class = attr.class|default('w-full') -%}
+        {%- set attr = attr|merge({'class': (attr_class ~ ' ' ~ attr.class|default(''))|trim}) -%}
+        {{ form_widget(form, { attr }) }}
+    {% endif %}
+{% endblock ux_entity_autocomplete_widget %}
+
 {%- block form_label -%}
     {%- set label_class = label_class|default('label label-text font-bold text-wrap') -%}
     {{- parent() -}}
@@ -177,7 +193,7 @@
             <thead class="text-xs uppercase">
                 <tr class="border-b border-t">
                     {% for prototypeChild in prototype %}
-                        <th class="min-w-10 text-gray-700 font-normal text-start text-nowrap">
+                        <th class="min-w-10 text-base-content font-normal text-start text-nowrap">
                             <span>{{ form_label(prototypeChild) }}</span>
                         </th>
                     {% endfor %}
@@ -259,7 +275,7 @@
                     <thead class="text-xs uppercase">
                         <tr>
                             {% for prototypeChild in prototype %}
-                                <th class="px-6 py-3 text-nowrap">
+                                <th class="min-w-10 text-base-content font-normal text-start text-nowrap">
                                     <span>{{ form_label(prototypeChild) }}</span>
                                 </th>
                             {% endfor %}
@@ -388,3 +404,21 @@
         </div>
     </div>
 {%- endblock collection_widget -%}
+
+{% block money_widget %}
+    <div class="join w-full">
+        <span class="btn btn-success join-item pointer-events-none text-base-200">
+            {{ money_pattern|form_encode_currency }}
+        </span>
+        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="input join-item w-full" />
+    </div>
+{% endblock %}
+
+{% block percent_widget %}
+    <div class="join w-full">
+        <span class="btn btn-warning join-item pointer-events-none text-base-200">
+            {{ symbol|default('%') }}
+        </span>
+        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="input join-item w-full" />
+    </div>
+{% endblock %}
