@@ -8,7 +8,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ProfileController extends DefaultLayoutController
 {
-    #[Route('/profile', name: 'app_profile', methods: ['GET', 'POST'],)]
+    #[Route('/profile', name: 'app_profile', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
     public function profile()
     {
