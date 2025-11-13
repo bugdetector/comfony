@@ -84,6 +84,64 @@
     {{- parent() -}}
 {%- endblock textarea_widget -%}
 
+{%- block date_widget -%}
+    {%- if widget == 'single_text' -%}
+        {%- set type = type|default('text') -%}
+        {%- set widget_class = widget_class|default('input w-full') -%}
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} 
+            {{ stimulus_controller('flatpickr', {
+                enableTime: false,
+                dateFormat: 'Y-m-d',
+                altFormat: 'd-m-Y',
+                altInput: true,
+                allowInput: true,
+                locale: app.request.locale
+            }) }}
+        />
+    {%- else -%}
+        {{- parent() -}}
+    {%- endif -%}
+{%- endblock date_widget -%}
+
+{%- block datetime_widget -%}
+    {%- if widget == 'single_text' -%}
+        {%- set type = type|default('text') -%}
+        {%- set widget_class = widget_class|default('input w-full') -%}
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} 
+            {{ stimulus_controller('flatpickr', {
+                enableTime: true,
+                dateFormat: 'Y-m-d H:i',
+                altFormat: 'd-m-Y h:i',
+                altInput: true,
+                allowInput: true,
+                locale: app.request.locale
+            }) }}
+        />
+    {%- else -%}
+        {{- parent() -}}
+    {%- endif -%}
+{%- endblock datetime_widget -%}
+
+{%- block time_widget -%}
+    {%- if widget == 'single_text' -%}
+        {%- set type = type|default('text') -%}
+        {%- set widget_class = widget_class|default('input w-full') -%}
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} 
+            {{ stimulus_controller('flatpickr', {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: 'H:i',
+                altFormat: 'h:i',
+                altInput: true,
+                allowInput: true,
+                locale: app.request.locale
+            }) }}
+        />
+    {%- else -%}
+        {{- parent() -}}
+    {%- endif -%}
+{%- endblock time_widget -%}
+
 {%- block form_widget_simple -%}
     {%- set type = type|default('text') -%}
     {%- if type == 'password' -%}
