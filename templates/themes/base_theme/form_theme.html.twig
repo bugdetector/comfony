@@ -468,7 +468,7 @@
         <span class="btn btn-success join-item pointer-events-none text-base-200">
             {{ money_pattern|form_encode_currency }}
         </span>
-        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="input join-item w-full" />
+        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
     </div>
 {% endblock %}
 
@@ -477,6 +477,6 @@
         <span class="btn btn-warning join-item pointer-events-none text-base-200">
             {{ symbol|default('%') }}
         </span>
-        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="input join-item w-full" />
+        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
     </div>
 {% endblock %}
