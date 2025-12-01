@@ -11,7 +11,7 @@
     {% elseif type is defined and type == "password" %}
         {%- set widget_class = widget_class|default('w-full') -%}
     {% else %}
-        {%- set widget_class = widget_class|default('input w-full') -%}
+        {%- set widget_class = widget_class|default('input w-full min-w-[80px]') -%}
     {% endif %}
     {%- set widget_disabled_class = widget_disabled_class|default('input-disabled') -%}
     {%- set widget_errors_class = widget_errors_class|default('text-error') -%}
@@ -213,7 +213,7 @@
 
 {%- block live_collection_widget -%}
     <div tabindex="0" class="collapse collapse-arrow bg-base-100 border-base-300 border">
-        <input type="checkbox" name="{{ cache_key }}" />
+        <input type="checkbox" name="{{ cache_key }}" checked/>
         <div class="collapse-title font-semibold">{{ block('form_label_content') }}</div>
         <div class="collapse-content text-sm" id="{{ id }}_wrapper_content">
             <div class="join join-vertical bg-base-100 w-full">
@@ -227,8 +227,8 @@
 {%- endblock -%}
 
 {%- block live_collection_entry_row -%}
-    <div class="collapse collapse-arrow join-item border-base-300 border">
-        <input type="checkbox" name="{{ cache_key }}"/>
+    <div class="collapse collapse-arrow join-item border-base-300 border my-2">
+        <input type="checkbox" name="{{ cache_key }}" {{ not form.vars.data ? 'checked' }}/>
         <div class="collapse-title font-semibold">{{ (form.parent.vars.label ? form.parent.vars.label|trans ~ ' - ' : '') ~  (name + 1) }}</div>
         <div class="collapse-content" id="{{ id }}_content">
             {{ block('form_row') }}
@@ -264,7 +264,12 @@
                         {% for innerChild in child %}
                             {% if not innerChild.rendered %}
                                 <td class="px-2 py-2 align-baseline">
-                                    {{ form_widget(innerChild) }}
+                                    {{ form_widget(innerChild, {
+                                            attr: {
+                                            "data-live-item-index-param": index
+                                            }
+                                        }) }}
+
                                     {{ form_errors(innerChild) }}
                                 </td>
                             {% endif %}
@@ -390,7 +395,7 @@
 {%- block collection_widget -%}
     {% set prototypeHtml = "
         <div class='collapse collapse-arrow join-item border-base-300 border'>
-            <input type='checkbox' name='__name__' />
+            <input type='checkbox' name='__name__' checked />
             <div class='collapse-title font-semibold'>
                 " ~ (label|default('')|trans) ~ " - <span>__name_index__</span>
             </div>
@@ -416,7 +421,7 @@
         data-form-collection-container-tag-value="div"
         data-form-collection-prototype-value="{{ prototypeHtml }}">
         <div class="collapse collapse-arrow bg-base-100 border-base-300 border mb-3">
-            <input type="checkbox" name="{{ id }}_main" />
+            <input type="checkbox" name="{{ id }}_main" checked />
             <div class="collapse-title font-semibold">
                 {{ form.vars.label }}
             </div>
@@ -468,7 +473,7 @@
         <span class="btn btn-success join-item pointer-events-none text-base-200">
             {{ money_pattern|form_encode_currency }}
         </span>
-        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="input join-item w-full" />
+        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
     </div>
 {% endblock %}
 
@@ -477,6 +482,6 @@
         <span class="btn btn-warning join-item pointer-events-none text-base-200">
             {{ symbol|default('%') }}
         </span>
-        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="input join-item w-full" />
+        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
     </div>
 {% endblock %}

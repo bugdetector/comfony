@@ -39,6 +39,7 @@ export default class extends Controller {
 	}
 
 	async initializeFlatpickr() {
+		const parentDialog = this.element.closest('dialog') || null;
 		const options = {
 			enableTime: this.enableTimeValue,
 			noCalendar: this.noCalendarValue,
@@ -48,6 +49,8 @@ export default class extends Controller {
 			allowInput: this.allowInputValue,
 			mode: this.modeValue,
 			locale: this.localeValue,
+			appendTo: parentDialog,
+			...this.element.dataset.flatpickrOptions
 		};
 
 		try {

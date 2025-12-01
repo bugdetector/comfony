@@ -1,60 +1,81 @@
 @layer components {
     .sidebar {
-        transition: all 0.3s ease-in-out;
-        width: calc(var(--spacing) * 15);
-        position: fixed;
-        z-index: 1000;
+        @apply fixed z-[1000] h-screen bg-base-200 border-r border-base-300 flex flex-col overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)];
+        width: 3.75rem; /* w-15 */
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
     }
 
-    .sidebar img {
-        object-fit: contain;
-    }
-
-    .sidebar:not(.open, :hover) .menu a span,
-    .sidebar:not(.open, :hover) .menu details summary span {
+    .sidebar::-webkit-scrollbar {
         display: none;
     }
 
-    .sidebar .menu a span {
-        white-space: nowrap;
+    .sidebar nav {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
     }
 
-    .sidebar:not(.open, :hover) .menu a i {
-        @apply text-2xl;
+    .sidebar nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .sidebar img {
+        @apply object-contain transition-all duration-300;
+    }
+
+    /* Hide text when collapsed */
+    .sidebar:not(.open):not(:hover) .menu a span,
+    .sidebar:not(.open):not(:hover) .menu details summary span,
+    .sidebar:not(.open):not(:hover) .sidebar-mark {
+        @apply opacity-0 w-0 hidden;
+    }
+
+    .sidebar .menu a span,
+    .sidebar .menu details summary span {
+        @apply whitespace-nowrap transition-opacity duration-300 delay-100;
+    }
+
+    .sidebar .menu details summary{
+        @apply py-3;
+    }
+
+    .sidebar .menu i {
+        @apply text-xl min-w-[1.5rem] text-center;
     }
 
     .sidebar .menu.menu-vertical {
-        @apply gap-2;
+        @apply gap-1 px-2;
     }
 
     .sidebar .menu.menu-vertical li a {
-        @apply py-2;
+        @apply py-3 rounded-lg hover:bg-base-300 transition-colors duration-200;
     }
 
-    @media screen and (min-width: 768px) {
-        .sidebar:not(.open, :hover) .sidebar-mark {
-            display: none;
-        }
+    .sidebar .menu.menu-vertical li a.active {
+        @apply bg-primary text-primary-content shadow-md;
+    }
 
+    /* Desktop Styles */
+    @media screen and (min-width: 768px) {
         .sidebar.open,
         .sidebar:hover {
-            transform: translateX(0);
-            width: calc(var(--spacing) * 64);
+            width: 16rem; /* w-64 */
+            @apply shadow-2xl;
+        }
+        
+        .sidebar:not(.open):not(:hover) .sidebar-mark {
+             display: none;
         }
     }
 
-
-
+    /* Mobile Styles */
     @media screen and (max-width: 768px) {
-
         .sidebar {
-            transform: translateX(-100%);
-            position: fixed;
+            @apply -translate-x-full w-64 shadow-2xl;
         }
 
         .sidebar.open {
-            transform: translateX(0);
-            width: 100vw;
+            @apply translate-x-0;
         }
     }
 }

@@ -20,10 +20,12 @@ export default class FormCollectionController extends Controller {
         this.collectionContainerTarget.appendChild(item);
         this.indexValue++;
         initializeComponents()
+        this.element.dispatchEvent(new CustomEvent('form-collection:addCollectionItem', { bubbles: true }));
     }
 
     removeCollectionItem(event)
     {
       event.target.closest('.collection-item').remove();
+      this.element.dispatchEvent(new CustomEvent('form-collection:removeCollectionItem', { bubbles: true }));
     }
 }
