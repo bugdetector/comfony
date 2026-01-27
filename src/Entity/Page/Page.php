@@ -57,7 +57,7 @@ class Page implements Translatable
     private ?Collection $translations = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Category $category = null;
 
     public function __construct()

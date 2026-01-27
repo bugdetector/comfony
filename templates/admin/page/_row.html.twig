@@ -31,9 +31,11 @@
 	<td class="px-6 py-3">{{ object.id }}</td>
 	<td class="px-6 py-3">{{ object.title }}</td>
 	<td class="px-6 py-3">
-		<span class="badge badge-primary">
-			{{ object.category.name }}
-		</span>
+		{% if object.category %}
+			<span class="badge badge-primary">
+				{{ object.category.name }}
+			</span>
+		{% endif %}
 	</td>
 	<td class="px-6 py-3">
 		{% if object.published %}
