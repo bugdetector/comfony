@@ -39,6 +39,9 @@ trait LiveAsyncFileInputTrait
         $nameParts = array_filter($nameParts, fn($part) => !is_numeric($part));
         $firstPart = array_shift($nameParts);
         $uploadedFiles = $request->files->get("live_file_input_" . $this->formName);
+        if (!$uploadedFiles) {
+            return;
+        }
         foreach ($nameParts as $namePart) {
             $uploadedFiles = $uploadedFiles[$namePart];
         }
