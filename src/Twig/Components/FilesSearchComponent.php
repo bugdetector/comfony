@@ -58,6 +58,9 @@ final class FilesSearchComponent extends DatatableComponent
                     'sortable' => true,
                 ],
                 [
+                    'label' => $this->translator->trans("file_path"),
+                ],
+                [
                     'label' => $this->translator->trans('mime_type'),
                 ],
                 [
@@ -76,7 +79,8 @@ final class FilesSearchComponent extends DatatableComponent
                 ]
             ],
             "quick_filters" => [
-                "f.file_name" => []
+                "f.file_name" => [],
+                'f.file_path' => [],
             ],
             "filters" => [
                 'f.file_name' => [

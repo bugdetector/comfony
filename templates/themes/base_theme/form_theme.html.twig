@@ -455,7 +455,7 @@
                             <i class='i-tabler-plus'></i>
                             <span>
                                 {% if form.vars.label %}
-                                    {% trans with {label: form.vars.label|trans} %}Add New label{% endtrans %}
+                                    {% trans with {'{label}': form.vars.label|trans} %}Add New {label}{% endtrans %}
                                 {% else %}
                                     {% trans %}Add{% endtrans %}
                                 {% endif %}

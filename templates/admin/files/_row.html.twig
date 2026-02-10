@@ -31,6 +31,7 @@
 		{{ component('FilePreviewComponent', {file: object}) }}
 	</td>
 	<td class="px-6 py-3">{{ object.getFileSize()|format_bytes }}</td>
+	<td class="px-6 py-3">{{ object.getFilePath() }}</td>
 	<td class="px-6 py-3">{{ object.getMimeType() }}</td>
 	<td class="px-6 py-3">{{ object.getExtension() }}</td>
 	<td class="px-6 py-3">

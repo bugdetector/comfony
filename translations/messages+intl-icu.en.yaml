@@ -142,4 +142,5 @@ Parent: Parent
 View: View
 'Email Sent': 'Email Sent'
 'We have sent a verification code to your email address. <br> Please use it to verify your email address.': 'We have sent a verification code to your email address. <br> Please use it to verify your email address.'
-'Code': 'Code'
+Code: Code
+file_path: file_path

@@ -146,4 +146,5 @@ Parent: Üst
 View: Görüntüle
 'Email Sent': 'E-posta gönderildi'
 'We have sent a verification code to your email address. <br> Please use it to verify your email address.': 'E-postanıza doğrulamanız için bir kod gönderdik. <br> Lütfen e-postanızı doğrulamak için kullanın.'
-'Code': 'Kod'
+Code: Kod
+file_path: 'Dosya Yolu'
