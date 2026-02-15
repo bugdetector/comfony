@@ -29,7 +29,7 @@
 					{% block turboTitle %}
 						{% set newTitle = title ?? app_name %}
 						 <script>
-							document.title = "{{ newTitle }}";
+							document.title = "{{ newTitle|e('js') }}";
 						</script>
 					{% endblock %}
 					
