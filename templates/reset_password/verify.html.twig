@@ -15,7 +15,8 @@
 				{% trans %}Verify Email{% endtrans %}
 			</h3>
 			<div class="flex items-center justify-center my-5">
-				<img src="{{ asset('assets/favicon.png') }}" class="w-16 h-16 mask mask-squircle"/>
+				<img class="dark:hidden h-16" src="{{ asset('assets/logo.png') }}" alt="{{ app_name }}"/>
+				<img class="hidden dark:block h-16" src="{{ asset('assets/logo-dark.png') }}" alt="{{ app_name }}"/>
 			</div>
 			<div class="flex items-center justify-center font-medium">
 				<a class="link" href="{{ path('app_forgot_password_request') }}">
