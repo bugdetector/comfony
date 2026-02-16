@@ -4,14 +4,11 @@ namespace App\Controller;
 
 use App\Dto\Auth\RegisterMailDto;
 use App\Dto\Auth\VerifyOtpDto;
-use App\Entity\Auth\ForgetPasswordToken;
 use App\Entity\Auth\UserStatus;
 use App\Form\Auth\ChangePasswordFormType;
 use App\Form\Auth\OtpVerifyFormType;
 use App\Form\Auth\RegistrationMailFormType;
 use App\Repository\Auth\UserRepository;
-use App\Repository\Auth\ForgetPasswordTokenRepository;
-use App\Security\LoginFormAuthenticator;
 use App\Theme\BaseTheme\AuthLayoutController;
 use App\Theme\ThemeHelper;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,18 +19,22 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/reset-password')]
 class ResetPasswordController extends AuthLayoutController
 {
+    private const CACHE_TTL = 300; // 5 minutes
+    private const CACHE_PREFIX = 'reset_password_';
+
     public function __construct(
         public ThemeHelper $theme,
         protected TranslatorInterface $translator,
         private EntityManagerInterface $entityManager,
         private UserRepository $userRepository,
-        private ForgetPasswordTokenRepository $forgetPasswordTokenRepository,
+        private CacheInterface $cache,
     ) {
         parent::__construct($theme, $translator);
     }
@@ -44,7 +45,7 @@ class ResetPasswordController extends AuthLayoutController
         MailerInterface $mailer,
     ): Response {
         if ($this->getUser()) {
-            return $this->redirectToRoute('app_tenant_customer_dashboard');
+            return $this->redirectToRoute('homepage');
         }
 
         $form = $this->createForm(RegistrationMailFormType::class);
@@ -63,31 +64,55 @@ class ResetPasswordController extends AuthLayoutController
 
 
             if ($user) {
-                /** @var ForgetPasswordToken */
-                $token = $this->forgetPasswordTokenRepository->findOneBy([
-                    "user" => $user
-                ]) ?: new ForgetPasswordToken();
-                if ($token->getId() && $token->isValid()) {
-                    $this->addFlash('error', "Too many attempts to send mail.");
-                } else {
-                    $token->setUser($user);
-                    $token->setCode(random_int(100000, 999999));
-                    $token->setResetToken(null);
-                    $this->entityManager->persist($token);
-                    $this->entityManager->flush();
+                $cacheKey = self::CACHE_PREFIX . 'code_' . $user->getId();
 
-                    $email = (new TemplatedEmail())
-                        ->to($user->getEmail())
-                        ->subject($this->translator->trans('Reset Password'))
-                        ->htmlTemplate('reset_password/verify-email.html.twig')
-                        ->context([
-                            'code' => $token->getCode()
-                        ])
-                        ->locale($this->translator->getLocale());
+                try {
+                    // Check if token already exists
+                    $existingData = $this->cache->get($cacheKey, function (ItemInterface $item) {
+                        return null;
+                    });
 
-                    $mailer->send($email);
+                    if ($existingData !== null) {
+                        $this->addFlash(
+                            'error',
+                            $this->translator->trans(
+                                'A reset code has already been sent to your email. Please check your inbox or try again later.'
+                            )
+                        );
+                        return $this->redirectToRoute('app_forgot_password_request');
+                    } else {
+                        $code = random_int(100000, 999999);
 
-                    $request->getSession()->set('forget_password_email', $dto->email);
+                        // Store code in cache
+                        $this->cache->delete($cacheKey);
+                        $this->cache->get($cacheKey, function (ItemInterface $item) use ($user, $code) {
+                            $item->expiresAfter(self::CACHE_TTL);
+                            return [
+                                'user_id' => $user->getId(),
+                                'code' => $code,
+                                'email' => $user->getEmail(),
+                                'verified' => false,
+                            ];
+                        });
+
+                        $email = (new TemplatedEmail())
+                            ->to($user->getEmail())
+                            ->subject($this->translator->trans('Reset Password'))
+                            ->htmlTemplate('reset_password/verify-email.html.twig')
+                            ->context([
+                                'code' => $code
+                            ])
+                            ->locale($this->translator->getLocale());
+
+                        $mailer->send($email);
+
+                        $request->getSession()->set('forget_password_email', $dto->email);
+                    }
+                } catch (\Exception $e) {
+                    $this->addFlash(
+                        'error',
+                        $this->translator->trans('Sorry, an unknown error occured.')
+                    );
                 }
             }
             return $this->redirectToRoute('app_forget_password_verify');
@@ -107,7 +132,7 @@ class ResetPasswordController extends AuthLayoutController
         Request $request,
     ) {
         if ($this->getUser()) {
-            return $this->redirectToRoute('app_tenant_customer_dashboard');
+            return $this->redirectToRoute('homepage');
         }
         $email = $request->getSession()->get('forget_password_email');
         $dto = new VerifyOtpDto();
@@ -118,41 +143,66 @@ class ResetPasswordController extends AuthLayoutController
         $error = false;
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->userRepository->findOneBy(['email' => $email]);
+            if (!$user) {
+                $this->addFlash(
+                    'error',
+                    $this->translator->trans("Sorry, an unknown error occured.")
+                );
+                $error = true;
+            }
+
             /** @var VerifyOtpDto */
             $dto = $form->getData();
-            /** @var ForgetPasswordToken */
-            $token = $this->forgetPasswordTokenRepository->findOneBy([
-                "user" => $user,
-                "code" => $dto->code,
-                "reset_token" => null
-            ]);
 
-            if (!$token) {
-                $this->addFlash(
-                    'error',
-                    $this->translator->trans("Invalid token."),
-                );
-                $error = true;
-            }
-            if (!$error && !$token->isValid()) {
-                $this->addFlash(
-                    'error',
-                    $this->translator->trans('Code expired.')
-                );
-                $error = true;
-            }
             if (!$error) {
-                $token->setResetToken(
-                    uniqid("reset_token_")
-                );
-                $this->entityManager->persist($token);
-                $this->entityManager->flush();
-                $this->addFlash(
-                    'success',
-                    $this->translator->trans('Code validated.')
-                );
-                $request->getSession()->set('reset_token', $token->getResetToken());
-                return $this->redirectToRoute('app_forget_password_reset');
+                $cacheKey = self::CACHE_PREFIX . 'code_' . $user->getId();
+
+                try {
+                    $tokenData = $this->cache->get($cacheKey, function (ItemInterface $item) {
+                        return null;
+                    });
+
+                    if ($tokenData === null) {
+                        $this->addFlash(
+                            'error',
+                            $this->translator->trans('Code expired.')
+                        );
+                        $error = true;
+                    } else {
+                        if ($tokenData['code'] != $dto->code) {
+                            $this->addFlash(
+                                'error',
+                                $this->translator->trans("Invalid token."),
+                            );
+                            $error = true;
+                        }
+
+                        if (!$error) {
+                            // Generate reset token
+                            $resetToken = bin2hex(random_bytes(32));
+
+                            // Update cache with reset token - delete and recreate
+                            $this->cache->delete($cacheKey);
+                            $this->cache->get($cacheKey, function (ItemInterface $item) use ($tokenData, $resetToken) {
+                                $item->expiresAfter(self::CACHE_TTL);
+                                $tokenData['verified'] = true;
+                                $tokenData['reset_token'] = $resetToken;
+                                return $tokenData;
+                            });
+
+                            $this->addFlash(
+                                'success',
+                                $this->translator->trans('Code validated.')
+                            );
+                            $request->getSession()->set('reset_token', $resetToken);
+                            $request->getSession()->set('reset_user_id', $user->getId());
+                            return $this->redirectToRoute('app_forget_password_reset');
+                        }
+                    }
+                } catch (\Exception $e) {
+                    $this->addFlash('error', $this->translator->trans('An error occurred. Please try again.'));
+                    $error = true;
+                }
             }
         }
 
@@ -174,27 +224,54 @@ class ResetPasswordController extends AuthLayoutController
     ): Response {
 
         $resetToken = $request->getSession()->get('reset_token');
-        /** @var ForgetPasswordToken */
-        $token = $this->forgetPasswordTokenRepository->findOneBy([
-            'reset_token' => $resetToken,
-        ]);
+        $userId = $request->getSession()->get('reset_user_id');
+
         $error = false;
-        if (!$token) {
+        $tokenData = null;
+
+        if (!$resetToken || !$userId) {
             $this->addFlash(
                 'error',
                 $this->translator->trans("Invalid token."),
             );
             $error = true;
         }
-        if (!$error && !$token->isValid()) {
-            $this->addFlash(
-                'error',
-                $this->translator->trans('Code expired.')
-            );
-            $error = true;
+
+        if (!$error) {
+            $cacheKey = self::CACHE_PREFIX . 'code_' . $userId;
+
+            try {
+                $tokenData = $this->cache->get($cacheKey, function (ItemInterface $item) {
+                    return null;
+                });
+
+                if ($tokenData === null) {
+                    $this->addFlash(
+                        'error',
+                        $this->translator->trans('Code expired.')
+                    );
+                    $error = true;
+                } else {
+                    if (
+                        !isset($tokenData['reset_token']) ||
+                        $tokenData['reset_token'] !== $resetToken ||
+                        !$tokenData['verified']
+                    ) {
+                        $this->addFlash(
+                            'error',
+                            $this->translator->trans("Invalid token."),
+                        );
+                        $error = true;
+                    }
+                }
+            } catch (\Exception $e) {
+                $this->addFlash('error', $this->translator->trans('Sorry, an unknown error occured.'));
+                $error = true;
+            }
         }
+
         if ($error) {
-            return $this->redirectToRoute('app_forget_password');
+            return $this->redirectToRoute('app_forgot_password_request');
         }
 
         $form = $this->createForm(ChangePasswordFormType::class, null, [
@@ -205,8 +282,13 @@ class ResetPasswordController extends AuthLayoutController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->remove($token);
-            $user = $token->getUser();
+            $user = $this->userRepository->find($userId);
+
+            if (!$user) {
+                $this->addFlash('error', $this->translator->trans("User not found."));
+                return $this->redirectToRoute('app_forgot_password_request');
+            }
+
             $encodedPassword = $userPasswordHasher->hashPassword(
                 $user,
                 $form->get('plainPassword')->getData()
@@ -214,6 +296,15 @@ class ResetPasswordController extends AuthLayoutController
             $user->setPassword($encodedPassword);
             $user->setStatus(UserStatus::Active);
             $this->entityManager->flush();
+
+            // Delete cache entry
+            $cacheKey = self::CACHE_PREFIX . 'code_' . $userId;
+            $this->cache->delete($cacheKey);
+
+            // Clear session
+            $request->getSession()->remove('reset_token');
+            $request->getSession()->remove('reset_user_id');
+            $request->getSession()->remove('forget_password_email');
 
             $security->login($user, "security.authenticator.remember_me.main");
 
