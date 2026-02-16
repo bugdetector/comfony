@@ -1,13 +1,12 @@
 {% extends theme.themeDirectory ~ '/layout/master.html.twig' %}
 
 {% block layout %}
-	<body class="min-h-screen bg-base-100 text-base-content flex">
-		{% block sidebar %}
-			{% include theme.themeDirectory ~ "/partials/_sidebar.html.twig" %}
-		{% endblock %}
-		<!-- Main Content -->
-		<div
-			class="flex-1 flex flex-col">
+	<body class="min-h-screen bg-base-100 text-base-content">
+		<div class="drawer lg:drawer-open">
+			{% block sidebar %}
+				{% include theme.themeDirectory ~ "/partials/_sidebar.html.twig" %}
+			{% endblock %}
+			<div class="drawer-content flex flex-col">
 			<!-- Navbar -->
 			{% block header %}
 				{% include theme.themeDirectory ~ "/partials/_header.html.twig" %}
@@ -43,9 +42,10 @@
 					</div>
 				</turbo-frame>
 			</main>
-			{% block footer %}
-				{% include theme.themeDirectory ~ "/partials/_footer.html.twig" %}
-			{% endblock %}
+				{% block footer %}
+					{% include theme.themeDirectory ~ "/partials/_footer.html.twig" %}
+				{% endblock %}
+			</div>
 		</div>
 	</body>
 {% endblock %}

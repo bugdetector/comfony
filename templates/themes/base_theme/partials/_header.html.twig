@@ -1,8 +1,8 @@
 <nav class="navbar bg-base-100 border-b border-base-300 px-4 sticky top-0 z-10" id="header">
 	<div class="navbar-start">
-		<button class="btn btn-ghost btn-sm sidebar-toggle">
+		<label for="app-drawer" class="btn btn-ghost btn-sm drawer-button" aria-label="open sidebar">
 			<span class="i-tabler-menu text-2xl"></span>
-		</button>
+		</label>
 		<div class="flex-1">
 			<a href="{{ path('homepage') }}" class="flex items-center gap-2" data-turbo="false">
 				<img class="dark:hidden h-[40px]" src="{{ asset('assets/logo.png') }}" alt="{{ app_name }}"/>

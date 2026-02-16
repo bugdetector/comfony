@@ -1,64 +1,61 @@
-<div class="sidebar-placeholder w-15 hidden md:block"></div>
-<div id="sidebar-backdrop" class="fixed inset-0 bg-black/50 z-[999] hidden opacity-0 transition-opacity duration-300 md:hidden"></div>
-<aside class="bg-base-200 border-r border-base-300 flex flex-col h-screen overflow-auto sidebar" id="sidebar">
-	<div class="py-4 px-3 text-xl font-bold tracking-wide">
-		<div class="flex items-center gap-2">
-			<img class="dark:hidden h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
-			<img class="hidden dark:block h-[40px]" src="{{ asset('assets/favicon.png') }}"/>
-			<div class="sidebar-mark">{{ app_name }}</div>
-			<button class="btn btn-ghost btn-sm sidebar-toggle ms-auto">
-				<span class="i-tabler-x text-2xl"></span>
-			</button>
+<input id="app-drawer" type="checkbox" class="drawer-toggle"/>
+<div class="drawer-side z-50 is-drawer-close:overflow-visible">
+	<label for="app-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+	<div class="flex min-h-full flex-col bg-base-200 border-r border-base-300 is-drawer-close:w-16 is-drawer-open:w-64 is-drawer-close:overflow-visible overflow-y-auto">
+		<div class="py-4 px-3 border-b border-base-300 flex items-center gap-2">
+			<img class="dark:hidden h-[40px] is-drawer-close:h-[32px]" src="{{ asset('assets/favicon.png') }}"/>
+			<img class="hidden dark:block h-[40px] is-drawer-close:h-[32px]" src="{{ asset('assets/favicon.png') }}"/>
+			<div class="text-xl font-bold tracking-wide is-drawer-close:hidden">{{ app_name }}</div>
 		</div>
-	</div>
-	<nav class="flex-1 overflow-y-auto">
-		<ul class="menu menu-vertical px-2 w-full text-xl">
-			<li>
-				<a href="{{ path('homepage') }}" data-turbo-frame="base-content">
-					<i class="i-tabler-home"></i>
-					<span>{% trans %}Home{% endtrans %}</span>
-				</a>
-			</li>
-			{% if is_granted('ROLE_ADMIN') %}
+		<nav class="flex-1 is-drawer-close:overflow-visible overflow-y-auto">
+			<ul class="menu w-full grow">
 				<li>
-					<a href="{{ path('app_admin') }}" data-turbo-frame="base-content">
-						<i class="i-tabler-dashboard"></i>
-						<span>{% trans %}Dashboard{% endtrans %}</span>
+					<a href="{{ path('homepage') }}" data-turbo-frame="base-content" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="{% trans %}Home{% endtrans %}">
+						<i class="i-tabler-home text-xl"></i>
+						<span class="is-drawer-close:hidden">{% trans %}Home{% endtrans %}</span>
 					</a>
 				</li>
-				<li>
-					<a href="{{ path('app_admin_users_index') }}" data-turbo-frame="base-content">
-						<i class="i-tabler-users"></i>
-						<span>{% trans %}Users{% endtrans %}</span>
-					</a>
-				</li>
-				{% if is_granted('ROLE_SUPER_ADMIN') %}
+				{% if is_granted('ROLE_ADMIN') %}
 					<li>
-						<a href="{{ path('app_admin_files_index') }}" data-turbo-frame="base-content">
-							<i class="i-tabler-files"></i>
-							<span>{% trans %}Files{% endtrans %}</span>
+						<a href="{{ path('app_admin') }}" data-turbo-frame="base-content" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="{% trans %}Dashboard{% endtrans %}">
+							<i class="i-tabler-dashboard text-xl"></i>
+							<span class="is-drawer-close:hidden">{% trans %}Dashboard{% endtrans %}</span>
 						</a>
 					</li>
+					<li>
+						<a href="{{ path('app_admin_users_index') }}" data-turbo-frame="base-content" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="{% trans %}Users{% endtrans %}">
+							<i class="i-tabler-users text-xl"></i>
+							<span class="is-drawer-close:hidden">{% trans %}Users{% endtrans %}</span>
+						</a>
+					</li>
+					{% if is_granted('ROLE_SUPER_ADMIN') %}
 						<li>
-							<a href="{{ path('app_admin_configuration_index') }}" data-turbo-frame="base-content">
-								<i class="i-tabler-settings"></i>
-								<span>{% trans %}Configurations{% endtrans %}</span>
+							<a href="{{ path('app_admin_files_index') }}" data-turbo-frame="base-content" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="{% trans %}Files{% endtrans %}">
+								<i class="i-tabler-files text-xl"></i>
+								<span class="is-drawer-close:hidden">{% trans %}Files{% endtrans %}</span>
 							</a>
 						</li>
-					<li>
-						<a href="{{ path('app_admin_page_index') }}" data-turbo-frame="base-content">
-							<i class="i-tabler-files"></i>
-							<span>{% trans %}Pages{% endtrans %}</span>
-						</a>
-					</li>
-					<li>
-						<a href="{{ path('app_admin_category_index') }}" data-turbo-frame="base-content">
-							<i class="i-tabler-list-tree"></i>
-							<span>{% trans %}Categories{% endtrans %}</span>
-						</a>
-					</li>
+						<li>
+							<a href="{{ path('app_admin_configuration_index') }}" data-turbo-frame="base-content" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="{% trans %}Configurations{% endtrans %}">
+								<i class="i-tabler-settings text-xl"></i>
+								<span class="is-drawer-close:hidden">{% trans %}Configurations{% endtrans %}</span>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_admin_page_index') }}" data-turbo-frame="base-content" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="{% trans %}Pages{% endtrans %}">
+								<i class="i-tabler-file-text text-xl"></i>
+								<span class="is-drawer-close:hidden">{% trans %}Pages{% endtrans %}</span>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_admin_category_index') }}" data-turbo-frame="base-content" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="{% trans %}Categories{% endtrans %}">
+								<i class="i-tabler-list-tree text-xl"></i>
+								<span class="is-drawer-close:hidden">{% trans %}Categories{% endtrans %}</span>
+							</a>
+						</li>
+					{% endif %}
 				{% endif %}
-			{% endif %}
-		</ul>
-	</nav>
-</aside>
+			</ul>
+		</nav>
+	</div>
+</div>
