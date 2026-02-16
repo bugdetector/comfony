@@ -3,9 +3,11 @@
 	<label for="app-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
 	<div class="flex min-h-full flex-col bg-base-200 border-r border-base-300 is-drawer-close:w-16 is-drawer-open:w-64 is-drawer-close:overflow-visible overflow-y-auto">
 		<div class="py-4 px-3 border-b border-base-300 flex items-center gap-2">
-			<img class="dark:hidden h-[40px] is-drawer-close:h-[32px]" src="{{ asset('assets/favicon.png') }}"/>
-			<img class="hidden dark:block h-[40px] is-drawer-close:h-[32px]" src="{{ asset('assets/favicon.png') }}"/>
-			<div class="text-xl font-bold tracking-wide is-drawer-close:hidden">{{ app_name }}</div>
+			<img class="dark:hidden h-[40px] is-drawer-open:!hidden" src="{{ asset('assets/favicon.png') }}"/>
+			<img class="hidden dark:block h-[40px] is-drawer-open:!hidden" src="{{ asset('assets/favicon.png') }}"/>
+
+			<img class="dark:hidden h-[40px] is-drawer-close:!hidden" src="{{ asset('assets/logo.png') }}" alt="{{ app_name }}"/>
+			<img class="hidden dark:block h-[40px] is-drawer-close:!hidden" src="{{ asset('assets/logo-dark.png') }}" alt="{{ app_name }}"/>
 		</div>
 		<nav class="flex-1 is-drawer-close:overflow-visible overflow-y-auto">
 			<ul class="menu w-full grow">
