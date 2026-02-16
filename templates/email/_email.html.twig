@@ -1,39 +1,58 @@
 {% apply inky_to_html|inline_css(source('@emails/foundation-emails.css')) %}
     <container>
-        <row>
+        {# Header #}
+        <row class="header">
             <columns>
-                <spacer size="20"></spacer>
+                <spacer size="30"></spacer>
                 <center>
                     <a href="{{ url('homepage') }}">
-                        <img src="{{ email.image('@assets/logo.png') }}" width="150" alt="{{ app_name }}">
+                        <img src="{{ email.image('@assets/logo.png') }}" width="160" alt="{{ app_name }}">
                     </a>
                 </center>
-                <spacer size="20"></spacer>
+                <spacer size="30"></spacer>
             </columns>
         </row>
 
+        {# Content #}
         {% block content %}
             <row>
-                <columns>
-                    <center>
-                        <h1>{{ subject|default('')|trans|raw }}</h1>
-                        <p>{{ message|default('')|trans|raw }}</p>
-                        {% if buttonUrl is defined %}
-                            <spacer size="16"></spacer>
-                            <button class="primary" href="{{ buttonUrl }}">
+                <columns small="12" large="10">
+                    <spacer size="20"></spacer>
+                    <callout class="primary">
+                        <center>
+                            <h1>{{ subject|default('')|trans|raw }}</h1>
+                        </center>
+                    </callout>
+                    
+                    <spacer size="20"></spacer>
+                    
+                    <p class="text-left">{{ message|default('')|trans|raw }}</p>
+                    
+                    {% if buttonUrl is defined %}
+                        <spacer size="24"></spacer>
+                        <center>
+                            <button class="large primary radius" href="{{ buttonUrl }}">
                                 {{ buttonText|default('View')|trans }}
                             </button>
-                        {% endif %}
-                    </center>
+                        </center>
+                    {% endif %}
+                    
+                    <spacer size="20"></spacer>
                 </columns>
             </row>
         {% endblock %}
 
+        <spacer size="30"></spacer>
+
+        {# Footer #}
         <row class="footer">
             <columns>
                 <center>
                     <spacer size="20"></spacer>
-                    <small>{{ app_name }}</small>
+                    <p>
+                        <strong>{{ app_name }}</strong>
+                    </p>
+                    <spacer size="20"></spacer>
                 </center>
             </columns>
         </row>
