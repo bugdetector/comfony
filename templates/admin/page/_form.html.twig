@@ -5,7 +5,7 @@
 			{% for localeObj in locales() %}
 				{% set is_active = (this.locale ?: this.defaultLocale) == localeObj.code %}
 				{% set is_rtl = localeObj.code in ['ar', 'fa', 'he'] %}
-				<input type="radio" data-model="locale" class="tab {{ is_active ? 'tab-active' : '' }}" value="{{ localeObj.code }}" aria-label="{{ localeObj.name|default(localeObj.code) }}" />
+				<a href="{{ path('app_admin_page_edit', { 'id': page.id, 'locale': localeObj.code } ) }}" class="tab {{ is_active ? 'tab-active' : '' }}" aria-label="{{ localeObj.name|default(localeObj.code) }}">{{ localeObj.name|default(localeObj.code) }}</a>
 			{% endfor %}
 		</div>
 	{% endif %}
