@@ -35,16 +35,25 @@ trait LiveAsyncFileInputTrait
             str_replace("file_input_", "", $name),
             $matches
         );
-        $nameParts = $matches[0];
-        $nameParts = array_filter($nameParts, fn($part) => !is_numeric($part));
-        $firstPart = array_shift($nameParts);
+        $allParts = $matches[0];
+        if ($allParts[0] === $this->formName) {
+            array_shift($allParts);
+        }
+
         $uploadedFiles = $request->files->get("live_file_input_" . $this->formName);
         if (!$uploadedFiles) {
             return;
         }
-        foreach ($nameParts as $namePart) {
-            $uploadedFiles = $uploadedFiles[$namePart];
+
+        foreach ($allParts as $part) {
+            if (isset($uploadedFiles[$part])) {
+                $uploadedFiles = $uploadedFiles[$part];
+            }
         }
+
+        $nameParts = array_filter($allParts, fn($part) => !is_numeric($part));
+        $firstPart = array_shift($nameParts);
+
         try {
             if (!is_array($uploadedFiles)) {
                 $uploadedFiles = [$uploadedFiles];

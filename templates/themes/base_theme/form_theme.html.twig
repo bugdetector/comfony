@@ -228,7 +228,7 @@
 
 {%- block live_collection_entry_row -%}
     <div class="collapse collapse-arrow join-item border-base-300 border my-2">
-        <input type="checkbox" name="{{ cache_key }}" {{ not form.vars.data ? 'checked' }}/>
+        <input type="checkbox" name="{{ cache_key }}" checked/>
         <div class="collapse-title font-semibold">{{ (form.parent.vars.label ? form.parent.vars.label|trans ~ ' - ' : '') ~  (name + 1) }}</div>
         <div class="collapse-content" id="{{ id }}_content">
             {{ block('form_row') }}
@@ -255,7 +255,7 @@
                             <span>{{ form_label(prototypeChild) }}</span>
                         </th>
                     {% endfor %}
-                <tr>
+                </tr>
             </thead>
             <tbody>
                 {% for index, child in form %}
@@ -342,7 +342,7 @@
                                     <span>{{ form_label(prototypeChild) }}</span>
                                 </th>
                             {% endfor %}
-                        <tr>
+                        </tr>
                     </thead>
                     <tbody {{ stimulus_target('form-collection', 'collectionContainer') }}>
                     {% for index, child in form %}
@@ -394,7 +394,7 @@
 
 {%- block collection_widget -%}
     {% set prototypeHtml = "
-        <div class='collapse collapse-arrow join-item border-base-300 border'>
+        <div class='collapse collapse-arrow join-item border-base-300 border collection-item'>
             <input type='checkbox' name='__name__' checked />
             <div class='collapse-title font-semibold'>
                 " ~ (label|default('')|trans) ~ " - <span>__name_index__</span>
@@ -428,8 +428,8 @@
             <div class="collapse-content text-sm" id="{{ id }}_wrapper_content">
                 <div class="join join-vertical bg-base-100 w-full" {{ stimulus_target('form-collection', 'collectionContainer') }}>
                     {% for index, child in form %}
-                        <div class="collapse collapse-arrow join-item border-base-300 border mb-2" id="{{ child.vars.id }}">
-                            <input type="checkbox" name="{{ child.vars.id }}_toggle"/>
+                        <div class="collapse collapse-arrow join-item border-base-300 border mb-2 collection-item" id="{{ child.vars.id }}">
+                            <input type="checkbox" name="{{ child.vars.id }}_toggle" checked/>
                             <div class="collapse-title font-semibold">
                                 {{ (form.vars.label ? form.vars.label|trans ~ ' - ' : '') ~ (index + 1) }}
                             </div>
