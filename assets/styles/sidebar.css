@@ -1,0 +1,73 @@
+.sidebar-group {
+  position: relative;
+}
+
+.sidebar-details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.sidebar-details > summary:hover {
+  background-color: color-mix(in oklab, var(--color-base-content) 8%, transparent);
+  color: var(--color-base-content);
+}
+
+.sidebar-details[open] > summary {
+  background: linear-gradient(135deg, color-mix(in oklab, var(--color-primary) 18%, var(--color-base-100)), color-mix(in oklab, var(--color-base-100) 92%, var(--color-base-300)));
+  color: var(--color-base-content);
+  box-shadow: 0 16px 36px -24px color-mix(in oklab, var(--color-primary) 55%, transparent);
+}
+
+.sidebar-submenu {
+  margin-top: 0.5rem;
+  margin-left: 0 !important;
+  padding: 0.4rem !important;
+  border-radius: 1.25rem;
+  border: 1px solid color-mix(in oklab, var(--color-base-300) 88%, var(--color-base-100));
+  background: color-mix(in oklab, var(--color-base-100) 94%, var(--color-base-300));
+  box-shadow: 0 24px 50px -28px color-mix(in oklab, var(--color-base-content) 24%, transparent);
+}
+
+.sidebar-submenu li > a {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-height: 2.5rem;
+  border-radius: 0.95rem;
+  padding: 0.75rem 0.9rem;
+}
+
+.sidebar-submenu li > a i {
+  flex: 0 0 auto;
+}
+
+.sidebar-submenu li > a span {
+  line-height: 1.35;
+}
+
+@media (min-width: 1024px) {
+  .is-drawer-close .sidebar-group {
+    overflow: visible;
+  }
+
+  .is-drawer-close .sidebar-submenu {
+    position: absolute;
+    top: 0;
+    left: calc(100% + 0.9rem);
+    z-index: 70;
+    margin-top: 0;
+    padding: 0.85rem !important;
+  }
+
+  .is-drawer-close .sidebar-submenu::before {
+    content: "";
+    position: absolute;
+    top: 1.15rem;
+    left: -0.45rem;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-left: 1px solid color-mix(in oklab, var(--color-base-300) 88%, var(--color-base-100));
+    border-bottom: 1px solid color-mix(in oklab, var(--color-base-300) 88%, var(--color-base-100));
+    background: color-mix(in oklab, var(--color-base-100) 94%, var(--color-base-300));
+    transform: rotate(45deg);
+  }
+}

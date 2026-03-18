@@ -24,38 +24,48 @@
 							<span class="is-drawer-close:hidden">{% trans %}Dashboard{% endtrans %}</span>
 						</a>
 					</li>
-					<li>
-						<a href="{{ path('app_admin_users_index') }}" data-turbo-frame="base-content" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="{% trans %}Users{% endtrans %}">
-							<i class="i-tabler-users text-xl"></i>
-							<span class="is-drawer-close:hidden">{% trans %}Users{% endtrans %}</span>
-						</a>
+					<li class="sidebar-group is-drawer-close:tooltip is-drawer-close:tooltip-right is-drawer-close:overflow-visible" data-tip="{% trans %}Management{% endtrans %}">
+						<details class="sidebar-details is-drawer-close:overflow-visible is-drawer-close:invisible lg:is-drawer-close:visible">
+							<summary>
+								<i class="i-tabler-360 text-xl"></i>
+								<span class="is-drawer-close:hidden">{% trans %}Management{% endtrans %}</span>
+							</summary>
+							<ul class="sidebar-submenu lg:is-drawer-close:absolute lg:is-drawer-close:left-[calc(100%+0.9rem)] lg:is-drawer-close:top-0 lg:is-drawer-close:z-[70] lg:is-drawer-close:mt-0 lg:is-drawer-close:w-72 lg:is-drawer-close:p-3">
+								<li>
+									<a href="{{ path('app_admin_users_index') }}" data-turbo-frame="base-content">
+										<i class="i-tabler-users text-xl"></i>
+										<span>{% trans %}Users{% endtrans %}</span>
+									</a>
+								</li>
+								{% if is_granted('ROLE_SUPER_ADMIN') %}
+								<li>
+									<a href="{{ path('app_admin_files_index') }}" data-turbo-frame="base-content">
+										<i class="i-tabler-files text-xl"></i>
+										<span>{% trans %}Files{% endtrans %}</span>
+									</a>
+								</li>
+								<li>
+									<a href="{{ path('app_admin_configuration_index') }}" data-turbo-frame="base-content">
+										<i class="i-tabler-settings text-xl"></i>
+										<span>{% trans %}Configurations{% endtrans %}</span>
+									</a>
+								</li>
+								<li>
+									<a href="{{ path('app_admin_page_index') }}" data-turbo-frame="base-content">
+										<i class="i-tabler-file-text text-xl"></i>
+										<span>{% trans %}Pages{% endtrans %}</span>
+									</a>
+								</li>
+								<li>
+									<a href="{{ path('app_admin_category_index') }}" data-turbo-frame="base-content">
+										<i class="i-tabler-list-tree text-xl"></i>
+										<span>{% trans %}Categories{% endtrans %}</span>
+									</a>
+								</li>
+								{% endif %}
+							</ul>
+						</details>
 					</li>
-					{% if is_granted('ROLE_SUPER_ADMIN') %}
-						<li>
-							<a href="{{ path('app_admin_files_index') }}" data-turbo-frame="base-content" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="{% trans %}Files{% endtrans %}">
-								<i class="i-tabler-files text-xl"></i>
-								<span class="is-drawer-close:hidden">{% trans %}Files{% endtrans %}</span>
-							</a>
-						</li>
-						<li>
-							<a href="{{ path('app_admin_configuration_index') }}" data-turbo-frame="base-content" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="{% trans %}Configurations{% endtrans %}">
-								<i class="i-tabler-settings text-xl"></i>
-								<span class="is-drawer-close:hidden">{% trans %}Configurations{% endtrans %}</span>
-							</a>
-						</li>
-						<li>
-							<a href="{{ path('app_admin_page_index') }}" data-turbo-frame="base-content" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="{% trans %}Pages{% endtrans %}">
-								<i class="i-tabler-file-text text-xl"></i>
-								<span class="is-drawer-close:hidden">{% trans %}Pages{% endtrans %}</span>
-							</a>
-						</li>
-						<li>
-							<a href="{{ path('app_admin_category_index') }}" data-turbo-frame="base-content" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="{% trans %}Categories{% endtrans %}">
-								<i class="i-tabler-list-tree text-xl"></i>
-								<span class="is-drawer-close:hidden">{% trans %}Categories{% endtrans %}</span>
-							</a>
-						</li>
-					{% endif %}
 				{% endif %}
 			</ul>
 		</nav>

@@ -1,5 +1,6 @@
 /* Tailwind core */
 @import './tom-select.css';
+@import './sidebar.css';
 @import "tailwindcss";
 @source "../../templates/**/*.html.twig";
 @source "../**/*.js";
