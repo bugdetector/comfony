@@ -570,8 +570,8 @@ Add proper link in proper location in `templates/themes/base_theme/partials/_sid
 For example page link like this:
 
 <li>
-    <a href="{{ path('app_admin_page_index') }}" data-turbo-frame="base-content">
-        <i class="i-tabler-files"></i>
-        <span>{% trans %}Pages{% endtrans %}</span>
+    <a href="{{ path('app_admin_page_index') }}" data-turbo-frame="base-content" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="{% trans %}Pages{% endtrans %}">
+        <i class="i-tabler-files text-xl"></i>
+        <span class="is-drawer-close:hidden">{% trans %}Pages{% endtrans %}</span>
     </a>
 </li>

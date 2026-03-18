@@ -144,3 +144,7 @@ View: View
 'We have sent a verification code to your email address. <br> Please use it to verify your email address.': 'We have sent a verification code to your email address. <br> Please use it to verify your email address.'
 Code: Code
 file_path: file_path
+'A reset code has already been sent to your email. Please check your inbox or try again later.': 'A reset code has already been sent to your email. Please check your inbox or try again later.'
+'An error occurred. Please try again.': 'An error occurred. Please try again.'
+'User not found.': 'User not found.'
+Management: Management
