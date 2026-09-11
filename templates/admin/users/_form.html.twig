@@ -13,8 +13,9 @@
 {{ form_start(form) }}
 {{ form_widget(form) }}
 <div class="fixed bottom-10 end-10">
-	<button type="submit" class="btn btn-soft btn-success hover:text-base-100" data-loading="action(save)|addAttribute(disabled)">
-		<i class="i-tabler-check text-xl"></i>
+	<button type="submit" class="btn btn-success btn-soft hover:text-base-100 gap-2" data-loading="action(save)|addAttribute(disabled)">
+		<span data-loading="action(save)|removeClass(hidden)" class="loading loading-spinner loading-xs hidden"></span>
+		<i data-loading="action(save)|addClass(hidden)" class="i-tabler-check text-xl"></i>
 		{% trans %}Save{% endtrans %}
 	</button>
 </div>
