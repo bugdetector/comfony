@@ -34,3 +34,8 @@ yarn.lock
 .htpasswd
 bolt.db
 ###< Comfony ###
+
+###> AI Agent Skills ###
+/.agents/skills/*
+!/.agents/skills/comfony-crud/
+###< AI Agent Skills ###

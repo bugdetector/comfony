@@ -1,0 +1,17 @@
+---
+description: Comfony project architecture, console execution, and conventions
+globs: *
+alwaysApply: true
+---
+
+Please strictly follow the project rules, architectural guidelines, and execution workflows defined in `AGENTS.md` at the repository root.
+
+- **Main Instructions:** [AGENTS.md](../../AGENTS.md)
+- **CRUD & Component Templates:** [.agents/skills/comfony-crud/SKILL.md](../../.agents/skills/comfony-crud/SKILL.md)
+- **daisyUI 5 Component Guide:** [.agents/skills/daisyui/SKILL.md](../../.agents/skills/daisyui/SKILL.md)
+
+## Key Directives
+- **Console execution:** In Docker, use `./bin/docker-console.sh <command>`; locally, use `./bin/console <command>`.
+- **Database:** NEVER create manual migrations (`make:migration`). Always use `./bin/docker-console.sh config:import`.
+- **Entities:** Setters must accept nullable parameters for Symfony UX LiveComponent compatibility.
+
