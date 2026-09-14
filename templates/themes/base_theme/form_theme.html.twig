@@ -31,8 +31,9 @@
 {%- endblock choice_widget_expanded -%}
 
 {%- block choice_widget_collapsed -%}
-    {%- set attr_class = attr.class|default('select w-full') -%}
-    {%- set attr = attr|merge({'class': (attr_class ~ ' ' ~ attr.class|default(''))|trim}) -%}
+    {%- set base_class = uses_autocomplete|default(false) ? 'w-full' : 'select w-full' -%}
+    {%- set base_class = multiple|default(false) ? base_class ~ ' block' : base_class -%}
+    {%- set attr = attr|merge({'class': (base_class ~ ' ' ~ attr.class|default(''))|trim}) -%}
     {{- parent() -}}
 {%- endblock choice_widget_collapsed -%}
 
