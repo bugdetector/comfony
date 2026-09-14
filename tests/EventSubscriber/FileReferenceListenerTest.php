@@ -139,7 +139,7 @@ class FileReferenceListenerTest extends TestCase
         $removedFile = new File();
         $removedFile->setStatus(FileStatus::Permanent);
 
-        $collection = new class($removedFile) {
+        $collection = new class ($removedFile) {
             public function __construct(private File $file)
             {
             }
