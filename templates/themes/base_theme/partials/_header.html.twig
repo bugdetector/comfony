@@ -40,61 +40,15 @@
 							<span>{% trans %}Theme{% endtrans %}</span>
 							<span class="i-tabler-chevron-right text-lg ms-auto"></span>
 						</button>
-						<ul class="dropdown dropdown-content menu rounded-box !bg-base-100 shadow-sm z-20" popover id="nav-theme-popover" style="position-anchor:--anchor-nav-theme-popover">
-							<li>
-								<label class="flex items-center gap-2 cursor-pointer">
-									<input type="radio" name="theme" value="light" class="radio radio-sm"/>
-									<span>{% trans %}Light{% endtrans %}</span>
-								</label>
-							</li>
-							<li>
-								<label class="flex items-center gap-2 cursor-pointer">
-									<input type="radio" name="theme" value="dark" class="radio radio-sm"/>
-									<span>{% trans %}Dark{% endtrans %}</span>
-								</label>
-							</li>
-							<li>
-								<label class="flex items-center gap-2 cursor-pointer">
-									<input type="radio" name="theme" value="system" class="radio radio-sm"/>
-									<span>{% trans %}System{% endtrans %}</span>
-								</label>
-							</li>
-						</ul>
 					</li>
 					<li>
 						<button popovertarget="nav-language-popover" style="anchor-name:--anchor-nav-language-popover">
 							<span>{% trans %}Language{% endtrans %}</span>
-							<div class="badge badge-outline badge-primary">
+							<span class="badge badge-outline badge-primary">
 								{{ app.request.locale|upper }}
-							</div>
+							</span>
 							<span class="i-tabler-chevron-right text-lg ms-auto"></span>
 						</button>
-						<ul class="dropdown dropdown-content menu rounded-box !bg-base-100 shadow-sm z-20" popover id="nav-language-popover" style="position-anchor:--anchor-nav-language-popover">
-							{% for locale in locales() %}
-								{% set is_active = app.request.locale == locale.code %}
-								{% set is_rtl = locale.code in ['ar', 'fa', 'he'] %}
-								<li>
-									<a class="flex justify-around" translate="no" lang="{{ locale.code }}" hreflang="{{ locale.code }}" href="?_locale={{ locale.code }}" data-turbo="false">
-										{% if is_active %}
-											<div class="indicator">
-												<span class="indicator-item status status-success"></span>
-												<div class="badge badge-outline badge-primary">
-													{{ locale.code|upper }}
-													-
-													{{ locale.name }}
-												</div>
-											</div>
-										{% else %}
-											<div class="badge badge-outline badge-primary">
-												{{ locale.code|upper }}
-												-
-												{{ locale.name }}
-											</div>
-										{% endif %}
-									</a>
-								</li>
-							{% endfor %}
-						</ul>
 					</li>
 					{% if app.user %}
 						<li>
@@ -117,6 +71,52 @@
 
 				</ul>
 			</div>
+			<ul class="dropdown dropdown-left menu rounded-box !bg-base-100 shadow-sm z-20" popover id="nav-theme-popover" style="position-anchor:--anchor-nav-theme-popover">
+				<li>
+					<label class="flex items-center gap-2 cursor-pointer">
+						<input type="radio" name="theme" value="light" class="radio radio-sm"/>
+						<span>{% trans %}Light{% endtrans %}</span>
+					</label>
+				</li>
+				<li>
+					<label class="flex items-center gap-2 cursor-pointer">
+						<input type="radio" name="theme" value="dark" class="radio radio-sm"/>
+						<span>{% trans %}Dark{% endtrans %}</span>
+					</label>
+				</li>
+				<li>
+					<label class="flex items-center gap-2 cursor-pointer">
+						<input type="radio" name="theme" value="system" class="radio radio-sm"/>
+						<span>{% trans %}System{% endtrans %}</span>
+					</label>
+				</li>
+			</ul>
+			<ul class="dropdown dropdown-left menu rounded-box !bg-base-100 shadow-sm z-20" popover id="nav-language-popover" style="position-anchor:--anchor-nav-language-popover">
+				{% for locale in locales() %}
+					{% set is_active = app.request.locale == locale.code %}
+					{% set is_rtl = locale.code in ['ar', 'fa', 'he'] %}
+					<li>
+						<a class="flex justify-around" translate="no" lang="{{ locale.code }}" hreflang="{{ locale.code }}" href="?_locale={{ locale.code }}" data-turbo="false">
+							{% if is_active %}
+								<div class="indicator">
+									<span class="indicator-item status status-success"></span>
+									<div class="badge badge-outline badge-primary">
+										{{ locale.code|upper }}
+										-
+										{{ locale.name }}
+									</div>
+								</div>
+							{% else %}
+								<div class="badge badge-outline badge-primary">
+									{{ locale.code|upper }}
+									-
+									{{ locale.name }}
+								</div>
+							{% endif %}
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
 		</div>
 	</div>
 </nav>

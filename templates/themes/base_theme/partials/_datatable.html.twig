@@ -7,26 +7,27 @@
 				<input type="search" data-model="debounce(300)|query" autocomplete='off' value="{{ this.query }}" placeholder="{{'Search'|trans}}" class="grow">
 			</label>
 			{% if filterForm %}
-				<div class="dropdown end-0 top-0 dropdown-end">
-					<button class="btn btn-soft bg-base-100" tabindex="0" role="button">
+				{% set hasActiveFilters = this.filters|default([])|filter(value => value is not same as(null) and value is not same as(''))|length > 0 %}
+				<details class="dropdown end-0 top-0 dropdown-end" {% if hasActiveFilters %}open{% endif %}>
+					<summary class="btn btn-soft bg-base-100 list-none">
 						<i class="i-tabler-filter"></i>
 						<i class="i-tabler-chevron-down"></i>
-					</button>
-					<ul class="dropdown-content w-64 max-h-96 overflow-y-auto bg-base-100 shadow pt-4">
+					</summary>
+					<div class="dropdown-content w-72 max-h-96 overflow-y-auto bg-base-100 shadow pt-4 rounded-box z-[1]">
 						{{ form_start(filterForm) }}
 						{% for field in filterForm %}
 							<div class='px-4'>
 								{{ form_row(field) }}
 							</div>
 						{% endfor %}
-						<div class="sticky bottom-0">
+						<div class="sticky bottom-0 bg-base-100 px-4 py-3">
 							<button type="reset" class="btn btn-error btn-soft btn-sm w-full justify-center hover:text-base-100" data-action="live#action" data-live-action-param="resetFilters">
 								{{ 'Clear'|trans }}
 							</button>
 						</div>
 						{{ form_end(filterForm) }}
-					</ul>
-				</div>
+					</div>
+				</details>
 			{% endif %}
 		</div>
 		<div class="divider"></div>
