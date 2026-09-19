@@ -4,8 +4,8 @@
     "daisyui": {
       "source": "saadeghi/daisyui",
       "sourceType": "github",
-      "computedHash": "b4f20b48d444b18c0ac3506cc063a22e996bf5b717a7b9cd1b2dabc1bc98a7c7"
+      "skillPath": "skills/daisyui/SKILL.md",
+      "computedHash": "f70b06883160802b5b04db0504647cc140bd38cf7eb941183a38f44a179b27ca"
     }
   }
 }
-
