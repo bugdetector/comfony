@@ -23,6 +23,8 @@
 	encode zstd br gzip
 
 	mercure {
+		name default
+		protocol_version_compatibility 8
 		# Transport to use (default to Bolt)
 		transport bolt {
 			path /data/mercure.db
