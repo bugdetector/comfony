@@ -11,7 +11,7 @@ export default class TinyMceController extends Controller {
     const config = {
       license_key: 'gpl',
       target: this.element,
-      plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
+      plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help quickbars emoticons accordion',
       editimage_cors_hosts: ['picsum.photos'],
       menubar: 'file edit view insert format tools table help',
       toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image table media blockquote | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code visualblocks fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
@@ -22,8 +22,6 @@ export default class TinyMceController extends Controller {
       autosave_retention: '2m',
       image_advtab: true,
       importcss_append: true,
-      template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
-      template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
       height: 600,
       image_caption: true,
       quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
