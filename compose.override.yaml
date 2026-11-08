@@ -21,7 +21,7 @@ services:
     tty: true
   phpmyadmin:
     image: phpmyadmin
-    restart: always
+    restart: "no"
     ports:
       - 8090:80
     environment:

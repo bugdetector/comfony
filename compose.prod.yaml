@@ -1,6 +1,7 @@
 # Production environment override
 services:
   php:
+    restart: unless-stopped
     build:
       context: .
       target: frankenphp_prod
@@ -8,3 +9,9 @@ services:
       APP_SECRET: ${APP_SECRET}
       MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET}
       MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET}
+
+  database:
+    restart: unless-stopped
+
+  mercure:
+    restart: unless-stopped
