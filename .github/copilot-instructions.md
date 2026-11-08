@@ -1,6 +1,6 @@
 # Comfony - Agent & Copilot Instructions
 
-Comfony is a modern Symfony 7.3 boilerplate with Hotwire Turbo, Stimulus, daisyUI 5, Tailwind CSS 4, and Symfony UX Live Components.
+Comfony is a modern Symfony 7.4 (LTS) boilerplate with Hotwire Turbo, Stimulus, daisyUI 5, Tailwind CSS 4, and Symfony UX Live Components.
 
 ## Core Rules & Single Source of Truth
 Please strictly follow the complete architectural standards and commands defined in [AGENTS.md](../AGENTS.md):

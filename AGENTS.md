@@ -6,7 +6,7 @@ Welcome to **Comfony**. This document is the single source of truth (SSoT) for A
 
 ## 1. Tech Stack Overview
 
-- **Backend:** PHP 8.4, Symfony 7.3, Doctrine ORM
+- **Backend:** PHP 8.4, Symfony 7.4 (LTS), Doctrine ORM
 - **Server / Runtime:** FrankenPHP (Caddy) in Docker
 - **Real-Time Streaming:** Mercure protocol with Turbo Streams
 - **Frontend / Reactivity:** Hotwire Turbo, Stimulus, Symfony UX Live Components

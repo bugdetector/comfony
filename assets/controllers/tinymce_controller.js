@@ -9,6 +9,7 @@ export default class TinyMceController extends Controller {
   connect() {
     var useDarkMode = localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
     const config = {
+      license_key: 'gpl',
       target: this.element,
       plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
       editimage_cors_hosts: ['picsum.photos'],
