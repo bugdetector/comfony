@@ -48,8 +48,6 @@
         "sweetalert2": "^11.26.25",
         "tailwindcss": "^4.3.4",
         "tinymce": "^8",
-        "ts-loader": "^9.6.2",
-        "typescript": "^5.9.3",
         "webpack-merge-and-include-globally": "^2.3.4"
     }
 }
