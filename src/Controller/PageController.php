@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Page\Page;
 use App\Theme\BaseTheme\DefaultLayoutController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class PageController extends DefaultLayoutController
 {
